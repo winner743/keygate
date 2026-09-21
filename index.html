@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en"><head><base href="https://488533012-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeyGate</title>
+<meta name="description" content="Finish a few quick steps to get your key.">
+<meta property="og:title" content="KeyGate | Get your key">
+<meta property="og:description" content="Finish a few quick steps to get your key.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1220; --surface:#161b2e; --surface-2:#1d2440; --line:#2a3252;
+  --text:#e9edf9; --muted:#8f99bb; --accent:#6b7cff; --accent-h:#8290ff;
+  --ok:#3ddc97; --bad:#ff5c7a;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  min-height:100vh; background:var(--bg); color:var(--text);
+  font:16px/1.55 "DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  display:grid; place-items:center; padding:28px 16px;
+}
+.wrap{width:min(500px,100%); display:grid; gap:16px}
+.mode{display:grid; gap:16px}
+.brand{display:flex; align-items:center; gap:10px; font:700 20px "Sora",system-ui,sans-serif; letter-spacing:-.01em}
+.brand svg{width:30px; height:30px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:28px}
+h1{font:700 26px/1.2 "Sora",system-ui,sans-serif; margin:0 0 8px; letter-spacing:-.02em}
+h2{font:600 16px "Sora",system-ui,sans-serif; margin:0}
+.sub{color:var(--muted); margin:0 0 22px}
+label{display:block; font-weight:600; font-size:14px; margin:18px 0 8px}
+input,textarea{
+  width:100%; background:var(--bg); color:var(--text); border:1px solid var(--line);
+  border-radius:12px; padding:13px 14px; font:inherit; outline:none; transition:border-color .15s, box-shadow .15s;
+}
+input::placeholder{color:#5c6688}
+input:focus-visible,textarea:focus-visible{border-color:var(--accent); box-shadow:0 0 0 3px rgba(107,124,255,.25)}
+textarea{height:170px; resize:vertical; color:#c9d2f5; font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.btn{
+  width:100%; margin-top:20px; padding:14px 18px; border:0; border-radius:12px; cursor:pointer;
+  background:var(--accent); color:#fff; font:600 16px "DM Sans",sans-serif; transition:background .15s, transform .1s;
+}
+.btn:hover{background:var(--accent-h)}
+.btn:active{transform:scale(.99)}
+.btn:disabled{opacity:.5; cursor:not-allowed}
+.btn.ok{background:var(--ok); color:#06281a}
+.btn.ghost{background:var(--surface-2); border:1px solid var(--line); color:var(--text); margin-top:10px}
+.btn.ghost:hover{background:#252d50}
+.btn:focus-visible{outline:3px solid rgba(107,124,255,.5); outline-offset:2px}
+.msg{margin-top:16px; padding:11px 14px; border-radius:10px; font-size:14px}
+.msg.bad{background:rgba(255,92,122,.1); border:1px solid rgba(255,92,122,.35); color:#ffb3c1}
+.note{padding:11px 14px; border-radius:10px; font-size:13px; background:rgba(255,196,77,.08); border:1px solid rgba(255,196,77,.3); color:#ffd88a}
+ol.how{margin:0 0 6px; padding-left:20px; color:var(--muted); font-size:14px}
+ol.how li{margin:0 0 6px}
+ol.how b{color:var(--text); font-weight:600}
+.lnk{color:var(--accent-h); font-weight:600}
+.linkbtn{background:none; border:0; color:var(--accent-h); font:600 14px "DM Sans",sans-serif; cursor:pointer; padding:4px}
+.linkbtn:hover{text-decoration:underline}
+.foot{margin:0; text-align:center; color:var(--muted); font-size:13px}
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+.chip{font-size:13px; padding:4px 11px; border-radius:999px; border:1px solid var(--line); color:var(--muted); transition:all .15s}
+.chip.on{border-color:var(--ok); color:var(--ok); background:rgba(61,220,151,.08)}
+.linkrow{display:flex; gap:8px; margin-top:8px}
+.linkrow input{font-size:14px}
+.linkrow button{flex:none; padding:0 16px; border-radius:12px; border:1px solid var(--line); background:var(--surface-2); color:var(--text); font:600 14px "DM Sans",sans-serif; cursor:pointer}
+.linkrow button:hover{background:#252d50}
+.share{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+.share a,.share button{padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:var(--surface-2); color:var(--text); font:600 14px "DM Sans",sans-serif; cursor:pointer; text-decoration:none}
+.share a:hover,.share button:hover{background:#252d50}
+
+/* Visitor steps */
+.steps{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+.step{display:grid; grid-template-columns:34px 1fr; gap:14px; padding:16px; border:1px solid var(--line); border-radius:14px; background:var(--bg); transition:border-color .2s, opacity .2s}
+.dot{width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font:700 14px "Sora",sans-serif; background:var(--surface-2); color:var(--muted); border:1px solid var(--line)}
+.step.is-active{border-color:var(--accent)}
+.step.is-active .dot{background:var(--accent); color:#fff; border-color:var(--accent)}
+.step.is-done .dot{background:var(--ok); color:#06281a; border-color:var(--ok)}
+.step.is-locked{opacity:.5}
+.panel{display:none; margin-top:12px}
+.step.is-active .panel{display:block}
+.step p{margin:4px 0 0; color:var(--muted); font-size:14px}
+.row{display:flex; gap:8px}
+.row .btn{margin-top:0; width:auto; padding:0 20px}
+.q{font:700 20px "Sora",sans-serif; margin:0 0 10px; letter-spacing:.02em}
+.bar{height:8px; border-radius:99px; background:var(--surface-2); overflow:hidden; margin:12px 0 4px}
+.bar i{display:block; height:100%; width:0; background:var(--accent); transition:width .25s linear}
+.small{font-size:13px; color:var(--muted)}
+.center{text-align:center}
+.tick{width:64px; height:64px; margin:0 auto 14px; border-radius:50%; display:grid; place-items:center; background:rgba(61,220,151,.12); border:2px solid var(--ok)}
+.tick svg{width:30px; height:30px}
+.spin{width:38px; height:38px; margin:0 auto 14px; border-radius:50%; border:3px solid var(--line); border-top-color:var(--accent); animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.keybox{background:var(--bg); border:1px dashed var(--ok); border-radius:14px; padding:18px 14px; margin:0 0 4px; font:600 18px/1.4 "Sora",system-ui,sans-serif; letter-spacing:.04em; word-break:break-all; user-select:all}
+#vBypass{position:fixed; inset:0; z-index:99; background:#1a0910; display:grid; place-items:center; padding:24px; text-align:center}
+#vBypass h1{font-size:clamp(28px,7vw,52px); color:#ff5c7a; letter-spacing:-.01em; margin:0 0 12px}
+#vBypass p{color:#ffb3c1; margin:0}
+.shake{animation:shk .35s}
+@keyframes shk{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#6b7cff"></rect><path d="M11 14v-2.5a5 5 0 0 1 10 0V14M10 14h12v9a1 1 0 0 1-1 1H11a1 1 0 0 1-1-1z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    KeyGate
+  </div>
+
+  <!-- ============ CREATE ============ -->
+  <div class="mode" id="mCreate" hidden="">
+    <section class="card" id="pubCard" hidden="">
+      <h1>Publish your website</h1>
+      <p class="sub">Paste a GitHub token once. KeyGate creates a public repository and turns on GitHub Pages for you, so your share links live on your own permanent website.</p>
+      <ol class="how">
+        <li>Open the <a class="lnk" href="https://github.com/settings/tokens/new?scopes=public_repo&amp;description=KeyGate" target="_blank" rel="noopener">GitHub token page</a>.</li>
+        <li>Keep <b>public_repo</b> ticked, press <b>Generate token</b> and copy it.</li>
+        <li>Paste it below.</li>
+      </ol>
+      <form id="pubForm" novalidate="">
+        <label for="ghToken">GitHub token</label>
+        <input id="ghToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_...">
+        <label for="ghRepo">Repository name</label>
+        <input id="ghRepo" type="text" autocomplete="off" spellcheck="false" value="keygate">
+        <div class="msg bad" id="pubErr" role="alert" hidden=""></div>
+        <div class="small" id="pubStatus" hidden="" style="margin-top:14px"></div>
+        <button class="btn" id="pubGo" type="submit">Publish website</button>
+      </form>
+      <p class="small" style="margin:14px 0 0">The token is only used in this browser to publish. It is never saved and never put in your links. You can delete it on GitHub afterwards.</p>
+      <button class="linkbtn" id="pubSkip" type="button" style="margin-top:8px">Skip, I host the file myself</button>
+    </section>
+
+    <section class="card" id="pubDone" hidden="">
+      <h1>Website published</h1>
+      <p class="sub">Your share links will now use this address.</p>
+      <div class="linkrow"><input id="siteUrl" readonly=""><button id="copySite" type="button">Copy</button></div>
+      <div class="small" id="liveStatus" style="margin-top:12px"></div>
+      <button class="btn" id="pubContinue" type="button">Continue</button>
+    </section>
+
+    <section class="card" id="formCard" hidden="">
+      <h1>Create a share link</h1>
+      <p class="sub">Add your sponsor link and your script. Visitors finish the steps and get a KFREE key for your key menu.</p>
+      <form id="f" novalidate="">
+        <label for="ad" style="margin-top:0">Sponsor link</label>
+        <input id="ad" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://lootlabs.gg/your-link">
+        <div class="chips">
+          <span class="chip" data-p="Lootlabs">Lootlabs</span>
+          <span class="chip" data-p="Linkvertise">Linkvertise</span>
+          <span class="chip" data-p="Platoboost">Platoboost</span>
+        </div>
+        <label for="title">Title <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+        <input id="title" type="text" maxlength="60" autocomplete="off" placeholder="My awesome script">
+        <label for="myScript">Your Lua script <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+        <textarea id="myScript" spellcheck="false" style="height:140px" placeholder="print(&quot;Hello from my script&quot;)"></textarea>
+        <p class="small" style="margin:8px 0 0">It runs right after a valid key. Leave it empty to add your script later.</p>
+        <div class="msg bad" id="cErr" role="alert" hidden=""></div>
+        <button class="btn" id="go" type="submit">Create share link</button>
+      </form>
+    </section>
+
+    <section class="card" id="resCard" hidden="">
+      <h1>Your share link is ready</h1>
+      <p class="sub">Post this link anywhere. Visitors finish the steps and get a key automatically.</p>
+      <div class="linkrow"><input id="shareUrl" readonly=""><button id="copyShare" type="button">Copy</button></div>
+      <div class="note" id="shareNote" hidden="" style="margin-top:12px"></div>
+      <div class="share">
+        <button type="button" id="shareNative" hidden="">Share</button>
+        <a id="shareWa" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="shareTg" target="_blank" rel="noopener">Telegram</a>
+      </div>
+      <label style="margin-top:26px">API key</label>
+      <div class="linkrow"><input id="apiKey" readonly=""><button id="copyApi" type="button">Copy</button></div>
+      <label style="margin-top:22px">Ready-to-use Lua script (key menu + your script)</label>
+      <textarea id="lua" readonly="" spellcheck="false"></textarea>
+      <button class="btn ghost" id="copyLua" type="button" style="margin-top:8px">Copy script</button>
+      <button class="btn ghost" id="again" type="button">Create another</button>
+    </section>
+
+    <p class="foot" id="siteFoot" hidden="">Website: <span id="siteName"></span> <button class="linkbtn" id="siteUpdate" type="button">Update</button></p>
+  </div>
+
+  <!-- ============ VISITOR ============ -->
+  <div class="mode" id="mVisit" hidden="">
+    <section class="card center" id="vLoad" hidden="">
+      <div class="spin" aria-hidden="true"></div>
+      <h2 id="loadTxt">Loading...</h2>
+    </section>
+
+    <section class="card" id="vFlow" hidden="">
+      <h1 id="ttl">Get your key</h1>
+      <p class="sub">Complete each step in order. This only takes a minute.</p>
+      <ol class="steps">
+        <li class="step" id="s1">
+          <div class="dot">1</div>
+          <div>
+            <h2>Verify you're human</h2>
+            <div class="panel">
+              <p class="q" id="mq">3 + 4 = ?</p>
+              <div class="row">
+                <input id="ma" inputmode="numeric" autocomplete="off" placeholder="Your answer">
+                <button class="btn" id="mgo" type="button">Check</button>
+              </div>
+              <div class="msg bad" id="mErr" hidden="">Wrong answer. Try the new question.</div>
+            </div>
+          </div>
+        </li>
+        <li class="step" id="s2">
+          <div class="dot">2</div>
+          <div>
+            <h2>Stay on this page</h2>
+            <div class="panel">
+              <p>Keep this tab open and visible while the timer runs.</p>
+              <div class="bar"><i id="bar"></i></div>
+              <div class="small" id="tmTxt">Ready to start</div>
+              <button class="btn" id="tmGo" type="button">Start timer</button>
+            </div>
+          </div>
+        </li>
+        <li class="step" id="s3">
+          <div class="dot">3</div>
+          <div>
+            <h2>Visit the sponsor page</h2>
+            <div class="panel">
+              <p>Open the sponsor page in a new tab and finish it. Then come back here and confirm.</p>
+              <button class="btn" id="adGo" type="button">Open sponsor page</button>
+              <button class="btn ok" id="adDone" type="button" hidden="">I finished the sponsor page</button>
+              <div class="msg bad" id="adErr" role="alert" hidden=""></div>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card center" id="vDone" hidden="">
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+      <h1>Your key is ready</h1>
+      <p class="sub" id="keySub">Copy it and paste it into the key menu.</p>
+      <div class="keybox" id="keyBox">KFREE-</div>
+      <button class="btn ok" id="copyKey" type="button">Copy key</button>
+    </section>
+
+    <section class="card center" id="vErr" hidden="">
+      <h1>Something went wrong</h1>
+      <p class="sub" id="vErrTxt">Please try again.</p>
+      <button class="btn" id="retry" type="button">Start over</button>
+    </section>
+  </div>
+</main>
+
+<!-- Bypass detected -->
+<section id="vBypass" role="alertdialog" aria-live="assertive" hidden="">
+  <div>
+    <h1>PLS DO NOT BYPASSING THE STEP</h1>
+    <p>Bypass detected. Sending you back to the start in <b id="cd">5</b>s.</p>
+    <p id="why" style="margin-top:14px;font-size:12px;opacity:.6"></p>
+  </div>
+</section>
+
+<script>
+(() => {
+"use strict";
+const SOURCE = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;   // this page as delivered, captured before anything changes
+
+/* =====================================================================
+   Settings (all optional). No database and no server: everything a
+   share link needs travels inside the link itself.
+   ===================================================================== */
+const CONFIG = {
+  SITE_URL: "",            // optional: full address of this page once hosted, e.g. "https://name.github.io/kg/keygate.html"
+  MIN_AD_SECONDS: 15,      // confirming the sponsor step faster than this = bypass
+  MIN_AWAY_SECONDS: 8,     // visitor must have left the tab for at least this long
+  MAX_AD_MINUTES: 30,      // a sponsor session expires after this
+  WAIT_SECONDS: 10,        // visible-tab timer in step 2
+  KEY_HOURS: 24,           // how long a key stays valid (0 = never expires)
+  SHOW_REASON: true        // show a small detection code on the bypass screen (set false when live)
+};
+const PROVIDERS = {
+  Lootlabs:    ["lootlabs.gg","loot-link.com","loot-links.com","lootlinks.co","lootdest.com","lootdest.org","lootdest.info","links-loot.com"],
+  Linkvertise: ["linkvertise.com","link-to.net","link-hub.net","link-center.net","link-target.net","direct-link.net","up-to-down.net"],
+  Platoboost:  ["platoboost.com","platoboost.net","platorelay.com"]
+};
+
+/* ---------- Shared helpers ---------- */
+const $ = id => document.getElementById(id);
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); return true; } catch { return false; } };
+const b64u = s => btoa(unescape(encodeURIComponent(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const unb64u = s => decodeURIComponent(escape(atob(s.replace(/-/g, "+").replace(/_/g, "/"))));
+async function copy(text, btn) {
+  try { await navigator.clipboard.writeText(text); }
+  catch { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+  if (btn) { const old = btn.textContent; btn.textContent = "Copied"; setTimeout(() => btn.textContent = old, 1400); }
+}
+function providerOf(u) {
+  if (!u) return null; const h = u.hostname.toLowerCase().replace(/^www\./, "");
+  for (const [name, list] of Object.entries(PROVIDERS)) if (list.some(d => h === d || h.endsWith("." + d))) return name;
+  return null;
+}
+const parseUrl = v => { try { const u = new URL(String(v).trim()); return /^https?:$/.test(u.protocol) ? u : null; } catch { return null; } };
+function makeToken(n) {                                // A-Z and 0-9, unbiased
+  const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let out = "";
+  while (out.length < n) { const b = new Uint8Array(n * 2); crypto.getRandomValues(b); for (const x of b) if (x < 252 && out.length < n) out += A[x % 36]; }
+  return out;
+}
+
+/* ---------- Key format (works offline, the Lua script uses the same maths) ----------
+   KFREE- + 24 characters:  [7: expiry, masked] [5: random] [12: keyed checksum]          */
+function hw(secret, data, salt) {                      // keyed 32-bit hash: FNV-1a + murmur finaliser
+  const s = secret + "|" + salt + "|" + data;
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619) >>> 0;
+  h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b) >>> 0;
+  h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35) >>> 0;
+  h ^= h >>> 16;
+  return h >>> 0;
+}
+const enc6 = v => (v % 2176782336).toString(36).toUpperCase().padStart(6, "0");
+function makeKey(secret, expMs) {
+  for (;;) {
+    const nonce = makeToken(5);
+    const expMin = expMs ? Math.floor(expMs / 60000) : 0;
+    const masked = ((expMin ^ hw(secret, nonce, "m")) >>> 0).toString(36).toUpperCase().padStart(7, "0");
+    const a = masked + nonce;
+    const body = a + enc6(hw(secret, a, "1")) + enc6(hw(secret, a, "2"));
+    if (/[A-Z]/.test(body) && /[0-9]/.test(body)) return "KFREE-" + body;
+  }
+}
+
+/* =====================================================================
+   CREATE: make a share link + the Lua key menu
+   ===================================================================== */
+function creator() {
+  $("mCreate").hidden = false;
+  const showErr = m => { $("cErr").textContent = m; $("cErr").hidden = !m; };
+
+  $("ad").addEventListener("input", () => {
+    const p = providerOf(parseUrl($("ad").value));
+    document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.p === p));
+  });
+
+  const PREVIEW = /googleusercontent|claude\.ai|localhost|127\.0\.0\.1/;
+  const previewHost = () => { try { return PREVIEW.test(location.hostname) || !/^https?:$/.test(location.protocol); } catch { return true; } };
+  const savedSite = () => { try { const v = localStorage.getItem("keygate:site"); return v && /^https:\/\//.test(v) ? v : ""; } catch { return ""; } };
+  function baseUrl() {
+    const cfg = CONFIG.SITE_URL.trim(); if (cfg) return cfg;
+    if (!previewHost()) return location.origin + location.pathname;
+    const s = savedSite(); if (s) return s;
+    try { return location.origin + location.pathname; } catch { return "keygate.html"; }
+  }
+  const siteKnown = () => !!(CONFIG.SITE_URL.trim() || savedSite() || !previewHost());
+
+  function showForm() {
+    $("pubCard").hidden = true; $("pubDone").hidden = true; $("resCard").hidden = true; $("formCard").hidden = false;
+    const s = savedSite(); $("siteFoot").hidden = !(s && previewHost() && !CONFIG.SITE_URL.trim());
+    $("siteName").textContent = s.replace(/^https:\/\//, "").replace(/\/$/, "");
+  }
+  function showPublish() { $("formCard").hidden = true; $("resCard").hidden = true; $("pubDone").hidden = true; $("siteFoot").hidden = true; $("pubCard").hidden = false; }
+  siteKnown() ? showForm() : showPublish();
+  $("pubSkip").onclick = showForm;
+  $("siteUpdate").onclick = showPublish;
+  $("pubContinue").onclick = showForm;
+  $("copySite").onclick = e => copy($("siteUrl").value, e.currentTarget);
+
+  /* ---- Publish the website to GitHub Pages with a token (used once, never stored) ---- */
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  async function gh(token, method, path, body) {
+    const r = await fetch("https://api.github.com" + path, {
+      method,
+      headers: Object.assign({ Authorization: "Bearer " + token, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" }, body ? { "Content-Type": "application/json" } : {}),
+      body: body ? JSON.stringify(body) : undefined
+    });
+    let data = null; try { data = await r.json(); } catch {}
+    return { status: r.status, ok: r.ok, data };
+  }
+  const say = (m) => { $("pubStatus").textContent = m; $("pubStatus").hidden = !m; };
+  const problem = m => Object.assign(new Error(m), { friendly: true });
+
+  async function publish(token, name) {
+    if (!/^[A-Za-z0-9._-]{1,100}$/.test(name) || name === "." || name === "..") throw problem("Repository names can only use letters, numbers, dots, dashes and underscores.");
+    if (!SOURCE.includes('id="mCreate"') || !SOURCE.includes("KeyGate")) throw problem("Could not read this page's source. Open the file directly in your browser and try again.");
+    say("Checking your token...");
+    const me = await gh(token, "GET", "/user");
+    if (me.status === 401) throw problem("GitHub rejected that token. Make sure you copied all of it.");
+    if (!me.ok || !me.data || !me.data.login) throw problem("Could not talk to GitHub (" + me.status + "). Try again in a moment.");
+    const owner = me.data.login;
+
+    say("Preparing the repository...");
+    let repo = await gh(token, "GET", `/repos/${owner}/${name}`);
+    if (repo.status === 404) {
+      repo = await gh(token, "POST", "/user/repos", { name, description: "KeyGate share website", private: false, auto_init: true });
+      if (repo.status === 403 || repo.status === 401) throw problem("This token can't create repositories. Create a new token with public_repo ticked.");
+      if (repo.status === 422) throw problem("GitHub couldn't create '" + name + "'. Try a different repository name.");
+      if (!repo.ok) throw problem("GitHub couldn't create the repository (" + repo.status + ").");
+    } else if (!repo.ok) throw problem("Could not check the repository (" + repo.status + ").");
+    if (repo.data && repo.data.private) throw problem("'" + name + "' is a private repository. GitHub Pages needs a public one, so pick another name.");
+    const branch = (repo.data && repo.data.default_branch) || "main";
+
+    say("Uploading the website...");
+    const content = btoa(unescape(encodeURIComponent(SOURCE)));
+    let uploaded = false, lastStatus = 0;
+    for (let i = 0; i < 6 && !uploaded; i++) {
+      const cur = await gh(token, "GET", `/repos/${owner}/${name}/contents/index.html?ref=${encodeURIComponent(branch)}`);
+      const put = await gh(token, "PUT", `/repos/${owner}/${name}/contents/index.html`, Object.assign({ message: "Publish KeyGate", content, branch }, cur.ok && cur.data && cur.data.sha ? { sha: cur.data.sha } : {}));
+      lastStatus = put.status;
+      if (put.status === 200 || put.status === 201) uploaded = true;
+      else if (put.status === 401 || put.status === 403) throw problem("This token isn't allowed to write to that repository.");
+      else await sleep(1500);                                          // a brand-new repo can take a moment to be ready
+    }
+    if (!uploaded) throw problem("Could not upload the website (" + lastStatus + "). Try again.");
+
+    say("Turning on GitHub Pages...");
+    const pg = await gh(token, "POST", `/repos/${owner}/${name}/pages`, { source: { branch, path: "/" } });
+    const already = pg.status === 409 || (pg.status === 422 && /already/i.test(JSON.stringify(pg.data || "")));
+    if (!(pg.status === 201 || already)) throw problem(pg.status === 403 || pg.status === 401 ? "This token can't turn on GitHub Pages. Create a new token with public_repo ticked." : "GitHub couldn't turn on Pages (" + pg.status + ").");
+    const url = (pg.data && /^https:\/\//.test(pg.data.html_url || "") ? pg.data.html_url : `https://${owner.toLowerCase()}.github.io/${name.toLowerCase() === (owner.toLowerCase() + ".github.io") ? "" : name + "/"}`).replace(/\/?$/, "/");
+    return url;
+  }
+
+  $("pubForm").addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const err = $("pubErr"); err.hidden = true; say("");
+    const token = $("ghToken").value.trim(), name = $("ghRepo").value.trim();
+    if (!token) { err.textContent = "Paste your GitHub token first."; err.hidden = false; return; }
+    const btn = $("pubGo"); btn.disabled = true; btn.textContent = "Publishing...";
+    try {
+      const url = await publish(token, name);
+      $("ghToken").value = "";                                         // the token is never kept
+      try { localStorage.setItem("keygate:site", url); } catch {}
+      say("");
+      $("siteUrl").value = url;
+      $("pubCard").hidden = true; $("pubDone").hidden = false;
+      $("liveStatus").textContent = "Checking if the site is live...";
+      for (let i = 0; i < 30; i++) {                                   // first publish takes GitHub 1-2 minutes
+        let up = false; try { up = (await fetch(url, { cache: "no-store" })).ok; } catch {}
+        if (up) { $("liveStatus").textContent = "Your website is live."; return; }
+        $("liveStatus").textContent = "GitHub is setting it up. This can take 1-2 minutes...";
+        await sleep(5000);
+      }
+      $("liveStatus").textContent = "It's still starting up. It should be live within a few minutes.";
+    } catch (e) {
+      say("");
+      err.textContent = e && e.friendly ? e.message : "Could not reach GitHub. Check your connection and try again.";
+      err.hidden = false;
+    } finally { btn.disabled = false; btn.textContent = "Publish website"; }
+  });
+
+  function longBracket(src) {                          // embeds any script safely inside a Lua long string
+    let n = 0; while (src.includes("]" + "=".repeat(n) + "]")) n++;
+    const eq = "=".repeat(n);
+    return "[" + eq + "[\n" + src + "\n]" + eq + "]";
+  }
+  function buildLua(secret, share, userScript) {
+    const body = (userScript || "").replace(/\r\n?/g, "\n").trim() || "-- Put your script here";
+    return `-- KeyGate | key menu + your script
+local API_KEY    = ${JSON.stringify(secret)}
+local SHARE_LINK = ${JSON.stringify(share)}
+
+-- Your script (runs after a valid key)
+local SCRIPT = ${longBracket(body)}
+
+local Players          = game:GetService("Players")
+local TweenService     = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local KEY_FILE = "keygate_" .. string.sub(API_KEY, 7, 14) .. ".txt"
+
+local function runScript()
+	local compile = loadstring or load
+	if not compile then
+		warn("[KeyGate] loadstring is not available in this environment")
+		return
+	end
+	local fn, err = compile(SCRIPT)
+	if not fn then
+		warn("[KeyGate] Script error: " .. tostring(err))
+		return
+	end
+	task.spawn(fn)
+end
+
+-- key check (offline): same maths as the key generator on the website
+local B36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+local function mul32(a, b)
+	local ah, al = math.floor(a / 65536), a % 65536
+	local bh, bl = math.floor(b / 65536), b % 65536
+	return ((ah * bl + al * bh) % 65536 * 65536 + al * bl) % 4294967296
+end
+
+local function hw(secret, data, salt)
+	local s = secret .. "|" .. salt .. "|" .. data
+	local h = 2166136261
+	for i = 1, #s do
+		h = mul32(bit32.bxor(h, string.byte(s, i)), 16777619)
+	end
+	h = bit32.bxor(h, bit32.rshift(h, 16))
+	h = mul32(h, 2246822507)
+	h = bit32.bxor(h, bit32.rshift(h, 13))
+	h = mul32(h, 3266489909)
+	h = bit32.bxor(h, bit32.rshift(h, 16))
+	return h
+end
+
+local function enc6(v)
+	v = v % 2176782336
+	local out = ""
+	for _ = 1, 6 do
+		local d = v % 36
+		out = string.sub(B36, d + 1, d + 1) .. out
+		v = math.floor(v / 36)
+	end
+	return out
+end
+
+local function dec36(s)
+	local v = 0
+	for i = 1, #s do
+		local pos = string.find(B36, string.sub(s, i, i), 1, true)
+		if not pos then return nil end
+		v = v * 36 + (pos - 1)
+	end
+	return v
+end
+
+-- returns ok, message
+local function verifyKey(input)
+	local key = string.upper((string.gsub(tostring(input or ""), "%s", "")))
+	if #key ~= 30 or not string.match(key, "^KFREE%-[A-Z0-9]+$") then
+		return false, "Invalid key"
+	end
+	local body = string.sub(key, 7)
+	local a = string.sub(body, 1, 12)
+	local mac = string.sub(body, 13, 24)
+	if enc6(hw(API_KEY, a, "1")) .. enc6(hw(API_KEY, a, "2")) ~= mac then
+		return false, "Invalid key"
+	end
+	local masked = dec36(string.sub(a, 1, 7))
+	if not masked then return false, "Invalid key" end
+	local expMin = bit32.bxor(masked % 4294967296, hw(API_KEY, string.sub(a, 8, 12), "m"))
+	if expMin ~= 0 and os.time() > expMin * 60 then
+		return false, "Key expired"
+	end
+	return true, "Key accepted"
+end
+
+local function readSaved()
+	if isfile and readfile then
+		local ok, res = pcall(function()
+			if isfile(KEY_FILE) then return readfile(KEY_FILE) end
+			return nil
+		end)
+		if ok and type(res) == "string" then return res end
+	end
+	return nil
+end
+
+local function writeSaved(key)
+	if writefile then pcall(writefile, KEY_FILE, key) end
+end
+
+local function guiParent()
+	local ok, ui = pcall(function() return gethui and gethui() end)
+	if ok and ui then return ui end
+	local ok2, core = pcall(function() return game:GetService("CoreGui") end)
+	if ok2 and core then return core end
+	return Players.LocalPlayer:WaitForChild("PlayerGui")
+end
+
+local function corner(obj, radius)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, radius)
+	c.Parent = obj
+	return c
+end
+
+local function stroke(obj, color, thickness)
+	local s = Instance.new("UIStroke")
+	s.Color = color
+	s.Thickness = thickness
+	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	s.Parent = obj
+	return s
+end
+
+local function openMenu()
+	local COL = {
+		bg          = Color3.fromRGB(22, 27, 46),
+		field       = Color3.fromRGB(14, 18, 32),
+		line        = Color3.fromRGB(42, 50, 82),
+		text        = Color3.fromRGB(233, 237, 249),
+		muted       = Color3.fromRGB(143, 153, 187),
+		accent      = Color3.fromRGB(107, 124, 255),
+		accentHover = Color3.fromRGB(130, 144, 255),
+		dark        = Color3.fromRGB(29, 36, 64),
+		darkHover   = Color3.fromRGB(37, 45, 80),
+		good        = Color3.fromRGB(61, 220, 151),
+		bad         = Color3.fromRGB(255, 92, 122),
+		warn        = Color3.fromRGB(255, 196, 77),
+	}
+	local alive = true
+	local conns = {}
+
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "KeyGateMenu"
+	gui.ResetOnSpawn = false
+	gui.IgnoreGuiInset = true
+	gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	gui.DisplayOrder = 999
+	local parent = guiParent()
+	local old = parent:FindFirstChild("KeyGateMenu")
+	if old then old:Destroy() end
+	local okParent = pcall(function() gui.Parent = parent end)
+	if not okParent then gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui") end
+
+	local backdrop = Instance.new("Frame")
+	backdrop.Name = "Backdrop"
+	backdrop.Size = UDim2.new(1, 0, 1, 0)
+	backdrop.BackgroundColor3 = Color3.new(0, 0, 0)
+	backdrop.BackgroundTransparency = 1
+	backdrop.BorderSizePixel = 0
+	backdrop.Parent = gui
+	TweenService:Create(backdrop, TweenInfo.new(0.35), { BackgroundTransparency = 0.55 }):Play()
+
+	local menu = Instance.new("Frame")
+	menu.Name = "Menu"
+	menu.AnchorPoint = Vector2.new(0.5, 0.5)
+	menu.Position = UDim2.new(0.5, 0, 0.5, 0)
+	menu.Size = UDim2.new(0, 290, 0, 150)
+	menu.BackgroundColor3 = COL.bg
+	menu.BorderSizePixel = 0
+	menu.ClipsDescendants = true
+	menu.Parent = gui
+	corner(menu, 16)
+	local menuStroke = stroke(menu, COL.line, 1.5)
+	TweenService:Create(menu, TweenInfo.new(0.45, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Size = UDim2.new(0, 340, 0, 214) }):Play()
+
+	-- drag handle (top of the menu)
+	local handle = Instance.new("Frame")
+	handle.Name = "Handle"
+	handle.BackgroundTransparency = 1
+	handle.Size = UDim2.new(1, 0, 0, 62)
+	handle.Active = true
+	handle.Parent = menu
+
+	local title = Instance.new("TextLabel")
+	title.Name = "Title"
+	title.BackgroundTransparency = 1
+	title.Position = UDim2.new(0, 0, 0, 14)
+	title.Size = UDim2.new(1, 0, 0, 40)
+	title.Font = Enum.Font.GothamBold
+	title.TextSize = 28
+	title.TextColor3 = COL.text
+	title.RichText = true
+	title.Text = ""
+	title.Parent = menu
+
+	local box = Instance.new("TextBox")
+	box.Name = "KeyBox"
+	box.Position = UDim2.new(0, 20, 0, 70)
+	box.Size = UDim2.new(1, -40, 0, 44)
+	box.BackgroundColor3 = COL.field
+	box.BorderSizePixel = 0
+	box.Font = Enum.Font.Gotham
+	box.TextSize = 15
+	box.TextColor3 = COL.text
+	box.PlaceholderText = "Enter your key..."
+	box.PlaceholderColor3 = Color3.fromRGB(92, 102, 136)
+	box.Text = ""
+	box.ClearTextOnFocus = false
+	box.Parent = menu
+	corner(box, 10)
+	local boxStroke = stroke(box, COL.line, 1)
+
+	local function makeButton(text, pos, size, base, hover)
+		local b = Instance.new("TextButton")
+		b.Position = pos
+		b.Size = size
+		b.BackgroundColor3 = base
+		b.BorderSizePixel = 0
+		b.AutoButtonColor = false
+		b.Font = Enum.Font.GothamBold
+		b.TextSize = 15
+		b.TextColor3 = COL.text
+		b.Text = text
+		b.Parent = menu
+		corner(b, 10)
+		b.MouseEnter:Connect(function()
+			TweenService:Create(b, TweenInfo.new(0.12), { BackgroundColor3 = hover }):Play()
+		end)
+		b.MouseLeave:Connect(function()
+			TweenService:Create(b, TweenInfo.new(0.12), { BackgroundColor3 = base }):Play()
+		end)
+		return b
+	end
+	local confirmBtn = makeButton("Confirm", UDim2.new(0, 20, 0, 126), UDim2.new(0.5, -25, 0, 42), COL.accent, COL.accentHover)
+	local getBtn = makeButton("Get key", UDim2.new(0.5, 5, 0, 126), UDim2.new(0.5, -25, 0, 42), COL.dark, COL.darkHover)
+
+	local status = Instance.new("TextLabel")
+	status.Name = "Status"
+	status.BackgroundTransparency = 1
+	status.Position = UDim2.new(0, 20, 0, 176)
+	status.Size = UDim2.new(1, -40, 0, 22)
+	status.Font = Enum.Font.Gotham
+	status.TextSize = 13
+	status.TextColor3 = COL.muted
+	status.Text = ""
+	status.Parent = menu
+
+	local function setStatus(text, color)
+		status.Text = text
+		status.TextColor3 = color or COL.muted
+	end
+
+	-- dragging
+	local dragging, dragStart, startPos = false, nil, nil
+	table.insert(conns, handle.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = menu.Position
+		end
+	end))
+	table.insert(conns, UserInputService.InputChanged:Connect(function(input)
+		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+			local d = input.Position - dragStart
+			menu.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
+		end
+	end))
+	table.insert(conns, UserInputService.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = false
+		end
+	end))
+
+	-- "Key menu" types in, blinks, then deletes. One full cycle every 4 seconds.
+	local HIDDEN = '<font transparency="1">|</font>'
+	local function render(text, cursor)
+		return text .. (cursor and "|" or HIDDEN)
+	end
+	task.spawn(function()
+		local full = "Key menu"
+		while alive do
+			local t0 = tick()
+			for i = 1, #full do
+				if not alive then return end
+				title.Text = render(string.sub(full, 1, i), true)
+				task.wait(0.08)
+			end
+			local on = true
+			while alive and tick() < t0 + 3.2 do
+				title.Text = render(full, on)
+				on = not on
+				task.wait(math.min(0.4, math.max(0.05, t0 + 3.2 - tick())))
+			end
+			for i = #full - 1, 0, -1 do
+				if not alive then return end
+				title.Text = render(string.sub(full, 1, i), true)
+				task.wait(0.05)
+			end
+			local left = t0 + 4 - tick()
+			if left > 0 then task.wait(left) end
+		end
+	end)
+
+	-- wrong key: the screen flashes a little red and the menu shakes left and right
+	local shaking = false
+	local function wrongKey()
+		if shaking then return end
+		shaking = true
+		TweenService:Create(backdrop, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(120, 10, 25), BackgroundTransparency = 0.35 }):Play()
+		TweenService:Create(menuStroke, TweenInfo.new(0.1), { Color = COL.bad }):Play()
+		TweenService:Create(boxStroke, TweenInfo.new(0.1), { Color = COL.bad }):Play()
+		local base = menu.Position
+		for _, dx in ipairs({ -14, 14, -11, 11, -7, 7, -3, 3, 0 }) do
+			local tw = TweenService:Create(menu, TweenInfo.new(0.04, Enum.EasingStyle.Sine), {
+				Position = UDim2.new(base.X.Scale, base.X.Offset + dx, base.Y.Scale, base.Y.Offset),
+			})
+			tw:Play()
+			tw.Completed:Wait()
+		end
+		menu.Position = base
+		TweenService:Create(backdrop, TweenInfo.new(0.6), { BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.55 }):Play()
+		TweenService:Create(menuStroke, TweenInfo.new(0.6), { Color = COL.line }):Play()
+		TweenService:Create(boxStroke, TweenInfo.new(0.6), { Color = COL.line }):Play()
+		shaking = false
+	end
+
+	local function accepted(clean)
+		alive = false
+		writeSaved(clean)
+		setStatus("Key accepted", COL.good)
+		TweenService:Create(menuStroke, TweenInfo.new(0.2), { Color = COL.good }):Play()
+		task.wait(0.6)
+		local tw = TweenService:Create(menu, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.In), { Size = UDim2.new(0, 0, 0, 0) })
+		TweenService:Create(backdrop, TweenInfo.new(0.35), { BackgroundTransparency = 1 }):Play()
+		tw:Play()
+		tw.Completed:Wait()
+		for _, c in ipairs(conns) do
+			pcall(function() c:Disconnect() end)
+		end
+		gui:Destroy()
+		runScript()
+	end
+
+	local busy = false
+	local function submit()
+		if busy or not alive then return end
+		local clean = string.upper((string.gsub(box.Text, "%s", "")))
+		if clean == "" then
+			setStatus("Enter your key first", COL.warn)
+			return
+		end
+		busy = true
+		confirmBtn.Text = "Checking..."
+		task.spawn(function()
+			local ok, msg, netErr = verifyKey(clean)
+			busy = false
+			confirmBtn.Text = "Confirm"
+			if ok then
+				accepted(clean)
+			elseif netErr then
+				setStatus(msg, COL.warn)
+			else
+				setStatus(msg, COL.bad)
+				wrongKey()
+			end
+		end)
+	end
+
+	confirmBtn.Activated:Connect(submit)
+	box.FocusLost:Connect(function(enterPressed)
+		if enterPressed then submit() end
+	end)
+	box.Focused:Connect(function()
+		TweenService:Create(boxStroke, TweenInfo.new(0.15), { Color = COL.accent }):Play()
+	end)
+	box.FocusLost:Connect(function()
+		TweenService:Create(boxStroke, TweenInfo.new(0.15), { Color = COL.line }):Play()
+	end)
+
+	-- Get key: copies the share link automatically
+	getBtn.Activated:Connect(function()
+		local copyFn = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+		local ok = false
+		if copyFn then ok = pcall(copyFn, SHARE_LINK) end
+		if ok then
+			getBtn.Text = "Copied!"
+			setStatus("Link copied. Open it in your browser.", COL.good)
+			task.delay(2, function()
+				if alive then getBtn.Text = "Get key" end
+			end)
+		else
+			box.Text = SHARE_LINK
+			setStatus("Copy the link from the box.", COL.warn)
+		end
+	end)
+end
+
+task.spawn(function()
+	local saved = readSaved()
+	if saved then
+		local ok = verifyKey(saved)
+		if ok then
+			runScript()
+			return
+		end
+	end
+	openMenu()
+end)
+`;
+  }
+
+  $("f").addEventListener("submit", ev => {
+    ev.preventDefault(); showErr("");
+    const ad = parseUrl($("ad").value);
+    if (!ad) return showErr("Enter a valid sponsor link that starts with https://");
+    if (!providerOf(ad)) return showErr("The sponsor link must be a Lootlabs, Linkvertise or Platoboost link.");
+    if (ad.href.length > 2000) return showErr("The link must be under 2000 characters.");
+    const btn = $("go"); btn.disabled = true;
+    try {
+      const secret = "KGAPI-" + makeToken(24);
+      const title = $("title").value.trim().slice(0, 60);
+      const payload = b64u(JSON.stringify({ a: ad.href, t: title, k: secret }));
+      const share = baseUrl() + "#g=" + payload;
+      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, $("myScript").value);
+      let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
+      let note = "";
+      if (!/^https?:\/\//.test(share)) note = "This link isn't a full web address yet. Publish your website first (Update below) or fill in SITE_URL in the settings.";
+      else if (PREVIEW.test(shareHost)) note = "This is a temporary preview address. Publish your website first so the link is permanent.";
+      $("shareNote").textContent = note; $("shareNote").hidden = !note;
+      const t = encodeURIComponent((title || "Get your key") + ":"), q = encodeURIComponent(share);
+      $("shareWa").href = `https://wa.me/?text=${t}%20${q}`;
+      $("shareTg").href = `https://t.me/share/url?url=${q}&text=${t}`;
+      if (navigator.share) { $("shareNative").hidden = false; $("shareNative").onclick = () => navigator.share({ title: title || "Get your key", url: share }).catch(() => {}); }
+      $("formCard").hidden = true; $("resCard").hidden = false;
+      $("copyShare").onclick = e => copy(share, e.currentTarget);
+      $("copyApi").onclick = e => copy(secret, e.currentTarget);
+      $("copyLua").onclick = e => copy($("lua").value, e.currentTarget);
+    } catch { showErr("Could not create the link. Please try again."); }
+    finally { btn.disabled = false; }
+  });
+  $("again").onclick = () => { $("f").reset(); $("ad").dispatchEvent(new Event("input")); showErr(""); showForm(); };
+}
+
+/* =====================================================================
+   VISIT: steps that end with a key
+   ===================================================================== */
+function visitor() {
+  $("mVisit").hidden = false;
+  const VIEWS = ["vLoad", "vFlow", "vDone", "vErr"];
+  const show = id => VIEWS.forEach(v => $(v).hidden = v !== id);
+  const fail = msg => { $("vErrTxt").textContent = msg; show("vErr"); };
+
+  const KEY = "keygate:flow", KEYSTORE = "keygate:key";
+  const raw = location.hash.slice(3);
+  let rec = null, lid = "", flow = null, keyValue = null;
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } };
+  const save = () => { try { flow ? localStorage.setItem(KEY, JSON.stringify(flow)) : localStorage.removeItem(KEY); } catch {} };
+  const clearFlow = () => { flow = null; save(); };
+  function storageOk() {
+    try { const k = "keygate:t"; localStorage.setItem(k, "1"); const ok = localStorage.getItem(k) === "1"; localStorage.removeItem(k); return ok; }
+    catch { return false; }
+  }
+
+  /* Bypass handling */
+  let tripped = false;
+  function bypass(reason) {
+    if (tripped) return; tripped = true;
+    $("why").textContent = CONFIG.SHOW_REASON && reason ? "Detection code: " + reason : "";
+    clearFlow(); keyValue = null;
+    document.querySelectorAll("main").forEach(m => m.hidden = true);
+    $("vBypass").hidden = false;
+    let n = 5; $("cd").textContent = n;
+    const t = setInterval(() => {
+      n--; $("cd").textContent = n;
+      if (n <= 0) { clearInterval(t); location.reload(); }
+    }, 1000);
+  }
+
+  /* Steps */
+  function renderSteps() {
+    const st = (id, state) => { $(id).className = "step is-" + state; };
+    st("s1", flow.math ? "done" : "active");
+    st("s2", !flow.math ? "locked" : flow.wait ? "done" : "active");
+    st("s3", !flow.wait ? "locked" : "active");
+    const waiting = flow.stage === "ad";
+    $("adDone").hidden = !waiting;
+    $("adGo").textContent = waiting ? "Open sponsor page again" : "Open sponsor page";
+    $("adGo").classList.toggle("ghost", waiting);
+    if (flow.math) $("s1").querySelector(".dot").textContent = "\u2713";
+    if (flow.wait) $("s2").querySelector(".dot").textContent = "\u2713";
+  }
+
+  let ans = 0;
+  function newQ() {
+    const a = 3 + Math.floor(Math.random() * 13), b = 3 + Math.floor(Math.random() * 13);
+    ans = a + b; $("mq").textContent = `${a} + ${b} = ?`; $("ma").value = "";
+  }
+  function checkMath() {
+    if (parseInt($("ma").value, 10) === ans) { flow.math = true; save(); $("mErr").hidden = true; renderSteps(); }
+    else { $("mErr").hidden = false; $("mq").classList.remove("shake"); void $("mq").offsetWidth; $("mq").classList.add("shake"); newQ(); }
+  }
+
+  let timerOn = false;
+  function startTimer() {
+    if (timerOn) return; timerOn = true; $("tmGo").disabled = true;
+    let ms = 0; const total = CONFIG.WAIT_SECONDS * 1000;
+    const iv = setInterval(() => {
+      const active = document.visibilityState === "visible" && document.hasFocus();
+      if (active) ms += 250;
+      $("bar").style.width = Math.min(100, ms / total * 100) + "%";
+      $("tmTxt").textContent = active ? `${Math.max(0, Math.ceil((total - ms) / 1000))}s remaining` : "Paused. Return to this tab to continue.";
+      if (ms >= total) { clearInterval(iv); timerOn = false; flow.wait = true; save(); renderSteps(); }
+    }, 250);
+  }
+
+  /* Sponsor step: we time the visit and measure how long the visitor really left this tab. */
+  let adOpenedHere = false, awayMs = 0, awayStart = null;
+  function trackAway() {
+    if (!adOpenedHere) return;
+    const away = document.visibilityState !== "visible" || !document.hasFocus();
+    if (away && awayStart === null) awayStart = Date.now();
+    if (!away && awayStart !== null) { awayMs += Date.now() - awayStart; awayStart = null; }
+  }
+  document.addEventListener("visibilitychange", trackAway);
+  window.addEventListener("blur", trackAway);
+  window.addEventListener("focus", trackAway);
+
+  function startAd() {
+    $("adErr").hidden = true;
+    let w = null;
+    try { w = window.open("about:blank", "_blank"); } catch {}
+    flow.stage = "ad"; flow.adStart = Date.now(); save();
+    adOpenedHere = true; awayMs = 0; awayStart = null;
+    if (w) { w.location.href = rec.a; renderSteps(); }
+    else { location.href = rec.a; }                                    // popup blocked: continue in this tab, use Back to return
+  }
+
+  function showKey(k) {
+    keyValue = k.key; $("keyBox").textContent = k.key;
+    $("keySub").textContent = k.exp ? "Valid until " + new Date(k.exp).toLocaleString() + ". Paste it into the key menu." : "Copy it and paste it into the key menu.";
+    lsSet(KEYSTORE, JSON.stringify(k)); show("vDone");
+  }
+  function savedKey() {
+    try { const k = JSON.parse(localStorage.getItem(KEYSTORE)); if (k && k.id === lid && (!k.exp || Date.now() < k.exp)) return k; } catch {}
+    return null;
+  }
+
+  function finishAd() {
+    $("adErr").hidden = true;
+    if (navigator.webdriver) return bypass("automation");
+    trackAway();
+    const f = load();
+    if (!f || f.id !== lid) return bypass("no-flow");
+    if (f.stage !== "ad" || !f.adStart) return bypass("sponsor-not-started");
+    if (!f.math || !f.wait) return bypass("tasks-incomplete");
+    const away = awayMs + (awayStart !== null ? Date.now() - awayStart : 0);
+    if (adOpenedHere && away < CONFIG.MIN_AWAY_SECONDS * 1000) return bypass("never-left");
+    const el = Date.now() - f.adStart;
+    if (el < CONFIG.MIN_AD_SECONDS * 1000) return bypass("too-fast");
+    if (el > CONFIG.MAX_AD_MINUTES * 60000) {                            // too old: not a bypass, just start the sponsor step again
+      flow.stage = "tasks"; flow.adStart = null; save(); renderSteps();
+      $("adErr").textContent = "That sponsor session expired. Open the sponsor page again.";
+      $("adErr").hidden = false; return;
+    }
+    const exp = CONFIG.KEY_HOURS > 0 ? Date.now() + CONFIG.KEY_HOURS * 3600000 : 0;
+    const k = { key: makeKey(rec.k, exp), exp, id: lid };
+    clearFlow();                                                         // one sponsor visit = one key
+    showKey(k);
+  }
+
+  $("mgo").onclick = checkMath;
+  $("ma").addEventListener("keydown", e => { if (e.key === "Enter") checkMath(); });
+  $("tmGo").onclick = startTimer;
+  $("adGo").onclick = startAd;
+  $("adDone").onclick = finishAd;
+  $("copyKey").onclick = () => keyValue && copy(keyValue, $("copyKey"));
+  $("retry").onclick = () => { clearFlow(); location.reload(); };
+
+  /* Boot */
+  show("vLoad");
+  try {
+    const d = JSON.parse(unb64u(raw));
+    const ad = parseUrl(d && d.a);
+    if (!ad || !providerOf(ad) || typeof d.k !== "string" || !/^[A-Za-z0-9-]{8,64}$/.test(d.k)) throw new Error("bad");
+    rec = { a: ad.href, t: typeof d.t === "string" ? d.t.slice(0, 60) : "", k: d.k };
+  } catch { return fail("This link isn't valid. Ask the creator for a new link."); }
+  let h = 5381; for (let i = 0; i < raw.length; i++) h = (Math.imul(h, 33) + raw.charCodeAt(i)) >>> 0;
+  lid = h.toString(36);
+  if (!storageOk()) return fail("Your browser is blocking storage. Open this page in a normal browser tab (not a preview or private in-app window) and try again.");
+  const have = savedKey(); if (have) return showKey(have);              // still valid: no need to repeat the steps
+  const old = load();
+  flow = (old && old.id === lid) ? old : { id: lid, stage: "tasks", math: false, wait: false };
+  save();
+  $("ttl").textContent = rec.t || "Get your key";
+  newQ(); renderSteps(); show("vFlow");
+}
+
+/* ---------- Router ---------- */
+window.addEventListener("hashchange", () => location.reload());
+if (/^#g=./.test(location.hash)) { document.title = "KeyGate | Get your key"; visitor(); }
+else { document.title = "KeyGate | Create a share link"; creator(); }
+})();
+</script></body></html>
