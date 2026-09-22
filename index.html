@@ -1,5 +1,62 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://1184018389-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://448126525-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+      <script>
+        (function() {
+          // Listen during capturing phase to intercept before <base target="_blank"> takes effect.
+          document.addEventListener('click', function(e) {
+            // Find the nearest ancestor anchor (handles nested icons, spans, svgs).
+            var el = e.target;
+            var anchor = null;
+            while (el && el !== document) {
+              if (el.tagName && el.tagName.toLowerCase() === 'a') {
+                anchor = el;
+                break;
+              }
+              el = el.parentElement;
+            }
+            if (!anchor) return;
+
+            // Only intercept relative in-page fragment links, not external links with hashes.
+            var href = anchor.getAttribute('href');
+            if (!href) return;
+            href = href.trim();
+            if (!href.startsWith('#')) return;
+
+            // Prevent default <base target="_blank"> navigation to a new blank tab.
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Handle empty anchor or top anchor.
+            if (href === '#' || href === '#top') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              return;
+            }
+
+            // Resolve target element by id, falling back to legacy name attribute.
+            var targetId = href.slice(1);
+            try {
+              targetId = decodeURIComponent(targetId);
+            } catch (err) {}
+
+            var targetEl = document.getElementById(targetId);
+            if (!targetEl) {
+              try {
+                var escaped = window.CSS && CSS.escape ? CSS.escape(targetId) : targetId.replace(/["\\]/g, '\\$&');
+                targetEl = document.querySelector('[name="' + escaped + '"]');
+              } catch (err) {}
+            }
+
+            // Smoothly scroll to the target within the embed and update URL hash history.
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              if (window.history && window.history.pushState) {
+                window.history.pushState(null, '', href);
+              }
+            }
+          }, true); // useCapture: true is critical to preempt <base target="_blank">
+        })();
+      </script>
+    
 
 
 <meta charset="utf-8">
@@ -124,6 +181,36 @@ details.guide[open] > summary::after{content:"\2212"}
 .gate-checks li.on::after{border-color:#06281a}
 .gate-msg.is-ready{color:var(--ok); font-weight:600}
 
+/* Per-style themes: each gate gets its own look, not copied from any sponsor's branding */
+.gate[data-theme="blue-purple"]{background:linear-gradient(160deg, #241b4d, #150f30); border-color:#4c3fa8}
+.gate[data-theme="blue-purple"] .gate-msg{color:#cfc9ff}
+.gate[data-theme="yellow-white"]{background:linear-gradient(160deg, #fffdf3, #fff8dc); border:2px solid #f0c419}
+.gate[data-theme="yellow-white"] .gate-badge{color:#8a6d00}
+.gate[data-theme="yellow-white"] .gate-msg{color:#6b5900}
+.gate[data-theme="yellow-white"] .gate-stage{color:#8a7a2a}
+.gate[data-theme="yellow-white"] .gate-checks li{color:#8a7a2a}
+.gate[data-theme="yellow-white"] .gate-checks li.on{color:#4a3d00}
+.gate[data-theme="yellow-white"] .gate-ad{border-color:#e6c74a; background:rgba(240,196,25,.08); color:#8a6d00}
+.gate[data-theme="yellow-white"] .gate-ring .track{stroke:#f3e6b0}
+.gate[data-theme="dark"]{background:linear-gradient(160deg, #101014, #050506); border-color:#2a2a30}
+
+.mission-list{display:flex; gap:6px; justify-content:center; margin:0 0 14px}
+.mission-dot{width:8px; height:8px; border-radius:50%; background:var(--surface-2); border:1px solid var(--line); transition:background .2s, border-color .2s}
+.mission-dot.on{background:var(--gc); border-color:var(--gc)}
+.mission-dot.cur{box-shadow:0 0 0 3px color-mix(in srgb, var(--gc) 30%, transparent)}
+
+.captcha{margin:4px 0 6px}
+.captcha-code{
+  display:flex; justify-content:center; gap:2px; user-select:none; margin:0 0 14px;
+  font:700 26px "Sora",monospace; letter-spacing:.05em;
+}
+.captcha-code span{display:inline-block; color:var(--gc)}
+.captcha-row{display:flex; gap:8px}
+.captcha-row input{text-align:center; letter-spacing:.15em; text-transform:uppercase; font-weight:600}
+.captcha-row button{flex:none; padding:0 18px; border-radius:12px; border:0; background:var(--gc); color:#fff; font:600 14px "DM Sans",sans-serif; cursor:pointer}
+.captcha-refresh{background:none; border:0; color:var(--muted); font-size:12px; cursor:pointer; padding:8px 0 0; text-decoration:underline}
+.captcha-err{color:var(--bad); font-size:13px; min-height:16px; margin-top:8px}
+
 .linkbtn{background:none; border:0; color:var(--accent-h); font:600 14px "DM Sans",sans-serif; cursor:pointer; padding:4px}
 .linkbtn:hover{text-decoration:underline}
 .foot{margin:0; text-align:center; color:var(--muted); font-size:13px}
@@ -185,7 +272,7 @@ details.guide[open] > summary::after{content:"\2212"}
       <summary>How to set it up</summary>
       <div class="gbody">
         <div class="gstep" id="gs1"><div class="gnum">1</div><div><h3>Publish your website (one time)</h3><p>Open the GitHub token page, keep <b>public_repo</b> ticked, generate the token, paste it below and press <b>Publish website</b>. Wait until it says your website is live (1 to 2 minutes).</p></div></div>
-        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your share link</h3><p>Pick a gate style, add a title and your Lua script, then press <b>Create share link</b>. No sponsor account or dashboard needed — the gate is KeyGate's own page.</p></div></div>
+        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your share link</h3><p>Pick a gate style (each has its own missions: ads, a video, a human check, or verification steps), add a title and your Lua script, then press <b>Create share link</b>. No sponsor account or dashboard needed — the gate is KeyGate's own page.</p></div></div>
         <div class="gstep" id="gs3"><div class="gnum">3</div><div><h3>Use the Lua script</h3><p>Copy the ready-to-use script and run it in your executor. It shows the key menu and runs your script after a valid key. Your executor needs <b>loadstring</b>.</p></div></div>
         <div class="gstep" id="gs4"><div class="gnum">4</div><div><h3>Test it before you share</h3><p>Press <b>Make a test key</b>, paste it into the key menu and check that your script runs. Then open your share link in another tab and go through the steps once.</p></div></div>
         <div class="gstep" id="gs5"><div class="gnum">5</div><div><h3>Share the link</h3><p>Post the share link anywhere. Visitors finish the steps, get a KFREE key and paste it into your key menu.</p></div></div>
@@ -196,6 +283,8 @@ details.guide[open] > summary::after{content:"\2212"}
           <dd>Wait 2 minutes after publishing. Check that the link starts with your github.io address and that the repository is public.</dd>
           <dt>"PLS DO NOT BYPASSING THE STEP" appears but nobody bypassed</dt>
           <dd>Stay on the page and let the countdown in step 3 finish on its own, then press the button once it lights up. Use a normal browser tab, not a preview window. The small detection code under the message tells you the reason.</dd>
+          <dt>A visitor says the captcha code is unreadable</dt>
+          <dd>They can press "Get a new code" under the code to generate a different one.</dd>
           <dt>The key menu says Invalid key</dt>
           <dd>Paste the whole key, including KFREE-. Keys last 24 hours. The script and the share link must come from the same Create step, because each one has its own secret.</dd>
           <dt>Nothing happens after the key is accepted</dt>
@@ -241,21 +330,25 @@ details.guide[open] > summary::after{content:"\2212"}
       <form id="f" novalidate="">
         <label style="margin-top:0">Gate style</label>
         <div class="styles" id="styles" role="radiogroup" aria-label="Gate style">
-          <label class="style-card" data-style="classic" style="--gc:#a855f7">
+          <label class="style-card" data-style="classic" style="--gc:#7c6cf0">
             <input type="radio" name="gstyle" value="classic" checked="">
-            <span class="dot" style="background:#a855f7"></span>
-            <b>Classic Gate</b><span>One step, ~250s</span>
+            <span class="dot" style="background:#7c6cf0"></span>
+            <b>Classic Gate</b><span>4 missions: 2 ads, 1 video, human check</span>
           </label>
-          <label class="style-card" data-style="twostep" style="--gc:#3b82f6">
+          <label class="style-card" data-style="twostep" style="--gc:#d1a80a">
             <input type="radio" name="gstyle" value="twostep">
-            <span class="dot" style="background:#3b82f6"></span>
-            <b>Two-Step Gate</b><span>Two steps, ~40s</span>
+            <span class="dot" style="background:#d1a80a"></span>
+            <b>Multi-Ad Gate</b><span>3 ads, 10s each (~30s)</span>
           </label>
-          <label class="style-card" data-style="quick" style="--gc:#14b8a6">
+          <label class="style-card" data-style="quick" style="--gc:#6b7cff">
             <input type="radio" name="gstyle" value="quick">
-            <span class="dot" style="background:#14b8a6"></span>
-            <b>Quick Gate</b><span>One step, ~59s</span>
+            <span class="dot" style="background:#6b7cff"></span>
+            <b>Quick Gate</b><span>Human check + verification steps</span>
           </label>
+        </div>
+        <div id="quickDurWrap" style="margin-top:12px">
+          <label for="quickDur" style="margin-top:0">Verification time <span style="color:var(--muted);font-weight:400">(seconds, 15-254)</span></label>
+          <input id="quickDur" type="number" inputmode="numeric" min="15" max="254" value="59">
         </div>
         <p class="small" style="margin:8px 0 0">This is KeyGate's own gate page — not a copy of any sponsor network's design. No external link needed, so nothing can fail to redirect back.</p>
         <label for="title">Title <span style="color:var(--muted);font-weight:400">(optional)</span></label>
@@ -337,15 +430,30 @@ details.guide[open] > summary::after{content:"\2212"}
             <div class="panel">
               <div class="gate" id="gate" style="--gc:#a855f7">
                 <div class="gate-badge"><i></i><span id="gateBadge">Classic Gate</span></div>
-                <div class="gate-ad" aria-hidden="true">
+                <div class="mission-list" id="missionList" aria-hidden="true"></div>
+                <div class="gate-ad" id="gateAd" aria-hidden="true">
                   <span>Advertisement</span>
                   <div class="gate-ad-dots"><i></i><i></i><i></i></div>
                 </div>
                 <div class="gate-stage" id="gateStage" hidden=""></div>
-                <div class="gate-ring">
-                  <svg viewBox="0 0 88 88"><circle class="track" cx="44" cy="44" r="38"></circle><circle class="prog" id="gateProg" cx="44" cy="44" r="38"></circle></svg>
-                  <div class="pct" id="gatePct">0%</div>
+
+                <div id="gateTimed">
+                  <div class="gate-ring">
+                    <svg viewBox="0 0 88 88"><circle class="track" cx="44" cy="44" r="38"></circle><circle class="prog" id="gateProg" cx="44" cy="44" r="38"></circle></svg>
+                    <div class="pct" id="gatePct">0%</div>
+                  </div>
                 </div>
+
+                <div id="gateCaptcha" class="captcha" hidden="">
+                  <div class="captcha-code" id="captchaCode"></div>
+                  <div class="captcha-row">
+                    <input id="captchaIn" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type the code">
+                    <button id="captchaGo" type="button">Verify</button>
+                  </div>
+                  <div class="captcha-err" id="captchaErr"></div>
+                  <button class="captcha-refresh" id="captchaRefresh" type="button">Can't read it? Get a new code</button>
+                </div>
+
                 <p class="gate-msg" id="gateMsg">Preparing your content...</p>
                 <ul class="gate-checks" id="gateChecks">
                   <li id="chkHuman">Verifying you're human</li>
@@ -401,10 +509,40 @@ const CONFIG = {
   KEY_HOURS: 24,           // how long a key stays valid (0 = never expires)
   SHOW_REASON: true        // show a small detection code on the bypass screen (set false when live)
 };
+/* Mission types: "ad"/"video"/"process" are timed progress bars (differ only in label/theme);
+   "captcha" pauses the sequence until the visitor types the code correctly. */
+const QUICK_DUR = { min: 15, max: 254, def: 59 };
 const GATE_STYLES = {
-  classic: { label: "Classic Gate", color: "#a855f7", seconds: 250, stages: [{ msg: "Preparing your content...", verb: "Get Content" }] },
-  twostep: { label: "Two-Step Gate", color: "#3b82f6", seconds: 40, stages: [{ msg: "Verifying access, step 1 of 2...", verb: "Continue to step 2" }, { msg: "Unlocking your content, step 2 of 2...", verb: "Unlock Content" }] },
-  quick:   { label: "Quick Gate", color: "#14b8a6", seconds: 59, stages: [{ msg: "Checking your progress...", verb: "Claim Reward" }] },
+  classic: {
+    label: "Classic Gate", color: "#7c6cf0", theme: "blue-purple", verb: "Get Content",
+    missions: () => [
+      { type: "ad", seconds: 20, msg: "Watching advertisement 1 of 2..." },
+      { type: "video", seconds: 32, msg: "Watching video..." },
+      { type: "ad", seconds: 20, msg: "Watching advertisement 2 of 2..." },
+      { type: "captcha", msg: "Human verification" },
+    ],
+  },
+  twostep: {
+    label: "Multi-Ad Gate", color: "#d1a80a", theme: "yellow-white", verb: "Continue",
+    missions: () => [
+      { type: "ad", seconds: 10, msg: "Watching advertisement 1 of 3..." },
+      { type: "ad", seconds: 10, msg: "Watching advertisement 2 of 3..." },
+      { type: "ad", seconds: 10, msg: "Watching advertisement 3 of 3..." },
+    ],
+  },
+  quick: {
+    label: "Quick Gate", color: "#6b7cff", theme: "dark", verb: "Claim Reward",
+    missions: (totalSeconds) => {
+      const s = Math.max(QUICK_DUR.min, Math.min(QUICK_DUR.max, Number(totalSeconds) || QUICK_DUR.def));
+      const each = s / 3;
+      return [
+        { type: "captcha", msg: "Human verification" },
+        { type: "process", seconds: each, msg: "Verifying your key..." },
+        { type: "process", seconds: each, msg: "Uploading your key..." },
+        { type: "process", seconds: each, msg: "Verifying your key..." },
+      ];
+    },
+  },
 };
 const gateStyle = s => GATE_STYLES[s] ? s : "classic";
 
@@ -479,6 +617,7 @@ function creator() {
   function paintStyles() {
     const v = document.querySelector('input[name="gstyle"]:checked').value;
     document.querySelectorAll(".style-card").forEach(c => c.classList.toggle("on", c.dataset.style === v));
+    $("quickDurWrap").hidden = v !== "quick";
   }
   paintStyles();
 
@@ -610,7 +749,6 @@ local SCRIPT = ${longBracket(body)}
 
 local Players          = game:GetService("Players")
 local TweenService     = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
 
 local KEY_FILE = "keygate_" .. string.sub(API_KEY, 7, 14) .. ".txt"
 
@@ -784,14 +922,6 @@ local function openMenu()
 	local menuStroke = stroke(menu, COL.line, 1.5)
 	TweenService:Create(menu, TweenInfo.new(0.45, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Size = UDim2.new(0, 340, 0, 214) }):Play()
 
-	-- drag handle (top of the menu)
-	local handle = Instance.new("Frame")
-	handle.Name = "Handle"
-	handle.BackgroundTransparency = 1
-	handle.Size = UDim2.new(1, 0, 0, 62)
-	handle.Active = true
-	handle.Parent = menu
-
 	local title = Instance.new("TextLabel")
 	title.Name = "Title"
 	title.BackgroundTransparency = 1
@@ -860,27 +990,6 @@ local function openMenu()
 		status.Text = text
 		status.TextColor3 = color or COL.muted
 	end
-
-	-- dragging
-	local dragging, dragStart, startPos = false, nil, nil
-	table.insert(conns, handle.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			dragStart = input.Position
-			startPos = menu.Position
-		end
-	end))
-	table.insert(conns, UserInputService.InputChanged:Connect(function(input)
-		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-			local d = input.Position - dragStart
-			menu.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
-		end
-	end))
-	table.insert(conns, UserInputService.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = false
-		end
-	end))
 
 	-- "Key menu" types in, blinks, then deletes. One full cycle every 4 seconds.
 	local HIDDEN = '<font transparency="1">|</font>'
@@ -1023,11 +1132,16 @@ end)
   $("f").addEventListener("submit", ev => {
     ev.preventDefault(); showErr("");
     const style = gateStyle(document.querySelector('input[name="gstyle"]:checked').value);
+    let quickDur = QUICK_DUR.def;
+    if (style === "quick") {
+      quickDur = Math.round(Number($("quickDur").value));
+      if (!Number.isFinite(quickDur) || quickDur < QUICK_DUR.min || quickDur > QUICK_DUR.max) return showErr(`Verification time must be between ${QUICK_DUR.min} and ${QUICK_DUR.max} seconds.`);
+    }
     const btn = $("go"); btn.disabled = true;
     try {
       const secret = "KGAPI-" + makeToken(24);
       const title = cleanText($("title").value).slice(0, 60);
-      const payload = b64u(JSON.stringify({ t: title, k: secret, y: style }));
+      const payload = b64u(JSON.stringify({ t: title, k: secret, y: style, s: style === "quick" ? quickDur : undefined }));
       const share = baseUrl() + "#g=" + payload;
       $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
       let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
@@ -1134,59 +1248,108 @@ function visitor() {
      this one page — no external site, no new tab, no redirect to get right. The circle only
      advances while the tab is actually visible and focused, exactly like the step-2 timer. */
   let gateReady = false, gateRunning = false, gateTimerDone = false, gateVerb = "Continue";
+  let missions = [], missionIdx = 0, captchaCode = "";
   function setChecks(n) {                                                // 0..3 checklist items lit, in sequence
     [["chkHuman", 1], ["chkTimer", 2], ["chkUnlock", 3]].forEach(([id, at]) => $(id).classList.toggle("on", n >= at));
   }
   function checkReady() {                                                // the button only ever unlocks once BOTH are true:
-    if (!gateTimerDone || !flow.math || !flow.wait || gateReady) return; //   the gate's own timer, and steps 1-2
+    if (!gateTimerDone || !flow.math || !flow.wait || gateReady) return; //   every mission, and steps 1-2
     gateReady = true;
     setChecks(3);
     $("gate").querySelector(".gate-ring").classList.add("is-ready");
     $("gateMsg").textContent = "Ready!"; $("gateMsg").classList.add("is-ready");
     $("gateGo").disabled = false; $("gateGo").textContent = gateVerb;
   }
+  function paintMissionDots() {
+    const wrap = $("missionList"); wrap.textContent = "";
+    missions.forEach((m, i) => {
+      const d = document.createElement("span");
+      d.className = "mission-dot" + (i < missionIdx ? " on" : "") + (i === missionIdx ? " cur" : "");
+      wrap.appendChild(d);
+    });
+  }
   function setupGate() {
     const st = GATE_STYLES[gateStyle(rec.y)];
     document.getElementById("gate").style.setProperty("--gc", st.color);
+    document.getElementById("gate").dataset.theme = st.theme;
     $("gateBadge").textContent = st.label;
     $("gateTitle").textContent = "Unlock your content";
-    const ring = $("gateProg"); const r = 38, c = 2 * Math.PI * r;
-    ring.style.strokeDasharray = c; ring.style.strokeDashoffset = c;
-    $("gatePct").textContent = "0%";
-    $("gateMsg").textContent = st.stages[0].msg; $("gateMsg").classList.remove("is-ready");
-    $("gateStage").hidden = st.stages.length < 2;
-    if (st.stages.length > 1) $("gateStage").textContent = "Step 1 of " + st.stages.length;
+    missions = st.missions(rec.s); missionIdx = 0; gateVerb = st.verb;
+    $("gateStage").hidden = missions.length < 2;
+    paintMissionDots();
     setChecks(flow.math ? (flow.wait ? 2 : 1) : 0);                      // step 1/2 may already be done on a resumed visit
     $("gate").querySelector(".gate-ring").classList.remove("is-ready");
     $("gateGo").disabled = true; $("gateGo").textContent = "Please wait...";
   }
-  function runGate() {
-    if (gateRunning || gateTimerDone) return; gateRunning = true;
-    const st = GATE_STYLES[gateStyle(rec.y)];
-    const perStage = st.seconds * 1000 / st.stages.length;
-    const r = 38, c = 2 * Math.PI * r;
-    let stageIdx = 0, ms = 0;
+  function ringSetup() {
+    const ring = $("gateProg"); const r = 38, c = 2 * Math.PI * r;
+    ring.style.strokeDasharray = c; ring.style.strokeDashoffset = c;
+    $("gatePct").textContent = "0%";
+    return c;
+  }
+  function newCaptcha() {                                                // generates a fresh code; does NOT touch the error message
+    const A = "ABCDEFGHJKLMNPQRTUVWXY3479";                              // no look-alikes (0/O, 1/I, 2/Z, S/5, etc.)
+    captchaCode = Array.from({ length: 5 }, () => A[Math.floor(Math.random() * A.length)]).join("");
+    const box = $("captchaCode"); box.textContent = "";
+    box.setAttribute("aria-label", "Verification code: " + captchaCode.split("").join(" "));  // spans are decorative, so screen readers get this instead
+    captchaCode.split("").forEach((ch, i) => {
+      const s = document.createElement("span");
+      s.textContent = ch;
+      s.style.transform = `rotate(${(i % 2 ? -1 : 1) * (8 + (i * 5) % 10)}deg) translateY(${(i % 3) * 3}px)`;
+      box.appendChild(s);
+    });
+    $("captchaIn").value = "";
+  }
+  function checkCaptcha() {
+    const val = cleanText($("captchaIn").value).toUpperCase().replace(/\s/g, "");
+    if (val === captchaCode) { $("captchaErr").textContent = ""; advanceMission(); }
+    else {
+      const box = $("captchaCode"); box.classList.remove("shake"); void box.offsetWidth; box.classList.add("shake");
+      newCaptcha();
+      $("captchaErr").textContent = "That code didn't match the new one shown above. Try again.";
+    }
+  }
+  function showMission() {
+    const m = missions[missionIdx];
+    $("gateStage").textContent = "Mission " + (missionIdx + 1) + " of " + missions.length;
+    $("gateMsg").textContent = m.msg; $("gateMsg").classList.remove("is-ready");
+    paintMissionDots();
+    if (m.type === "captcha") {
+      $("gateAd").hidden = true; $("gateTimed").hidden = true; $("gateCaptcha").hidden = false;
+      newCaptcha(); $("captchaErr").textContent = "";
+    } else {
+      $("gateAd").hidden = (m.type !== "ad" && m.type !== "video"); $("gateTimed").hidden = false; $("gateCaptcha").hidden = true;
+      ringSetup(); runTimedMission(m);
+    }
+  }
+  function advanceMission() {
+    missionIdx++;
+    if (missionIdx < missions.length) { showMission(); return; }
+    gateRunning = false; gateTimerDone = true;
+    $("gateAd").hidden = true; $("gateTimed").hidden = true; $("gateCaptcha").hidden = true;
+    paintMissionDots();
+    if (!flow.math || !flow.wait) $("gateMsg").textContent = "Almost there, finish the steps above...";
+    checkReady();
+  }
+  function runTimedMission(m) {
+    if (gateRunning) return; gateRunning = true;
+    const c = 2 * Math.PI * 38;
+    let ms = 0;
     const iv = setInterval(() => {
       const active = document.visibilityState === "visible" && document.hasFocus();
       if (!active) return;                                              // pauses exactly like the step-2 timer
       ms += 200;
-      const pct = Math.min(100, ms / perStage * 100);
+      const pct = Math.min(100, ms / (m.seconds * 1000) * 100);
       $("gateProg").style.strokeDashoffset = c - (c * pct / 100);
       $("gatePct").textContent = Math.round(pct) + "%";
-      if (ms >= perStage) {
-        stageIdx++; ms = 0;
-        if (stageIdx < st.stages.length) {
-          $("gateMsg").textContent = st.stages[stageIdx].msg;
-          $("gateStage").textContent = "Step " + (stageIdx + 1) + " of " + st.stages.length;
-          $("gateProg").style.strokeDashoffset = c; $("gatePct").textContent = "0%";
-        } else {
-          clearInterval(iv); gateRunning = false; gateTimerDone = true; gateVerb = st.stages[st.stages.length - 1].verb;
-          if (!flow.math || !flow.wait) $("gateMsg").textContent = "Almost there, finish the steps above...";
-          checkReady();
-        }
-      }
+      if (ms >= m.seconds * 1000) { clearInterval(iv); gateRunning = false; advanceMission(); }
     }, 200);
   }
+  function runGate() { if (missions.length && missionIdx === 0 && !gateTimerDone && !gateRunning) showMission(); }
+
+  $("captchaGo").onclick = checkCaptcha;
+  $("captchaIn").addEventListener("keydown", e => { if (e.key === "Enter") checkCaptcha(); });
+  $("captchaRefresh").onclick = () => { newCaptcha(); $("captchaErr").textContent = ""; };
 
   function finishGate() {
     $("adErr").hidden = true;
@@ -1211,7 +1374,7 @@ function visitor() {
   try {
     const d = JSON.parse(unb64u(raw));
     if (typeof d.k !== "string" || !/^[A-Za-z0-9-]{8,64}$/.test(d.k)) throw new Error("bad");
-    rec = { y: gateStyle(d.y), t: typeof d.t === "string" ? d.t.slice(0, 60) : "", k: d.k };
+    rec = { y: gateStyle(d.y), t: typeof d.t === "string" ? d.t.slice(0, 60) : "", k: d.k, s: typeof d.s === "number" ? d.s : undefined };
   } catch { return fail("This link isn't valid. Ask the creator for a new link."); }
   let h = 5381; for (let i = 0; i < raw.length; i++) h = (Math.imul(h, 33) + raw.charCodeAt(i)) >>> 0;
   lid = h.toString(36);
