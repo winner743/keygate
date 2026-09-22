@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://1009447618-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://1184018389-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
 
 
 <meta charset="utf-8">
@@ -97,6 +97,32 @@ details.guide[open] > summary::after{content:"\2212"}
 .gate-msg{text-align:center; color:var(--muted); font-size:13px; min-height:18px; margin-bottom:6px}
 .gate .btn{background:var(--gc)}
 .gate .btn:hover{filter:brightness(1.08)}
+.gate-ad{
+  border:1px dashed var(--line); border-radius:12px; padding:22px 12px; margin-bottom:16px;
+  display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--muted);
+  font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.02);
+}
+.gate-ad-dots{display:flex; gap:5px}
+.gate-ad-dots i{width:6px; height:6px; border-radius:50%; background:var(--gc); opacity:.35; animation:gad 1.2s ease-in-out infinite}
+.gate-ad-dots i:nth-child(2){animation-delay:.15s} .gate-ad-dots i:nth-child(3){animation-delay:.3s}
+@keyframes gad{0%,80%,100%{opacity:.25; transform:scale(.8)}40%{opacity:1; transform:scale(1)}}
+.gate-ring.is-ready .prog{filter:drop-shadow(0 0 6px var(--gc))}
+.gate-checks{list-style:none; margin:14px 0 4px; padding:0; display:grid; gap:8px}
+.gate-checks li{
+  position:relative; padding-left:26px; font-size:13px; color:var(--muted); transition:color .25s;
+}
+.gate-checks li::before{
+  content:""; position:absolute; left:0; top:1px; width:17px; height:17px; border-radius:50%;
+  border:1.5px solid var(--line); transition:border-color .25s, background .25s;
+}
+.gate-checks li::after{
+  content:""; position:absolute; left:5px; top:6px; width:8px; height:4px; border-left:2px solid transparent; border-bottom:2px solid transparent;
+  transform:rotate(-45deg); transition:border-color .15s;
+}
+.gate-checks li.on{color:var(--text)}
+.gate-checks li.on::before{border-color:var(--ok); background:var(--ok)}
+.gate-checks li.on::after{border-color:#06281a}
+.gate-msg.is-ready{color:var(--ok); font-weight:600}
 
 .linkbtn{background:none; border:0; color:var(--accent-h); font:600 14px "DM Sans",sans-serif; cursor:pointer; padding:4px}
 .linkbtn:hover{text-decoration:underline}
@@ -215,23 +241,23 @@ details.guide[open] > summary::after{content:"\2212"}
       <form id="f" novalidate="">
         <label style="margin-top:0">Gate style</label>
         <div class="styles" id="styles" role="radiogroup" aria-label="Gate style">
-          <label class="style-card" data-style="lootlabs" style="--gc:#a855f7">
-            <input type="radio" name="gstyle" value="lootlabs" checked="">
+          <label class="style-card" data-style="classic" style="--gc:#a855f7">
+            <input type="radio" name="gstyle" value="classic" checked="">
             <span class="dot" style="background:#a855f7"></span>
-            <b>LootLabs style</b><span>One-step unlock</span>
+            <b>Classic Gate</b><span>One step, ~250s</span>
           </label>
-          <label class="style-card" data-style="linkvertise" style="--gc:#3b82f6">
-            <input type="radio" name="gstyle" value="linkvertise">
+          <label class="style-card" data-style="twostep" style="--gc:#3b82f6">
+            <input type="radio" name="gstyle" value="twostep">
             <span class="dot" style="background:#3b82f6"></span>
-            <b>Linkvertise style</b><span>Two-step unlock</span>
+            <b>Two-Step Gate</b><span>Two steps, ~40s</span>
           </label>
-          <label class="style-card" data-style="platoboost" style="--gc:#14b8a6">
-            <input type="radio" name="gstyle" value="platoboost">
+          <label class="style-card" data-style="quick" style="--gc:#14b8a6">
+            <input type="radio" name="gstyle" value="quick">
             <span class="dot" style="background:#14b8a6"></span>
-            <b>PlatoBoost style</b><span>One-step, faster</span>
+            <b>Quick Gate</b><span>One step, ~59s</span>
           </label>
         </div>
-        <p class="small" style="margin:8px 0 0">This is KeyGate's own gate page, styled after these services. No external sponsor link needed and nothing can fail to redirect back.</p>
+        <p class="small" style="margin:8px 0 0">This is KeyGate's own gate page — not a copy of any sponsor network's design. No external link needed, so nothing can fail to redirect back.</p>
         <label for="title">Title <span style="color:var(--muted);font-weight:400">(optional)</span></label>
         <input id="title" type="text" maxlength="60" autocomplete="off" placeholder="My awesome script">
         <label for="myScript">Your Lua script <span style="color:var(--muted);font-weight:400">(optional)</span></label>
@@ -310,13 +336,22 @@ details.guide[open] > summary::after{content:"\2212"}
             <h2 id="gateTitle">Unlock your content</h2>
             <div class="panel">
               <div class="gate" id="gate" style="--gc:#a855f7">
-                <div class="gate-badge"><i></i><span id="gateBadge">LootLabs</span></div>
+                <div class="gate-badge"><i></i><span id="gateBadge">Classic Gate</span></div>
+                <div class="gate-ad" aria-hidden="true">
+                  <span>Advertisement</span>
+                  <div class="gate-ad-dots"><i></i><i></i><i></i></div>
+                </div>
                 <div class="gate-stage" id="gateStage" hidden=""></div>
                 <div class="gate-ring">
                   <svg viewBox="0 0 88 88"><circle class="track" cx="44" cy="44" r="38"></circle><circle class="prog" id="gateProg" cx="44" cy="44" r="38"></circle></svg>
                   <div class="pct" id="gatePct">0%</div>
                 </div>
                 <p class="gate-msg" id="gateMsg">Preparing your content...</p>
+                <ul class="gate-checks" id="gateChecks">
+                  <li id="chkHuman">Verifying you're human</li>
+                  <li id="chkTimer">Confirming you stayed on the page</li>
+                  <li id="chkUnlock">Unlocking your content</li>
+                </ul>
                 <button class="btn" id="gateGo" type="button" disabled="">Please wait...</button>
               </div>
               <div class="msg bad" id="adErr" role="alert" hidden="" style="margin-top:14px"></div>
@@ -363,16 +398,15 @@ const SOURCE = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;   // th
 const CONFIG = {
   SITE_URL: "",            // optional: full address of this page once hosted, e.g. "https://name.github.io/kg/keygate.html"
   WAIT_SECONDS: 10,        // visible-tab timer in step 2
-  GATE_SECONDS: 16,        // total time the step-3 gate takes (split into stages for multi-stage styles)
   KEY_HOURS: 24,           // how long a key stays valid (0 = never expires)
   SHOW_REASON: true        // show a small detection code on the bypass screen (set false when live)
 };
 const GATE_STYLES = {
-  lootlabs:    { label: "LootLabs",    color: "#a855f7", stages: [{ msg: "Preparing your content...", verb: "Get Content" }] },
-  linkvertise: { label: "Linkvertise", color: "#3b82f6", stages: [{ msg: "Verifying access, step 1 of 2...", verb: "Continue to step 2" }, { msg: "Unlocking your content, step 2 of 2...", verb: "Unlock Content" }] },
-  platoboost:  { label: "PlatoBoost",  color: "#14b8a6", stages: [{ msg: "Checking your progress...", verb: "Claim Reward" }] },
+  classic: { label: "Classic Gate", color: "#a855f7", seconds: 250, stages: [{ msg: "Preparing your content...", verb: "Get Content" }] },
+  twostep: { label: "Two-Step Gate", color: "#3b82f6", seconds: 40, stages: [{ msg: "Verifying access, step 1 of 2...", verb: "Continue to step 2" }, { msg: "Unlocking your content, step 2 of 2...", verb: "Unlock Content" }] },
+  quick:   { label: "Quick Gate", color: "#14b8a6", seconds: 59, stages: [{ msg: "Checking your progress...", verb: "Claim Reward" }] },
 };
-const gateStyle = s => GATE_STYLES[s] ? s : "lootlabs";
+const gateStyle = s => GATE_STYLES[s] ? s : "classic";
 
 /* ---------- Shared helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -1069,7 +1103,7 @@ function visitor() {
     ans = a + b; $("mq").textContent = `${a} + ${b} = ?`; $("ma").value = "";
   }
   function checkMath() {
-    if (parseInt($("ma").value, 10) === ans) { flow.math = true; save(); $("mErr").hidden = true; renderSteps(); }
+    if (parseInt($("ma").value, 10) === ans) { flow.math = true; save(); $("mErr").hidden = true; renderSteps(); setChecks(1); checkReady(); }
     else { $("mErr").hidden = false; $("mq").classList.remove("shake"); void $("mq").offsetWidth; $("mq").classList.add("shake"); newQ(); }
   }
 
@@ -1082,7 +1116,7 @@ function visitor() {
       if (active) ms += 250;
       $("bar").style.width = Math.min(100, ms / total * 100) + "%";
       $("tmTxt").textContent = active ? `${Math.max(0, Math.ceil((total - ms) / 1000))}s remaining` : "Paused. Return to this tab to continue.";
-      if (ms >= total) { clearInterval(iv); timerOn = false; flow.wait = true; save(); renderSteps(); }
+      if (ms >= total) { clearInterval(iv); timerOn = false; flow.wait = true; save(); renderSteps(); setChecks(2); checkReady(); }
     }, 250);
   }
 
@@ -1099,7 +1133,18 @@ function visitor() {
   /* Step 3: KeyGate's own gate page, styled after the picked provider. Runs entirely on
      this one page — no external site, no new tab, no redirect to get right. The circle only
      advances while the tab is actually visible and focused, exactly like the step-2 timer. */
-  let gateReady = false, gateRunning = false;
+  let gateReady = false, gateRunning = false, gateTimerDone = false, gateVerb = "Continue";
+  function setChecks(n) {                                                // 0..3 checklist items lit, in sequence
+    [["chkHuman", 1], ["chkTimer", 2], ["chkUnlock", 3]].forEach(([id, at]) => $(id).classList.toggle("on", n >= at));
+  }
+  function checkReady() {                                                // the button only ever unlocks once BOTH are true:
+    if (!gateTimerDone || !flow.math || !flow.wait || gateReady) return; //   the gate's own timer, and steps 1-2
+    gateReady = true;
+    setChecks(3);
+    $("gate").querySelector(".gate-ring").classList.add("is-ready");
+    $("gateMsg").textContent = "Ready!"; $("gateMsg").classList.add("is-ready");
+    $("gateGo").disabled = false; $("gateGo").textContent = gateVerb;
+  }
   function setupGate() {
     const st = GATE_STYLES[gateStyle(rec.y)];
     document.getElementById("gate").style.setProperty("--gc", st.color);
@@ -1108,15 +1153,17 @@ function visitor() {
     const ring = $("gateProg"); const r = 38, c = 2 * Math.PI * r;
     ring.style.strokeDasharray = c; ring.style.strokeDashoffset = c;
     $("gatePct").textContent = "0%";
-    $("gateMsg").textContent = st.stages[0].msg;
+    $("gateMsg").textContent = st.stages[0].msg; $("gateMsg").classList.remove("is-ready");
     $("gateStage").hidden = st.stages.length < 2;
     if (st.stages.length > 1) $("gateStage").textContent = "Step 1 of " + st.stages.length;
+    setChecks(flow.math ? (flow.wait ? 2 : 1) : 0);                      // step 1/2 may already be done on a resumed visit
+    $("gate").querySelector(".gate-ring").classList.remove("is-ready");
     $("gateGo").disabled = true; $("gateGo").textContent = "Please wait...";
   }
   function runGate() {
-    if (gateRunning || gateReady) return; gateRunning = true;
+    if (gateRunning || gateTimerDone) return; gateRunning = true;
     const st = GATE_STYLES[gateStyle(rec.y)];
-    const perStage = CONFIG.GATE_SECONDS * 1000 / st.stages.length;
+    const perStage = st.seconds * 1000 / st.stages.length;
     const r = 38, c = 2 * Math.PI * r;
     let stageIdx = 0, ms = 0;
     const iv = setInterval(() => {
@@ -1133,9 +1180,9 @@ function visitor() {
           $("gateStage").textContent = "Step " + (stageIdx + 1) + " of " + st.stages.length;
           $("gateProg").style.strokeDashoffset = c; $("gatePct").textContent = "0%";
         } else {
-          clearInterval(iv); gateRunning = false; gateReady = true;
-          $("gateMsg").textContent = "Ready!";
-          $("gateGo").disabled = false; $("gateGo").textContent = st.stages[st.stages.length - 1].verb;
+          clearInterval(iv); gateRunning = false; gateTimerDone = true; gateVerb = st.stages[st.stages.length - 1].verb;
+          if (!flow.math || !flow.wait) $("gateMsg").textContent = "Almost there, finish the steps above...";
+          checkReady();
         }
       }
     }, 200);
@@ -1145,7 +1192,7 @@ function visitor() {
     $("adErr").hidden = true;
     if (!gateReady) return;                                             // the button has no working handler until this is true
     if (navigator.webdriver) return bypass("automation");
-    if (!flow.math || !flow.wait) return bypass("tasks-incomplete");
+    if (!flow.math || !flow.wait || !gateTimerDone) return bypass("tasks-incomplete");
     const exp = CONFIG.KEY_HOURS > 0 ? Date.now() + CONFIG.KEY_HOURS * 3600000 : 0;
     const k = { key: makeKey(rec.k, exp), exp, id: lid };
     clearFlow();                                                         // one gate run = one key
