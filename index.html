@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://1929963539-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://1329304151-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
 
 
 <meta charset="utf-8">
@@ -134,7 +134,9 @@ details.guide[open] > summary::after{content:"\2212"}
       <summary>How to set it up</summary>
       <div class="gbody">
         <div class="gstep" id="gs1"><div class="gnum">1</div><div><h3>Publish your website (one time)</h3><p>Open the GitHub token page, keep <b>public_repo</b> ticked, generate the token, paste it below and press <b>Publish website</b>. Wait until it says your website is live (1 to 2 minutes).</p></div></div>
-        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your share link</h3><p>Paste your Lootlabs, Linkvertise or Platoboost link, add a title and your Lua script, then press <b>Create share link</b>.</p></div></div>
+        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your sponsor link</h3><p>On Lootlabs, Linkvertise or Platoboost, create a new link and set its destination to whatever page you like for now — you'll fix it in step 3.</p></div></div>
+        <div class="gstep" id="gs2b"><div class="gnum">2b</div><div><h3>Create your share link here</h3><p>Paste that sponsor link, add a title and your Lua script, then press <b>Create share link</b>.</p></div></div>
+        <div class="gstep" id="gs2c"><div class="gnum">2c</div><div><h3>Paste the destination link</h3><p>Copy the <b>Destination link</b> KeyGate gives you and paste it as the destination/redirect URL on Lootlabs, Linkvertise or Platoboost, replacing what you set in step 2. This is what makes the "come back automatically" part work.</p></div></div>
         <div class="gstep" id="gs3"><div class="gnum">3</div><div><h3>Use the Lua script</h3><p>Copy the ready-to-use script and run it in your executor. It shows the key menu and runs your script after a valid key. Your executor needs <b>loadstring</b>.</p></div></div>
         <div class="gstep" id="gs4"><div class="gnum">4</div><div><h3>Test it before you share</h3><p>Press <b>Make a test key</b>, paste it into the key menu and check that your script runs. Then open your share link in another tab and go through the steps once.</p></div></div>
         <div class="gstep" id="gs5"><div class="gnum">5</div><div><h3>Share the link</h3><p>Post the share link anywhere. Visitors finish the steps, get a KFREE key and paste it into your key menu.</p></div></div>
@@ -209,6 +211,10 @@ details.guide[open] > summary::after{content:"\2212"}
       <p class="sub">Post this link anywhere. Visitors finish the steps and get a key automatically.</p>
       <div class="linkrow"><input id="shareUrl" readonly=""><button id="copyShare" type="button">Copy</button></div>
       <div class="note" id="shareNote" hidden="" style="margin-top:12px"></div>
+
+      <label style="margin-top:26px">Destination link <span style="color:var(--muted);font-weight:400">(paste this into Lootlabs / Linkvertise / Platoboost)</span></label>
+      <p class="small" style="margin:0 0 8px">When creating the sponsor link on their site, set its destination/redirect URL to this. That's what makes visitors come back here automatically after the sponsor step, instead of needing to click a confirm button.</p>
+      <div class="linkrow"><input id="destUrl" readonly=""><button id="copyDest" type="button">Copy</button></div>
       <div class="share">
         <button type="button" id="shareNative" hidden="">Share</button>
         <a id="shareWa" target="_blank" rel="noopener">WhatsApp</a>
@@ -955,8 +961,9 @@ end)
       const title = cleanText($("title").value).slice(0, 60);
       const payload = b64u(JSON.stringify({ a: ad.href, t: title, k: secret }));
       const share = baseUrl() + "#g=" + payload;
-      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
-      let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
+      const dest = share + "&ret=1";
+      $("shareUrl").value = share; $("destUrl").value = dest; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
+            let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
       let note = "";
       if (!/^https?:\/\//.test(share)) note = "This link isn't a full web address yet. Publish your website first (Update below) or fill in SITE_URL in the settings.";
       else if (PREVIEW.test(shareHost)) note = "This is a temporary preview address. Publish your website first so the link is permanent.";
@@ -965,7 +972,8 @@ end)
       $("shareWa").href = `https://wa.me/?text=${t}%20${q}`;
       $("shareTg").href = `https://t.me/share/url?url=${q}&text=${t}`;
       if (navigator.share) { $("shareNative").hidden = false; $("shareNative").onclick = () => navigator.share({ title: title || "Get your key", url: share }).catch(() => {}); }
-      $("formCard").hidden = true; $("resCard").hidden = false; mark("gs2", true); mark("gs3", true);
+      $("formCard").hidden = true; $("resCard").hidden = false; mark("gs2", true); mark("gs2b", true); mark("gs3", true);
+      $("copyDest").onclick = e => { copy(dest, e.currentTarget); mark("gs2c", true); };
       $("testKey").value = "";
       $("makeTest").onclick = () => { const k = makeKey(secret, Date.now() + 3600000); $("testKey").value = k; mark("gs4", true); };
       $("copyTest").onclick = e => $("testKey").value && copy($("testKey").value, e.currentTarget);
@@ -988,7 +996,9 @@ function visitor() {
   const fail = msg => { $("vErrTxt").textContent = msg; show("vErr"); };
 
   const KEY = "keygate:flow", KEYSTORE = "keygate:key";
-  const raw = location.hash.slice(3);
+  const hashParams = new URLSearchParams(location.hash.slice(1));
+  const raw = hashParams.get("g") || "";
+  const isReturn = hashParams.get("ret") === "1";
   let rec = null, lid = "", flow = null, keyValue = null;
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } };
   const save = () => { try { flow ? localStorage.setItem(KEY, JSON.stringify(flow)) : localStorage.removeItem(KEY); } catch {} };
@@ -1062,6 +1072,11 @@ function visitor() {
   window.addEventListener("blur", trackAway);
   window.addEventListener("focus", trackAway);
 
+  window.addEventListener("storage", e => {                            // another tab (redirected back by the sponsor) finished for us
+    if (e.key !== KEYSTORE || tripped || $("vDone").hidden === false) return;
+    try { const k = JSON.parse(e.newValue || "null"); if (k && k.id === lid) showKey(k); } catch {}
+  });
+
   function startAd() {
     $("adErr").hidden = true;
     let w = null;
@@ -1082,28 +1097,31 @@ function visitor() {
     return null;
   }
 
-  function finishAd() {
-    $("adErr").hidden = true;
-    if (navigator.webdriver) return bypass("automation");
-    trackAway();
+  function completeSponsorStep(opts) {
+    const relaxed = !!(opts && opts.relaxed);                          // true when the sponsor itself redirected us back
+    if (!relaxed && navigator.webdriver) return bypass("automation");
+    if (!relaxed) trackAway();
     const f = load();
     if (!f || f.id !== lid) return bypass("no-flow");
     if (f.stage !== "ad" || !f.adStart) return bypass("sponsor-not-started");
     if (!f.math || !f.wait) return bypass("tasks-incomplete");
-    const away = awayMs + (awayStart !== null ? Date.now() - awayStart : 0);
-    if (adOpenedHere && away < CONFIG.MIN_AWAY_SECONDS * 1000) return bypass("never-left");
+    if (!relaxed) {
+      const away = awayMs + (awayStart !== null ? Date.now() - awayStart : 0);
+      if (adOpenedHere && away < CONFIG.MIN_AWAY_SECONDS * 1000) return bypass("never-left");
+    }
     const el = Date.now() - f.adStart;
     if (el < CONFIG.MIN_AD_SECONDS * 1000) return bypass("too-fast");
     if (el > CONFIG.MAX_AD_MINUTES * 60000) {                            // too old: not a bypass, just start the sponsor step again
       flow.stage = "tasks"; flow.adStart = null; save(); renderSteps();
       $("adErr").textContent = "That sponsor session expired. Open the sponsor page again.";
-      $("adErr").hidden = false; return;
+      $("adErr").hidden = false; show("vFlow"); return;
     }
     const exp = CONFIG.KEY_HOURS > 0 ? Date.now() + CONFIG.KEY_HOURS * 3600000 : 0;
     const k = { key: makeKey(rec.k, exp), exp, id: lid };
     clearFlow();                                                         // one sponsor visit = one key
     showKey(k);
   }
+  function finishAd() { $("adErr").hidden = true; completeSponsorStep({ relaxed: false }); }
 
   $("mgo").onclick = checkMath;
   $("ma").addEventListener("keydown", e => { if (e.key === "Enter") checkMath(); });
@@ -1130,11 +1148,12 @@ function visitor() {
   save();
   $("ttl").textContent = rec.t || "Get your key";
   newQ(); renderSteps(); show("vFlow");
+  if (isReturn) { $("adErr").hidden = true; completeSponsorStep({ relaxed: true }); }
 }
 
 /* ---------- Router ---------- */
 window.addEventListener("hashchange", () => location.reload());
-if (/^#g=./.test(location.hash)) { document.title = "KeyGate | Get your key"; visitor(); }
+if (new URLSearchParams(location.hash.slice(1)).get("g")) { document.title = "KeyGate | Get your key"; visitor(); }
 else { document.title = "KeyGate | Create a share link"; creator(); }
 })();
 </script></body></html>
