@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://1618455653-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://1726940046-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
 
 
 <meta charset="utf-8">
@@ -73,6 +73,31 @@ details.guide[open] > summary::after{content:"\2212"}
 .gbody dl{margin:0; font-size:14px; color:var(--muted)}
 .gbody dt{color:var(--text); font-weight:600; margin-top:10px}
 .gbody dd{margin:2px 0 0}
+
+.styles{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px}
+@media (max-width:420px){.styles{grid-template-columns:1fr}}
+.style-card{border:1.5px solid var(--line); border-radius:14px; padding:14px 12px; cursor:pointer; background:var(--bg); transition:border-color .15s, background .15s}
+.style-card input{position:absolute; opacity:0; pointer-events:none}
+.style-card .dot{width:10px; height:10px; border-radius:50%; margin-bottom:8px}
+.style-card b{display:block; font:600 14px "Sora",system-ui,sans-serif}
+.style-card span{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+.style-card.on{border-color:var(--gc, var(--accent)); background:rgba(255,255,255,.03)}
+.style-card.on .dot{box-shadow:0 0 0 3px color-mix(in srgb, var(--gc, var(--accent)) 25%, transparent)}
+
+.gate{border-radius:16px; padding:22px; background:linear-gradient(160deg, color-mix(in srgb, var(--gc) 16%, var(--bg)), var(--bg)); border:1px solid color-mix(in srgb, var(--gc) 40%, var(--line))}
+.gate-badge{display:inline-flex; align-items:center; gap:7px; font:700 12px "Sora",sans-serif; letter-spacing:.04em; text-transform:uppercase; color:var(--gc); margin-bottom:14px}
+.gate-badge i{width:7px; height:7px; border-radius:50%; background:var(--gc)}
+.gate-stage{font-size:13px; color:var(--muted); margin-bottom:6px}
+.gate-ring{width:88px; height:88px; margin:6px auto 16px; position:relative}
+.gate-ring svg{transform:rotate(-90deg); width:100%; height:100%}
+.gate-ring circle{fill:none; stroke-width:6}
+.gate-ring .track{stroke:var(--surface-2)}
+.gate-ring .prog{stroke:var(--gc); stroke-linecap:round; transition:stroke-dashoffset .25s linear}
+.gate-ring .pct{position:absolute; inset:0; display:grid; place-items:center; font:700 18px "Sora",sans-serif}
+.gate-msg{text-align:center; color:var(--muted); font-size:13px; min-height:18px; margin-bottom:6px}
+.gate .btn{background:var(--gc)}
+.gate .btn:hover{filter:brightness(1.08)}
+
 .linkbtn{background:none; border:0; color:var(--accent-h); font:600 14px "DM Sans",sans-serif; cursor:pointer; padding:4px}
 .linkbtn:hover{text-decoration:underline}
 .foot{margin:0; text-align:center; color:var(--muted); font-size:13px}
@@ -134,18 +159,17 @@ details.guide[open] > summary::after{content:"\2212"}
       <summary>How to set it up</summary>
       <div class="gbody">
         <div class="gstep" id="gs1"><div class="gnum">1</div><div><h3>Publish your website (one time)</h3><p>Open the GitHub token page, keep <b>public_repo</b> ticked, generate the token, paste it below and press <b>Publish website</b>. Wait until it says your website is live (1 to 2 minutes).</p></div></div>
-        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your sponsor link</h3><p>On Lootlabs, Linkvertise or Platoboost, create a new link and set its destination to whatever page you like for now — you'll fix it in step 3.</p></div></div>
-        <div class="gstep" id="gs2b"><div class="gnum">2b</div><div><h3>Create your share link here</h3><p>Paste that sponsor link, add a title and your Lua script, then press <b>Create share link</b>.</p></div></div>
-        <div class="gstep" id="gs2c"><div class="gnum">2c</div><div><h3>Paste the destination link</h3><p>Copy the <b>Destination link</b> KeyGate gives you and paste it as the destination/redirect URL on Lootlabs, Linkvertise or Platoboost, replacing what you set in step 2. This is what makes the "come back automatically" part work.</p></div></div>
+        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your share link</h3><p>Pick a gate style, add a title and your Lua script, then press <b>Create share link</b>. No sponsor account or dashboard needed — the gate is KeyGate's own page.</p></div></div>
         <div class="gstep" id="gs3"><div class="gnum">3</div><div><h3>Use the Lua script</h3><p>Copy the ready-to-use script and run it in your executor. It shows the key menu and runs your script after a valid key. Your executor needs <b>loadstring</b>.</p></div></div>
         <div class="gstep" id="gs4"><div class="gnum">4</div><div><h3>Test it before you share</h3><p>Press <b>Make a test key</b>, paste it into the key menu and check that your script runs. Then open your share link in another tab and go through the steps once.</p></div></div>
         <div class="gstep" id="gs5"><div class="gnum">5</div><div><h3>Share the link</h3><p>Post the share link anywhere. Visitors finish the steps, get a KFREE key and paste it into your key menu.</p></div></div>
+
         <h4>If something goes wrong</h4>
         <dl>
           <dt>The link shows a 404 page</dt>
           <dd>Wait 2 minutes after publishing. Check that the link starts with your github.io address and that the repository is public.</dd>
           <dt>"PLS DO NOT BYPASSING THE STEP" appears but nobody bypassed</dt>
-          <dd>Open the sponsor page in the new tab and stay on it for at least 15 seconds before coming back. Use a normal browser tab, not a preview window. The small detection code under the message tells you the reason.</dd>
+          <dd>Stay on the page and let the countdown in step 3 finish on its own, then press the button once it lights up. Use a normal browser tab, not a preview window. The small detection code under the message tells you the reason.</dd>
           <dt>The key menu says Invalid key</dt>
           <dd>Paste the whole key, including KFREE-. Keys last 24 hours. The script and the share link must come from the same Create step, because each one has its own secret.</dd>
           <dt>Nothing happens after the key is accepted</dt>
@@ -189,13 +213,25 @@ details.guide[open] > summary::after{content:"\2212"}
       <h1>Create a share link</h1>
       <p class="sub">Add your sponsor link and your script. Visitors finish the steps and get a KFREE key for your key menu.</p>
       <form id="f" novalidate="">
-        <label for="ad" style="margin-top:0">Sponsor link</label>
-        <input id="ad" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://lootlabs.gg/your-link">
-        <div class="chips">
-          <span class="chip" data-p="Lootlabs">Lootlabs</span>
-          <span class="chip" data-p="Linkvertise">Linkvertise</span>
-          <span class="chip" data-p="Platoboost">Platoboost</span>
+        <label style="margin-top:0">Gate style</label>
+        <div class="styles" id="styles" role="radiogroup" aria-label="Gate style">
+          <label class="style-card" data-style="lootlabs" style="--gc:#a855f7">
+            <input type="radio" name="gstyle" value="lootlabs" checked="">
+            <span class="dot" style="background:#a855f7"></span>
+            <b>LootLabs style</b><span>One-step unlock</span>
+          </label>
+          <label class="style-card" data-style="linkvertise" style="--gc:#3b82f6">
+            <input type="radio" name="gstyle" value="linkvertise">
+            <span class="dot" style="background:#3b82f6"></span>
+            <b>Linkvertise style</b><span>Two-step unlock</span>
+          </label>
+          <label class="style-card" data-style="platoboost" style="--gc:#14b8a6">
+            <input type="radio" name="gstyle" value="platoboost">
+            <span class="dot" style="background:#14b8a6"></span>
+            <b>PlatoBoost style</b><span>One-step, faster</span>
+          </label>
         </div>
+        <p class="small" style="margin:8px 0 0">This is KeyGate's own gate page, styled after these services. No external sponsor link needed and nothing can fail to redirect back.</p>
         <label for="title">Title <span style="color:var(--muted);font-weight:400">(optional)</span></label>
         <input id="title" type="text" maxlength="60" autocomplete="off" placeholder="My awesome script">
         <label for="myScript">Your Lua script <span style="color:var(--muted);font-weight:400">(optional)</span></label>
@@ -211,10 +247,6 @@ details.guide[open] > summary::after{content:"\2212"}
       <p class="sub">Post this link anywhere. Visitors finish the steps and get a key automatically.</p>
       <div class="linkrow"><input id="shareUrl" readonly=""><button id="copyShare" type="button">Copy</button></div>
       <div class="note" id="shareNote" hidden="" style="margin-top:12px"></div>
-
-      <label style="margin-top:26px">Destination link <span style="color:var(--muted);font-weight:400">(paste this into Lootlabs / Linkvertise / Platoboost)</span></label>
-      <p class="small" style="margin:0 0 8px">When creating the sponsor link on their site, set its destination/redirect URL to this. That's what makes visitors come back here automatically after the sponsor step, instead of needing to click a confirm button.</p>
-      <div class="linkrow"><input id="destUrl" readonly=""><button id="copyDest" type="button">Copy</button></div>
       <div class="share">
         <button type="button" id="shareNative" hidden="">Share</button>
         <a id="shareWa" target="_blank" rel="noopener">WhatsApp</a>
@@ -275,12 +307,19 @@ details.guide[open] > summary::after{content:"\2212"}
         <li class="step" id="s3">
           <div class="dot">3</div>
           <div>
-            <h2>Visit the sponsor page</h2>
+            <h2 id="gateTitle">Unlock your content</h2>
             <div class="panel">
-              <p>Open the sponsor page in a new tab and finish it. Then come back here and confirm.</p>
-              <button class="btn" id="adGo" type="button">Open sponsor page</button>
-              <button class="btn ok" id="adDone" type="button" hidden="">I finished the sponsor page</button>
-              <div class="msg bad" id="adErr" role="alert" hidden=""></div>
+              <div class="gate" id="gate" style="--gc:#a855f7">
+                <div class="gate-badge"><i></i><span id="gateBadge">LootLabs</span></div>
+                <div class="gate-stage" id="gateStage" hidden=""></div>
+                <div class="gate-ring">
+                  <svg viewBox="0 0 88 88"><circle class="track" cx="44" cy="44" r="38"></circle><circle class="prog" id="gateProg" cx="44" cy="44" r="38"></circle></svg>
+                  <div class="pct" id="gatePct">0%</div>
+                </div>
+                <p class="gate-msg" id="gateMsg">Preparing your content...</p>
+                <button class="btn" id="gateGo" type="button" disabled="">Please wait...</button>
+              </div>
+              <div class="msg bad" id="adErr" role="alert" hidden="" style="margin-top:14px"></div>
             </div>
           </div>
         </li>
@@ -323,18 +362,17 @@ const SOURCE = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;   // th
    ===================================================================== */
 const CONFIG = {
   SITE_URL: "",            // optional: full address of this page once hosted, e.g. "https://name.github.io/kg/keygate.html"
-  MIN_AD_SECONDS: 15,      // confirming the sponsor step faster than this = bypass
-  MIN_AWAY_SECONDS: 8,     // visitor must have left the tab for at least this long
-  MAX_AD_MINUTES: 30,      // a sponsor session expires after this
   WAIT_SECONDS: 10,        // visible-tab timer in step 2
+  GATE_SECONDS: 16,        // total time the step-3 gate takes (split into stages for multi-stage styles)
   KEY_HOURS: 24,           // how long a key stays valid (0 = never expires)
   SHOW_REASON: true        // show a small detection code on the bypass screen (set false when live)
 };
-const PROVIDERS = {
-  Lootlabs:    ["lootlabs.gg","loot-link.com","loot-links.com","lootlinks.co","lootdest.com","lootdest.org","lootdest.info","links-loot.com"],
-  Linkvertise: ["linkvertise.com","link-to.net","link-hub.net","link-center.net","link-target.net","direct-link.net","up-to-down.net"],
-  Platoboost:  ["platoboost.com","platoboost.net","platorelay.com"]
+const GATE_STYLES = {
+  lootlabs:    { label: "LootLabs",    color: "#a855f7", stages: [{ msg: "Preparing your content...", verb: "Get Content" }] },
+  linkvertise: { label: "Linkvertise", color: "#3b82f6", stages: [{ msg: "Verifying access, step 1 of 2...", verb: "Continue to step 2" }, { msg: "Unlocking your content, step 2 of 2...", verb: "Unlock Content" }] },
+  platoboost:  { label: "PlatoBoost",  color: "#14b8a6", stages: [{ msg: "Checking your progress...", verb: "Claim Reward" }] },
 };
+const gateStyle = s => GATE_STYLES[s] ? s : "lootlabs";
 
 /* ---------- Shared helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -345,11 +383,6 @@ async function copy(text, btn) {
   try { await navigator.clipboard.writeText(text); }
   catch { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
   if (btn) { const old = btn.textContent; btn.textContent = "Copied"; setTimeout(() => btn.textContent = old, 1400); }
-}
-function providerOf(u) {
-  if (!u) return null; const h = u.hostname.toLowerCase().replace(/^www\./, "");
-  for (const [name, list] of Object.entries(PROVIDERS)) if (list.some(d => h === d || h.endsWith("." + d))) return name;
-  return null;
 }
 /* Clean text pasted from rich-text editors (strips stray tags like <p style="text-align:left;">) */
 const cleanText = v => String(v == null ? "" : v).replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
@@ -406,10 +439,14 @@ function creator() {
   $("mCreate").hidden = false;
   const showErr = m => { $("cErr").textContent = m; $("cErr").hidden = !m; };
 
-  $("ad").addEventListener("input", () => {
-    const p = providerOf(parseUrl($("ad").value));
-    document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.p === p));
+  document.querySelectorAll(".style-card").forEach(c => {
+    c.addEventListener("click", () => { c.querySelector("input").checked = true; paintStyles(); });
   });
+  function paintStyles() {
+    const v = document.querySelector('input[name="gstyle"]:checked').value;
+    document.querySelectorAll(".style-card").forEach(c => c.classList.toggle("on", c.dataset.style === v));
+  }
+  paintStyles();
 
   const PREVIEW = /googleusercontent|claude\.ai|localhost|127\.0\.0\.1/;
   const previewHost = () => { try { return PREVIEW.test(location.hostname) || !/^https?:$/.test(location.protocol); } catch { return true; } };
@@ -951,19 +988,15 @@ end)
 
   $("f").addEventListener("submit", ev => {
     ev.preventDefault(); showErr("");
-    const ad = parseUrl($("ad").value);
-    if (!ad) return showErr("Enter a valid sponsor link that starts with https://");
-    if (!providerOf(ad)) return showErr("The sponsor link must be a Lootlabs, Linkvertise or Platoboost link.");
-    if (ad.href.length > 2000) return showErr("The link must be under 2000 characters.");
+    const style = gateStyle(document.querySelector('input[name="gstyle"]:checked').value);
     const btn = $("go"); btn.disabled = true;
     try {
       const secret = "KGAPI-" + makeToken(24);
       const title = cleanText($("title").value).slice(0, 60);
-      const payload = b64u(JSON.stringify({ a: ad.href, t: title, k: secret }));
+      const payload = b64u(JSON.stringify({ t: title, k: secret, y: style }));
       const share = baseUrl() + "#g=" + payload;
-      const dest = share + "&ret=1";
-      $("shareUrl").value = share; $("destUrl").value = dest; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
-            let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
+      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
+      let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
       let note = "";
       if (!/^https?:\/\//.test(share)) note = "This link isn't a full web address yet. Publish your website first (Update below) or fill in SITE_URL in the settings.";
       else if (PREVIEW.test(shareHost)) note = "This is a temporary preview address. Publish your website first so the link is permanent.";
@@ -972,8 +1005,7 @@ end)
       $("shareWa").href = `https://wa.me/?text=${t}%20${q}`;
       $("shareTg").href = `https://t.me/share/url?url=${q}&text=${t}`;
       if (navigator.share) { $("shareNative").hidden = false; $("shareNative").onclick = () => navigator.share({ title: title || "Get your key", url: share }).catch(() => {}); }
-      $("formCard").hidden = true; $("resCard").hidden = false; mark("gs2", true); mark("gs2b", true); mark("gs3", true);
-      $("copyDest").onclick = e => { copy(dest, e.currentTarget); mark("gs2c", true); };
+      $("formCard").hidden = true; $("resCard").hidden = false; mark("gs2", true); mark("gs3", true);
       $("testKey").value = "";
       $("makeTest").onclick = () => { const k = makeKey(secret, Date.now() + 3600000); $("testKey").value = k; mark("gs4", true); };
       $("copyTest").onclick = e => $("testKey").value && copy($("testKey").value, e.currentTarget);
@@ -983,7 +1015,7 @@ end)
     } catch { showErr("Could not create the link. Please try again."); }
     finally { btn.disabled = false; }
   });
-  $("again").onclick = () => { $("f").reset(); $("ad").dispatchEvent(new Event("input")); showErr(""); showForm(); };
+  $("again").onclick = () => { $("f").reset(); paintStyles(); showErr(""); showForm(); };
 }
 
 /* =====================================================================
@@ -996,9 +1028,7 @@ function visitor() {
   const fail = msg => { $("vErrTxt").textContent = msg; show("vErr"); };
 
   const KEY = "keygate:flow", KEYSTORE = "keygate:key";
-  const hashParams = new URLSearchParams(location.hash.slice(1));
-  const raw = hashParams.get("g") || "";
-  const isReturn = hashParams.get("ret") === "1";
+  const raw = new URLSearchParams(location.hash.slice(1)).get("g") || "";
   let rec = null, lid = "", flow = null, keyValue = null;
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } };
   const save = () => { try { flow ? localStorage.setItem(KEY, JSON.stringify(flow)) : localStorage.removeItem(KEY); } catch {} };
@@ -1029,10 +1059,6 @@ function visitor() {
     st("s1", flow.math ? "done" : "active");
     st("s2", !flow.math ? "locked" : flow.wait ? "done" : "active");
     st("s3", !flow.wait ? "locked" : "active");
-    const waiting = flow.stage === "ad";
-    $("adDone").hidden = !waiting;
-    $("adGo").textContent = waiting ? "Open sponsor page again" : "Open sponsor page";
-    $("adGo").classList.toggle("ghost", waiting);
     if (flow.math) $("s1").querySelector(".dot").textContent = "\u2713";
     if (flow.wait) $("s2").querySelector(".dot").textContent = "\u2713";
   }
@@ -1060,33 +1086,6 @@ function visitor() {
     }, 250);
   }
 
-  /* Sponsor step: we time the visit and measure how long the visitor really left this tab. */
-  let adOpenedHere = false, awayMs = 0, awayStart = null;
-  function trackAway() {
-    if (!adOpenedHere) return;
-    const away = document.visibilityState !== "visible" || !document.hasFocus();
-    if (away && awayStart === null) awayStart = Date.now();
-    if (!away && awayStart !== null) { awayMs += Date.now() - awayStart; awayStart = null; }
-  }
-  document.addEventListener("visibilitychange", trackAway);
-  window.addEventListener("blur", trackAway);
-  window.addEventListener("focus", trackAway);
-
-  window.addEventListener("storage", e => {                            // another tab (redirected back by the sponsor) finished for us
-    if (e.key !== KEYSTORE || tripped || $("vDone").hidden === false) return;
-    try { const k = JSON.parse(e.newValue || "null"); if (k && k.id === lid) showKey(k); } catch {}
-  });
-
-  function startAd() {
-    $("adErr").hidden = true;
-    let w = null;
-    try { w = window.open("about:blank", "_blank"); } catch {}
-    flow.stage = "ad"; flow.adStart = Date.now(); save();
-    adOpenedHere = true; awayMs = 0; awayStart = null;
-    if (w) { w.location.href = rec.a; renderSteps(); }
-    else { location.href = rec.a; }                                    // popup blocked: continue in this tab, use Back to return
-  }
-
   function showKey(k) {
     keyValue = k.key; $("keyBox").textContent = k.key;
     $("keySub").textContent = k.exp ? "Valid until " + new Date(k.exp).toLocaleString() + ". Paste it into the key menu." : "Copy it and paste it into the key menu.";
@@ -1097,37 +1096,66 @@ function visitor() {
     return null;
   }
 
-  function completeSponsorStep(opts) {
-    const relaxed = !!(opts && opts.relaxed);                          // true when the sponsor itself redirected us back
-    if (!relaxed && navigator.webdriver) return bypass("automation");
-    if (!relaxed) trackAway();
-    const f = load();
-    if (!f || f.id !== lid) return bypass("no-flow");
-    if (f.stage !== "ad" || !f.adStart) return bypass("sponsor-not-started");
-    if (!f.math || !f.wait) return bypass("tasks-incomplete");
-    if (!relaxed) {
-      const away = awayMs + (awayStart !== null ? Date.now() - awayStart : 0);
-      if (adOpenedHere && away < CONFIG.MIN_AWAY_SECONDS * 1000) return bypass("never-left");
-    }
-    const el = Date.now() - f.adStart;
-    if (el < CONFIG.MIN_AD_SECONDS * 1000) return bypass("too-fast");
-    if (el > CONFIG.MAX_AD_MINUTES * 60000) {                            // too old: not a bypass, just start the sponsor step again
-      flow.stage = "tasks"; flow.adStart = null; save(); renderSteps();
-      $("adErr").textContent = "That sponsor session expired. Open the sponsor page again.";
-      $("adErr").hidden = false; show("vFlow"); return;
-    }
+  /* Step 3: KeyGate's own gate page, styled after the picked provider. Runs entirely on
+     this one page — no external site, no new tab, no redirect to get right. The circle only
+     advances while the tab is actually visible and focused, exactly like the step-2 timer. */
+  let gateReady = false, gateRunning = false;
+  function setupGate() {
+    const st = GATE_STYLES[gateStyle(rec.y)];
+    document.getElementById("gate").style.setProperty("--gc", st.color);
+    $("gateBadge").textContent = st.label;
+    $("gateTitle").textContent = "Unlock your content";
+    const ring = $("gateProg"); const r = 38, c = 2 * Math.PI * r;
+    ring.style.strokeDasharray = c; ring.style.strokeDashoffset = c;
+    $("gatePct").textContent = "0%";
+    $("gateMsg").textContent = st.stages[0].msg;
+    $("gateStage").hidden = st.stages.length < 2;
+    if (st.stages.length > 1) $("gateStage").textContent = "Step 1 of " + st.stages.length;
+    $("gateGo").disabled = true; $("gateGo").textContent = "Please wait...";
+  }
+  function runGate() {
+    if (gateRunning || gateReady) return; gateRunning = true;
+    const st = GATE_STYLES[gateStyle(rec.y)];
+    const perStage = CONFIG.GATE_SECONDS * 1000 / st.stages.length;
+    const r = 38, c = 2 * Math.PI * r;
+    let stageIdx = 0, ms = 0;
+    const iv = setInterval(() => {
+      const active = document.visibilityState === "visible" && document.hasFocus();
+      if (!active) return;                                              // pauses exactly like the step-2 timer
+      ms += 200;
+      const pct = Math.min(100, ms / perStage * 100);
+      $("gateProg").style.strokeDashoffset = c - (c * pct / 100);
+      $("gatePct").textContent = Math.round(pct) + "%";
+      if (ms >= perStage) {
+        stageIdx++; ms = 0;
+        if (stageIdx < st.stages.length) {
+          $("gateMsg").textContent = st.stages[stageIdx].msg;
+          $("gateStage").textContent = "Step " + (stageIdx + 1) + " of " + st.stages.length;
+          $("gateProg").style.strokeDashoffset = c; $("gatePct").textContent = "0%";
+        } else {
+          clearInterval(iv); gateRunning = false; gateReady = true;
+          $("gateMsg").textContent = "Ready!";
+          $("gateGo").disabled = false; $("gateGo").textContent = st.stages[st.stages.length - 1].verb;
+        }
+      }
+    }, 200);
+  }
+
+  function finishGate() {
+    $("adErr").hidden = true;
+    if (!gateReady) return;                                             // the button has no working handler until this is true
+    if (navigator.webdriver) return bypass("automation");
+    if (!flow.math || !flow.wait) return bypass("tasks-incomplete");
     const exp = CONFIG.KEY_HOURS > 0 ? Date.now() + CONFIG.KEY_HOURS * 3600000 : 0;
     const k = { key: makeKey(rec.k, exp), exp, id: lid };
-    clearFlow();                                                         // one sponsor visit = one key
+    clearFlow();                                                         // one gate run = one key
     showKey(k);
   }
-  function finishAd() { $("adErr").hidden = true; completeSponsorStep({ relaxed: false }); }
 
   $("mgo").onclick = checkMath;
   $("ma").addEventListener("keydown", e => { if (e.key === "Enter") checkMath(); });
   $("tmGo").onclick = startTimer;
-  $("adGo").onclick = startAd;
-  $("adDone").onclick = finishAd;
+  $("gateGo").onclick = finishGate;
   $("copyKey").onclick = () => keyValue && copy(keyValue, $("copyKey"));
   $("retry").onclick = () => { clearFlow(); location.reload(); };
 
@@ -1135,20 +1163,18 @@ function visitor() {
   show("vLoad");
   try {
     const d = JSON.parse(unb64u(raw));
-    const ad = parseUrl(d && d.a);
-    if (!ad || !providerOf(ad) || typeof d.k !== "string" || !/^[A-Za-z0-9-]{8,64}$/.test(d.k)) throw new Error("bad");
-    rec = { a: ad.href, t: typeof d.t === "string" ? d.t.slice(0, 60) : "", k: d.k };
+    if (typeof d.k !== "string" || !/^[A-Za-z0-9-]{8,64}$/.test(d.k)) throw new Error("bad");
+    rec = { y: gateStyle(d.y), t: typeof d.t === "string" ? d.t.slice(0, 60) : "", k: d.k };
   } catch { return fail("This link isn't valid. Ask the creator for a new link."); }
   let h = 5381; for (let i = 0; i < raw.length; i++) h = (Math.imul(h, 33) + raw.charCodeAt(i)) >>> 0;
   lid = h.toString(36);
   if (!storageOk()) return fail("Your browser is blocking storage. Open this page in a normal browser tab (not a preview or private in-app window) and try again.");
   const have = savedKey(); if (have) return showKey(have);              // still valid: no need to repeat the steps
   const old = load();
-  flow = (old && old.id === lid) ? old : { id: lid, stage: "tasks", math: false, wait: false };
+  flow = (old && old.id === lid) ? old : { id: lid, math: false, wait: false };  // resumes steps 1-2 across a reload; the gate always restarts
   save();
   $("ttl").textContent = rec.t || "Get your key";
-  newQ(); renderSteps(); show("vFlow");
-  if (isReturn) { $("adErr").hidden = true; completeSponsorStep({ relaxed: true }); }
+  newQ(); renderSteps(); setupGate(); runGate(); show("vFlow");
 }
 
 /* ---------- Router ---------- */
