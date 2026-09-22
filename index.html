@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://488533012-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://1929963539-atari-embeds.googleusercontent.com/embeds/3c65d943f1fdb9b716cb032ccac58cec/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
 
 
 <meta charset="utf-8">
@@ -58,6 +58,21 @@ ol.how{margin:0 0 6px; padding-left:20px; color:var(--muted); font-size:14px}
 ol.how li{margin:0 0 6px}
 ol.how b{color:var(--text); font-weight:600}
 .lnk{color:var(--accent-h); font-weight:600}
+details.guide{background:var(--surface); border:1px solid var(--line); border-radius:18px}
+details.guide > summary{cursor:pointer; list-style:none; padding:18px 22px; font:600 16px "Sora",system-ui,sans-serif; display:flex; justify-content:space-between; align-items:center}
+details.guide > summary::-webkit-details-marker{display:none}
+details.guide > summary::after{content:"+"; color:var(--muted); font-size:20px}
+details.guide[open] > summary::after{content:"\2212"}
+.gbody{padding:0 22px 22px}
+.gstep{display:grid; grid-template-columns:28px 1fr; gap:12px; margin:0 0 16px}
+.gnum{width:28px; height:28px; border-radius:50%; background:var(--surface-2); border:1px solid var(--line); display:grid; place-items:center; font:700 13px "Sora",sans-serif; color:var(--muted)}
+.gstep.done .gnum{background:var(--ok); color:#06281a; border-color:var(--ok)}
+.gstep h3{margin:3px 0 4px; font:600 15px "Sora",system-ui,sans-serif}
+.gstep p{margin:0; color:var(--muted); font-size:14px}
+.gbody h4{margin:22px 0 8px; font:600 14px "Sora",system-ui,sans-serif}
+.gbody dl{margin:0; font-size:14px; color:var(--muted)}
+.gbody dt{color:var(--text); font-weight:600; margin-top:10px}
+.gbody dd{margin:2px 0 0}
 .linkbtn{background:none; border:0; color:var(--accent-h); font:600 14px "DM Sans",sans-serif; cursor:pointer; padding:4px}
 .linkbtn:hover{text-decoration:underline}
 .foot{margin:0; text-align:center; color:var(--muted); font-size:13px}
@@ -114,6 +129,31 @@ ol.how b{color:var(--text); font-weight:600}
 
   <!-- ============ CREATE ============ -->
   <div class="mode" id="mCreate" hidden="">
+
+    <details class="guide" id="guide">
+      <summary>How to set it up</summary>
+      <div class="gbody">
+        <div class="gstep" id="gs1"><div class="gnum">1</div><div><h3>Publish your website (one time)</h3><p>Open the GitHub token page, keep <b>public_repo</b> ticked, generate the token, paste it below and press <b>Publish website</b>. Wait until it says your website is live (1 to 2 minutes).</p></div></div>
+        <div class="gstep" id="gs2"><div class="gnum">2</div><div><h3>Create your share link</h3><p>Paste your Lootlabs, Linkvertise or Platoboost link, add a title and your Lua script, then press <b>Create share link</b>.</p></div></div>
+        <div class="gstep" id="gs3"><div class="gnum">3</div><div><h3>Use the Lua script</h3><p>Copy the ready-to-use script and run it in your executor. It shows the key menu and runs your script after a valid key. Your executor needs <b>loadstring</b>.</p></div></div>
+        <div class="gstep" id="gs4"><div class="gnum">4</div><div><h3>Test it before you share</h3><p>Press <b>Make a test key</b>, paste it into the key menu and check that your script runs. Then open your share link in another tab and go through the steps once.</p></div></div>
+        <div class="gstep" id="gs5"><div class="gnum">5</div><div><h3>Share the link</h3><p>Post the share link anywhere. Visitors finish the steps, get a KFREE key and paste it into your key menu.</p></div></div>
+        <h4>If something goes wrong</h4>
+        <dl>
+          <dt>The link shows a 404 page</dt>
+          <dd>Wait 2 minutes after publishing. Check that the link starts with your github.io address and that the repository is public.</dd>
+          <dt>"PLS DO NOT BYPASSING THE STEP" appears but nobody bypassed</dt>
+          <dd>Open the sponsor page in the new tab and stay on it for at least 15 seconds before coming back. Use a normal browser tab, not a preview window. The small detection code under the message tells you the reason.</dd>
+          <dt>The key menu says Invalid key</dt>
+          <dd>Paste the whole key, including KFREE-. Keys last 24 hours. The script and the share link must come from the same Create step, because each one has its own secret.</dd>
+          <dt>Nothing happens after the key is accepted</dt>
+          <dd>Your executor must support loadstring. Check the console for lines starting with [KeyGate].</dd>
+          <dt>Strange text like &lt;p style=...&gt; appears</dt>
+          <dd>That comes from pasting out of a rich text editor. Paste as plain text. The token, the sponsor link and the script boxes clean it automatically.</dd>
+        </dl>
+      </div>
+    </details>
+
     <section class="card" id="pubCard" hidden="">
       <h1>Publish your website</h1>
       <p class="sub">Paste a GitHub token once. KeyGate creates a public repository and turns on GitHub Pages for you, so your share links live on your own permanent website.</p>
@@ -179,7 +219,11 @@ ol.how b{color:var(--text); font-weight:600}
       <label style="margin-top:22px">Ready-to-use Lua script (key menu + your script)</label>
       <textarea id="lua" readonly="" spellcheck="false"></textarea>
       <button class="btn ghost" id="copyLua" type="button" style="margin-top:8px">Copy script</button>
-      <button class="btn ghost" id="again" type="button">Create another</button>
+      <label style="margin-top:26px">Test your key system</label>
+      <p class="small" style="margin:0 0 8px">Make a test key (valid for 1 hour), paste it into the key menu and check that your script runs.</p>
+      <div class="linkrow"><input id="testKey" readonly="" placeholder="Press the button below"><button id="copyTest" type="button">Copy</button></div>
+      <button class="btn ghost" id="makeTest" type="button" style="margin-top:8px">Make a test key</button>
+      <button class="btn ghost" id="again" type="button" style="margin-top:22px">Create another</button>
     </section>
 
     <p class="foot" id="siteFoot" hidden="">Website: <span id="siteName"></span> <button class="linkbtn" id="siteUpdate" type="button">Update</button></p>
@@ -301,7 +345,25 @@ function providerOf(u) {
   for (const [name, list] of Object.entries(PROVIDERS)) if (list.some(d => h === d || h.endsWith("." + d))) return name;
   return null;
 }
-const parseUrl = v => { try { const u = new URL(String(v).trim()); return /^https?:$/.test(u.protocol) ? u : null; } catch { return null; } };
+/* Clean text pasted from rich-text editors (strips stray tags like <p style="text-align:left;">) */
+const cleanText = v => String(v == null ? "" : v).replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
+const decodeEntities = v => v.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/&amp;/g, "&");
+function extractUrl(v) { const m = cleanText(v).match(/https?:\/\/[^\s<>"']+/i); return m ? m[0] : cleanText(v); }
+function extractToken(v) {
+  const c = cleanText(v).replace(/\s+/g, "");
+  const m = c.match(/github_pat_[A-Za-z0-9_]+|gh[pousr]_[A-Za-z0-9]+/);
+  if (m) return m[0];
+  return /^[a-f0-9]{40}$/i.test(c) ? c : "";
+}
+function cleanScript(v) {                              // only unwraps text that is entirely wrapped in <p>/<div>/<pre>/<code>
+  let s = String(v || "");
+  if (/^\s*<(p|div|pre|code)[\s>]/i.test(s) && /<\/(p|div|pre|code)>\s*$/i.test(s)) {
+    s = s.replace(/<br\s*\/?>/gi, "\n").replace(/<\/(p|div)>/gi, "\n").replace(/<[^>]*>/g, "");
+    s = decodeEntities(s).replace(/\u00a0/g, " ");
+  }
+  return s;
+}
+const parseUrl = v => { try { const u = new URL(extractUrl(v)); return /^https?:$/.test(u.protocol) ? u : null; } catch { return null; } };
 function makeToken(n) {                                // A-Z and 0-9, unbiased
   const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let out = "";
   while (out.length < n) { const b = new Uint8Array(n * 2); crypto.getRandomValues(b); for (const x of b) if (x < 252 && out.length < n) out += A[x % 36]; }
@@ -360,6 +422,10 @@ function creator() {
     $("siteName").textContent = s.replace(/^https:\/\//, "").replace(/\/$/, "");
   }
   function showPublish() { $("formCard").hidden = true; $("resCard").hidden = true; $("pubDone").hidden = true; $("siteFoot").hidden = true; $("pubCard").hidden = false; }
+  const mark = (id, on) => $(id).classList.toggle("done", !!on);
+  const refreshGuide = () => { mark("gs1", siteKnown()); };
+  $("guide").open = !siteKnown();
+  refreshGuide();
   siteKnown() ? showForm() : showPublish();
   $("pubSkip").onclick = showForm;
   $("siteUpdate").onclick = showPublish;
@@ -424,8 +490,10 @@ function creator() {
   $("pubForm").addEventListener("submit", async ev => {
     ev.preventDefault();
     const err = $("pubErr"); err.hidden = true; say("");
-    const token = $("ghToken").value.trim(), name = $("ghRepo").value.trim();
-    if (!token) { err.textContent = "Paste your GitHub token first."; err.hidden = false; return; }
+    const rawToken = $("ghToken").value, name = cleanText($("ghRepo").value);
+    if (!cleanText(rawToken)) { err.textContent = "Paste your GitHub token first."; err.hidden = false; return; }
+    const token = extractToken(rawToken);
+    if (!token) { err.textContent = "That doesn't look like a GitHub token. Copy it again from GitHub (it starts with ghp_ or github_pat_)."; err.hidden = false; return; }
     const btn = $("pubGo"); btn.disabled = true; btn.textContent = "Publishing...";
     try {
       const url = await publish(token, name);
@@ -433,7 +501,7 @@ function creator() {
       try { localStorage.setItem("keygate:site", url); } catch {}
       say("");
       $("siteUrl").value = url;
-      $("pubCard").hidden = true; $("pubDone").hidden = false;
+      $("pubCard").hidden = true; $("pubDone").hidden = false; refreshGuide();
       $("liveStatus").textContent = "Checking if the site is live...";
       for (let i = 0; i < 30; i++) {                                   // first publish takes GitHub 1-2 minutes
         let up = false; try { up = (await fetch(url, { cache: "no-store" })).ok; } catch {}
@@ -884,10 +952,10 @@ end)
     const btn = $("go"); btn.disabled = true;
     try {
       const secret = "KGAPI-" + makeToken(24);
-      const title = $("title").value.trim().slice(0, 60);
+      const title = cleanText($("title").value).slice(0, 60);
       const payload = b64u(JSON.stringify({ a: ad.href, t: title, k: secret }));
       const share = baseUrl() + "#g=" + payload;
-      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, $("myScript").value);
+      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
       let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
       let note = "";
       if (!/^https?:\/\//.test(share)) note = "This link isn't a full web address yet. Publish your website first (Update below) or fill in SITE_URL in the settings.";
@@ -897,7 +965,10 @@ end)
       $("shareWa").href = `https://wa.me/?text=${t}%20${q}`;
       $("shareTg").href = `https://t.me/share/url?url=${q}&text=${t}`;
       if (navigator.share) { $("shareNative").hidden = false; $("shareNative").onclick = () => navigator.share({ title: title || "Get your key", url: share }).catch(() => {}); }
-      $("formCard").hidden = true; $("resCard").hidden = false;
+      $("formCard").hidden = true; $("resCard").hidden = false; mark("gs2", true); mark("gs3", true);
+      $("testKey").value = "";
+      $("makeTest").onclick = () => { const k = makeKey(secret, Date.now() + 3600000); $("testKey").value = k; mark("gs4", true); };
+      $("copyTest").onclick = e => $("testKey").value && copy($("testKey").value, e.currentTarget);
       $("copyShare").onclick = e => copy(share, e.currentTarget);
       $("copyApi").onclick = e => copy(secret, e.currentTarget);
       $("copyLua").onclick = e => copy($("lua").value, e.currentTarget);
