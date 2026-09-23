@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://1211562656-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://608686098-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
       <script>
         (function() {
           // Listen during capturing phase to intercept before <base target="_blank"> takes effect.
@@ -751,6 +751,7 @@ local Players          = game:GetService("Players")
 local TweenService     = game:GetService("TweenService")
 
 local KEY_FILE = "keygate_" .. string.sub(API_KEY, 7, 14) .. ".txt"
+local KEY_EXPIRES_AT = 0                                  -- unix seconds; 0 = never expires
 
 local function runScript()
 	local compile = loadstring or load
@@ -828,7 +829,7 @@ local function verifyKey(input)
 	if expMin ~= 0 and os.time() > expMin * 60 then
 		return false, "Key expired"
 	end
-	return true, "Key accepted"
+	return true, "Key accepted", expMin
 end
 
 local function readSaved()
@@ -854,6 +855,27 @@ local function guiParent()
 	return Players.LocalPlayer:WaitForChild("PlayerGui")
 end
 
+-- Shared "modern blue" palette, used by both the key menu and the HUD
+local COL = {
+	bg          = Color3.fromRGB(22, 27, 46),
+	field       = Color3.fromRGB(14, 18, 32),
+	line        = Color3.fromRGB(42, 50, 82),
+	text        = Color3.fromRGB(233, 237, 249),
+	muted       = Color3.fromRGB(143, 153, 187),
+	accent      = Color3.fromRGB(107, 124, 255),
+	accentHover = Color3.fromRGB(130, 144, 255),
+	dark        = Color3.fromRGB(29, 36, 64),
+	darkHover   = Color3.fromRGB(37, 45, 80),
+	good        = Color3.fromRGB(61, 220, 151),
+	bad         = Color3.fromRGB(255, 92, 122),
+	warn        = Color3.fromRGB(255, 196, 77),
+	fps         = Color3.fromRGB(107, 124, 255),
+	cpu         = Color3.fromRGB(168, 130, 255),
+	gamestat    = Color3.fromRGB(61, 220, 151),
+	userstat    = Color3.fromRGB(255, 196, 77),
+	timestat    = Color3.fromRGB(255, 92, 122),
+}
+
 local function corner(obj, radius)
 	local c = Instance.new("UICorner")
 	c.CornerRadius = UDim.new(0, radius)
@@ -871,20 +893,6 @@ local function stroke(obj, color, thickness)
 end
 
 local function openMenu()
-	local COL = {
-		bg          = Color3.fromRGB(22, 27, 46),
-		field       = Color3.fromRGB(14, 18, 32),
-		line        = Color3.fromRGB(42, 50, 82),
-		text        = Color3.fromRGB(233, 237, 249),
-		muted       = Color3.fromRGB(143, 153, 187),
-		accent      = Color3.fromRGB(107, 124, 255),
-		accentHover = Color3.fromRGB(130, 144, 255),
-		dark        = Color3.fromRGB(29, 36, 64),
-		darkHover   = Color3.fromRGB(37, 45, 80),
-		good        = Color3.fromRGB(61, 220, 151),
-		bad         = Color3.fromRGB(255, 92, 122),
-		warn        = Color3.fromRGB(255, 196, 77),
-	}
 	local alive = true
 	local conns = {}
 
@@ -1058,6 +1066,7 @@ local function openMenu()
 			pcall(function() c:Disconnect() end)
 		end
 		gui:Destroy()
+		openHud()
 		runScript()
 	end
 
@@ -1072,13 +1081,12 @@ local function openMenu()
 		busy = true
 		confirmBtn.Text = "Checking..."
 		task.spawn(function()
-			local ok, msg, netErr = verifyKey(clean)
+			local ok, msg, expMin = verifyKey(clean)
 			busy = false
 			confirmBtn.Text = "Confirm"
 			if ok then
+				KEY_EXPIRES_AT = (expMin and expMin > 0) and (expMin * 60) or 0
 				accepted(clean)
-			elseif netErr then
-				setStatus(msg, COL.warn)
 			else
 				setStatus(msg, COL.bad)
 				wrongKey()
@@ -1109,17 +1117,178 @@ local function openMenu()
 				if alive then getBtn.Text = "Get key" end
 			end)
 		else
-			box.Text = SHARE_LINK
-			setStatus("Copy the link from the box.", COL.warn)
-		end
-	end)
+	\t\tbox.Text = SHARE_LINK
+\t\t\tsetStatus("Copy the link from the box.", COL.warn)
+\t\tend
+\tend)
+end
+
+-- Info HUD, shown top-right once a valid key is active. Not draggable, on purpose.
+local function openHud()
+\tlocal RunService = game:GetService("RunService")
+\tlocal Stats      = game:GetService("Stats")
+\tlocal MarketplaceService = game:GetService("MarketplaceService")
+
+\tlocal gui = Instance.new("ScreenGui")
+\tgui.Name = "KeyGateHUD"
+\tgui.ResetOnSpawn = false
+\tgui.IgnoreGuiInset = true
+\tgui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+\tgui.DisplayOrder = 998
+\tlocal parent = guiParent()
+\tlocal old = parent:FindFirstChild("KeyGateHUD")
+\tif old then old:Destroy() end
+\tlocal okParent = pcall(function() gui.Parent = parent end)
+\tif not okParent then gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui") end
+
+\tlocal panel = Instance.new("Frame")
+\tpanel.Name = "Panel"
+\tpanel.AnchorPoint = Vector2.new(1, 0)
+\tpanel.Position = UDim2.new(1, -14, 0, 14)
+\tpanel.Size = UDim2.new(0, 222, 0, 178)
+\tpanel.BackgroundColor3 = COL.bg
+\tpanel.BorderSizePixel = 0
+\tpanel.Active = false                                      -- not a drag surface
+\tpanel.Parent = gui
+\tcorner(panel, 16)
+\tstroke(panel, COL.line, 1.5)
+
+\tlocal title = Instance.new("TextLabel")
+\ttitle.BackgroundTransparency = 1
+\ttitle.Position = UDim2.new(0, 14, 0, 10)
+\ttitle.Size = UDim2.new(1, -28, 0, 20)
+\ttitle.Font = Enum.Font.GothamBold
+\ttitle.TextSize = 13
+\ttitle.TextColor3 = COL.text
+\ttitle.TextXAlignment = Enum.TextXAlignment.Left
+\ttitle.Text = "KeyGate"
+\ttitle.Parent = panel
+
+\tlocal rows = Instance.new("Frame")
+\trows.BackgroundTransparency = 1
+\trows.Position = UDim2.new(0, 12, 0, 36)
+\trows.Size = UDim2.new(1, -24, 1, -46)
+\trows.Parent = panel
+\tlocal layout = Instance.new("UIListLayout")
+\tlayout.Padding = UDim.new(0, 6)
+\tlayout.SortOrder = Enum.SortOrder.LayoutOrder
+\tlayout.Parent = rows
+
+\tlocal valueLabels = {}
+\tlocal function addRow(order, label, accent)
+\t\tlocal row = Instance.new("Frame")
+\t\trow.Size = UDim2.new(1, 0, 0, 26)
+\t\trow.BackgroundColor3 = COL.field
+\t\trow.LayoutOrder = order
+\t\trow.Parent = rows
+\t\tcorner(row, 8)
+\t\tlocal dot = Instance.new("Frame")
+\t\tdot.AnchorPoint = Vector2.new(0, 0.5)
+\t\tdot.Position = UDim2.new(0, 8, 0.5, 0)
+\t\tdot.Size = UDim2.new(0, 6, 0, 6)
+\t\tdot.BackgroundColor3 = accent
+\t\tdot.BorderSizePixel = 0
+\t\tdot.Parent = row
+\t\tcorner(dot, 3)
+\t\tlocal lbl = Instance.new("TextLabel")
+\t\tlbl.BackgroundTransparency = 1
+\t\tlbl.Position = UDim2.new(0, 20, 0, 0)
+\t\tlbl.Size = UDim2.new(0.55, -20, 1, 0)
+\t\tlbl.Font = Enum.Font.Gotham
+\t\tlbl.TextSize = 12
+\t\tlbl.TextColor3 = COL.muted
+\t\tlbl.TextXAlignment = Enum.TextXAlignment.Left
+\t\tlbl.Text = label
+\t\tlbl.Parent = row
+\t\tlocal val = Instance.new("TextLabel")
+\t\tval.BackgroundTransparency = 1
+\t\tval.Position = UDim2.new(0.55, 0, 0, 0)
+\t\tval.Size = UDim2.new(0.45, -8, 1, 0)
+\t\tval.Font = Enum.Font.GothamBold
+\t\tval.TextSize = 12
+\t\tval.TextColor3 = accent
+\t\tval.TextXAlignment = Enum.TextXAlignment.Right
+\t\tval.TextTruncate = Enum.TextTruncate.AtEnd
+\t\tval.Text = "..."
+\t\tval.Parent = row
+\t\tvalueLabels[label] = val
+\t\treturn val
+\tend
+
+\tlocal vFps  = addRow(1, "FPS", COL.fps)
+\tlocal vCpu  = addRow(2, "CPU", COL.cpu)
+\tlocal vGame = addRow(3, "GAME", COL.gamestat)
+\tlocal vUser = addRow(4, "PLAYER", COL.userstat)
+\tlocal vTime = addRow(5, "KEY TIME", COL.timestat)
+
+\t-- player name
+\tvUser.Text = Players.LocalPlayer.Name
+
+\t-- game name: try the marketplace title first, fall back to game.Name / PlaceId
+\tvGame.Text = "..."
+\ttask.spawn(function()
+\t\tlocal ok, info = pcall(function() return MarketplaceService:GetProductInfo(game.PlaceId) end)
+\t\tif ok and info and info.Name then
+\t\t\tvGame.Text = info.Name
+\t\telseif game.Name ~= "" then
+\t\t\tvGame.Text = game.Name
+\t\telse
+\t\t\tvGame.Text = "Place " .. tostring(game.PlaceId)
+\t\tend
+\tend)
+
+\t-- FPS: smoothed frame counter
+\tlocal frames, fpsClock = 0, os.clock()
+\tlocal fpsConn = RunService.RenderStepped:Connect(function()
+\t\tframes = frames + 1
+\t\tlocal now = os.clock()
+\t\tif now - fpsClock >= 0.5 then
+\t\t\tvFps.Text = tostring(math.floor(frames / (now - fpsClock) + 0.5))
+\t\t\tframes, fpsClock = 0, now
+\t\tend
+\tend)
+
+\t-- CPU: best-effort, from Roblox's own performance stats where available
+\tlocal function readCpu()
+\t\tlocal ok, ms = pcall(function()
+\t\t\tlocal perf = Stats:FindFirstChild("PerformanceStats")
+\t\t\tlocal item = perf and perf:FindFirstChild("CPU (Main)")
+\t\t\treturn item and item:GetValue()
+\t\tend)
+\t\tif ok and ms then return string.format("%.0f%%", math.clamp(ms / 16.67 * 100, 0, 999)) end
+\t\treturn "N/A"
+\tend
+
+\t-- key time remaining, ticks once a second
+\tlocal function formatRemaining()
+\t\tif KEY_EXPIRES_AT <= 0 then return "No limit" end
+\t\tlocal left = math.max(0, math.floor(KEY_EXPIRES_AT - os.time()))
+\t\tif left <= 0 then return "Expired" end
+\t\tlocal h = math.floor(left / 3600)
+\t\tlocal m = math.floor((left % 3600) / 60)
+\t\tlocal sSec = left % 60
+\t\tif h > 0 then return string.format("%dh %02dm", h, m) end
+\t\treturn string.format("%dm %02ds", m, sSec)
+\tend
+
+\ttask.spawn(function()
+\t\twhile gui.Parent do
+\t\t\tvCpu.Text = readCpu()
+\t\t\tvTime.Text = formatRemaining()
+\t\t\ttask.wait(1)
+\t\tend
+\t\tpcall(function() fpsConn:Disconnect() end)
+\tend)
+
 end
 
 task.spawn(function()
 	local saved = readSaved()
 	if saved then
-		local ok = verifyKey(saved)
+		local ok, _, expMin = verifyKey(saved)
 		if ok then
+			KEY_EXPIRES_AT = (expMin and expMin > 0) and (expMin * 60) or 0
+			openHud()
 			runScript()
 			return
 		end
