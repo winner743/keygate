@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://978004711-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://494484504-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.rSbJYhBfuqI.O%2Fd%3D1%2Frs%3DAHpOoo-jVekxMAQXeq7xqpwfVZ239erXog%2Fm%3D__features__" target="_blank">
       <script>
         (function() {
           // Listen during capturing phase to intercept before <base target="_blank"> takes effect.
@@ -156,8 +156,12 @@ details.guide[open] > summary::after{content:"\2212"}
 .gate .btn:hover{filter:brightness(1.08)}
 .gate-ad{
   border:1px dashed var(--line); border-radius:12px; padding:22px 12px; margin-bottom:16px;
-  display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--muted);
+  display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--muted); position:relative;
   font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.02);
+}
+.gate-ad-tag{
+  position:absolute; top:8px; left:10px; font:700 10px "Sora",sans-serif; letter-spacing:.05em;
+  color:var(--gc); border:1px solid var(--gc); border-radius:5px; padding:1px 5px;
 }
 .gate-ad-dots{display:flex; gap:5px}
 .gate-ad-dots i{width:6px; height:6px; border-radius:50%; background:var(--gc); opacity:.35; animation:gad 1.2s ease-in-out infinite}
@@ -210,6 +214,31 @@ details.guide[open] > summary::after{content:"\2212"}
 .captcha-row button{flex:none; padding:0 18px; border-radius:12px; border:0; background:var(--gc); color:#fff; font:600 14px "DM Sans",sans-serif; cursor:pointer}
 .captcha-refresh{background:none; border:0; color:var(--muted); font-size:12px; cursor:pointer; padding:8px 0 0; text-decoration:underline}
 .captcha-err{color:var(--bad); font-size:13px; min-height:16px; margin-top:8px}
+
+/* Video mission: a small mock player, deliberately different from the ad ring */
+.gate-video{margin:2px 0 14px}
+.gate-video-screen{
+  aspect-ratio:16/9; border-radius:12px; background:linear-gradient(160deg, #1a1a24, #0c0c12);
+  display:grid; place-items:center; border:1px solid rgba(255,255,255,.08); overflow:hidden; position:relative;
+}
+.gate-video-screen::after{content:""; position:absolute; inset:0; background:repeating-linear-gradient(100deg, rgba(255,255,255,.03) 0 2px, transparent 2px 6px)}
+.gate-video-play{width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,.14); display:grid; place-items:center; z-index:1}
+.gate-video-play svg{width:20px; height:20px; fill:#fff; margin-left:2px}
+.gate-video-bar{height:5px; border-radius:99px; background:var(--surface-2); margin:10px 0 6px; overflow:hidden}
+.gate-video-bar i{display:block; height:100%; width:0; background:var(--gc); transition:width .2s linear}
+.gate-video-time{display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums}
+
+/* Process mission: a small terminal log, distinct from both the ad ring and the video player */
+.gate-process{margin:2px 0 14px}
+.gate-term{
+  height:96px; border-radius:12px; background:#07080c; border:1px solid rgba(255,255,255,.08);
+  padding:12px 14px; font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:#8fe3a8;
+  overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end;
+}
+.gate-term div{opacity:0; transform:translateY(4px); animation:termline .3s ease forwards}
+@keyframes termline{to{opacity:1; transform:translateY(0)}}
+.gate-term .cur::after{content:"█"; margin-left:2px; animation:blink 1s step-start infinite}
+@keyframes blink{50%{opacity:0}}
 
 .linkbtn{background:none; border:0; color:var(--accent-h); font:600 14px "DM Sans",sans-serif; cursor:pointer; padding:4px}
 .linkbtn:hover{text-decoration:underline}
@@ -353,9 +382,9 @@ details.guide[open] > summary::after{content:"\2212"}
         <p class="small" style="margin:8px 0 0">This is KeyGate's own gate page — not a copy of any sponsor network's design. No external link needed, so nothing can fail to redirect back.</p>
         <label for="title">Title <span style="color:var(--muted);font-weight:400">(optional)</span></label>
         <input id="title" type="text" maxlength="60" autocomplete="off" placeholder="My awesome script">
-        <label for="myScript">Your Lua script <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-        <textarea id="myScript" spellcheck="false" style="height:140px" placeholder="print(&quot;Hello from my script&quot;)"></textarea>
-        <p class="small" style="margin:8px 0 0">It runs right after a valid key. Leave it empty to add your script later.</p>
+        <label for="myScript">Your Lua script <span style="color:var(--bad);font-weight:600">(required)</span></label>
+        <textarea id="myScript" spellcheck="false" style="height:140px" placeholder="print(&quot;Hello from my script&quot;)" required=""></textarea>
+        <p class="small" style="margin:8px 0 0">It runs right after a valid key.</p>
         <div class="msg bad" id="cErr" role="alert" hidden=""></div>
         <button class="btn" id="go" type="submit">Create share link</button>
       </form>
@@ -432,6 +461,7 @@ details.guide[open] > summary::after{content:"\2212"}
                 <div class="gate-badge"><i></i><span id="gateBadge">Classic Gate</span></div>
                 <div class="mission-list" id="missionList" aria-hidden="true"></div>
                 <div class="gate-ad" id="gateAd" aria-hidden="true">
+                  <span class="gate-ad-tag">AD</span>
                   <span>Advertisement</span>
                   <div class="gate-ad-dots"><i></i><i></i><i></i></div>
                 </div>
@@ -442,6 +472,19 @@ details.guide[open] > summary::after{content:"\2212"}
                     <svg viewBox="0 0 88 88"><circle class="track" cx="44" cy="44" r="38"></circle><circle class="prog" id="gateProg" cx="44" cy="44" r="38"></circle></svg>
                     <div class="pct" id="gatePct">0%</div>
                   </div>
+                </div>
+
+                <div id="gateVideo" class="gate-video" hidden="">
+                  <div class="gate-video-screen">
+                    <div class="gate-video-play" id="gateVideoPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+                  </div>
+                  <div class="gate-video-bar"><i id="gateVideoBar"></i></div>
+                  <div class="gate-video-time"><span id="gateVideoNow">0:00</span> / <span id="gateVideoDur">0:00</span></div>
+                </div>
+
+                <div id="gateProcess" class="gate-process" hidden="">
+                  <div class="gate-term" id="gateTerm"></div>
+                  <div class="gate-video-bar"><i id="gateProcessBar"></i></div>
                 </div>
 
                 <div id="gateCaptcha" class="captcha" hidden="">
@@ -892,6 +935,165 @@ local function stroke(obj, color, thickness)
 	return s
 end
 
+-- Info HUD, shown top-right once a valid key is active. Not draggable, on purpose.
+local function openHud()
+\tlocal RunService = game:GetService("RunService")
+\tlocal Stats      = game:GetService("Stats")
+\tlocal MarketplaceService = game:GetService("MarketplaceService")
+
+\tlocal gui = Instance.new("ScreenGui")
+\tgui.Name = "KeyGateHUD"
+\tgui.ResetOnSpawn = false
+\tgui.IgnoreGuiInset = true
+\tgui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+\tgui.DisplayOrder = 998
+\tlocal parent = guiParent()
+\tlocal old = parent:FindFirstChild("KeyGateHUD")
+\tif old then old:Destroy() end
+\tlocal okParent = pcall(function() gui.Parent = parent end)
+\tif not okParent then gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui") end
+
+\tlocal panel = Instance.new("Frame")
+\tpanel.Name = "Panel"
+\tpanel.AnchorPoint = Vector2.new(1, 0)
+\tpanel.Position = UDim2.new(1, -14, 0, 14)
+\tpanel.Size = UDim2.new(0, 222, 0, 178)
+\tpanel.BackgroundColor3 = COL.bg
+\tpanel.BorderSizePixel = 0
+\tpanel.Active = false                                      -- not a drag surface
+\tpanel.Parent = gui
+\tcorner(panel, 16)
+\tstroke(panel, COL.line, 1.5)
+
+\tlocal title = Instance.new("TextLabel")
+\ttitle.BackgroundTransparency = 1
+\ttitle.Position = UDim2.new(0, 14, 0, 10)
+\ttitle.Size = UDim2.new(1, -28, 0, 20)
+\ttitle.Font = Enum.Font.GothamBold
+\ttitle.TextSize = 13
+\ttitle.TextColor3 = COL.text
+\ttitle.TextXAlignment = Enum.TextXAlignment.Left
+\ttitle.Text = "KeyGate"
+\ttitle.Parent = panel
+
+\tlocal rows = Instance.new("Frame")
+\trows.BackgroundTransparency = 1
+\trows.Position = UDim2.new(0, 12, 0, 36)
+\trows.Size = UDim2.new(1, -24, 1, -46)
+\trows.Parent = panel
+\tlocal layout = Instance.new("UIListLayout")
+\tlayout.Padding = UDim.new(0, 6)
+\tlayout.SortOrder = Enum.SortOrder.LayoutOrder
+\tlayout.Parent = rows
+
+\tlocal valueLabels = {}
+\tlocal function addRow(order, label, accent)
+\t\tlocal row = Instance.new("Frame")
+\t\trow.Size = UDim2.new(1, 0, 0, 26)
+\t\trow.BackgroundColor3 = COL.field
+\t\trow.LayoutOrder = order
+\t\trow.Parent = rows
+\t\tcorner(row, 8)
+\t\tlocal dot = Instance.new("Frame")
+\t\tdot.AnchorPoint = Vector2.new(0, 0.5)
+\t\tdot.Position = UDim2.new(0, 8, 0.5, 0)
+\t\tdot.Size = UDim2.new(0, 6, 0, 6)
+\t\tdot.BackgroundColor3 = accent
+\t\tdot.BorderSizePixel = 0
+\t\tdot.Parent = row
+\t\tcorner(dot, 3)
+\t\tlocal lbl = Instance.new("TextLabel")
+\t\tlbl.BackgroundTransparency = 1
+\t\tlbl.Position = UDim2.new(0, 20, 0, 0)
+\t\tlbl.Size = UDim2.new(0.55, -20, 1, 0)
+\t\tlbl.Font = Enum.Font.Gotham
+\t\tlbl.TextSize = 12
+\t\tlbl.TextColor3 = COL.muted
+\t\tlbl.TextXAlignment = Enum.TextXAlignment.Left
+\t\tlbl.Text = label
+\t\tlbl.Parent = row
+\t\tlocal val = Instance.new("TextLabel")
+\t\tval.BackgroundTransparency = 1
+\t\tval.Position = UDim2.new(0.55, 0, 0, 0)
+\t\tval.Size = UDim2.new(0.45, -8, 1, 0)
+\t\tval.Font = Enum.Font.GothamBold
+\t\tval.TextSize = 12
+\t\tval.TextColor3 = accent
+\t\tval.TextXAlignment = Enum.TextXAlignment.Right
+\t\tval.TextTruncate = Enum.TextTruncate.AtEnd
+\t\tval.Text = "..."
+\t\tval.Parent = row
+\t\tvalueLabels[label] = val
+\t\treturn val
+\tend
+
+\tlocal vFps  = addRow(1, "FPS", COL.fps)
+\tlocal vCpu  = addRow(2, "CPU", COL.cpu)
+\tlocal vGame = addRow(3, "GAME", COL.gamestat)
+\tlocal vUser = addRow(4, "PLAYER", COL.userstat)
+\tlocal vTime = addRow(5, "KEY TIME", COL.timestat)
+
+\t-- player name
+\tvUser.Text = Players.LocalPlayer.Name
+
+\t-- game name: try the marketplace title first, fall back to game.Name / PlaceId
+\tvGame.Text = "..."
+\ttask.spawn(function()
+\t\tlocal ok, info = pcall(function() return MarketplaceService:GetProductInfo(game.PlaceId) end)
+\t\tif ok and info and info.Name then
+\t\t\tvGame.Text = info.Name
+\t\telseif game.Name ~= "" then
+\t\t\tvGame.Text = game.Name
+\t\telse
+\t\t\tvGame.Text = "Place " .. tostring(game.PlaceId)
+\t\tend
+\tend)
+
+\t-- FPS: smoothed frame counter
+\tlocal frames, fpsClock = 0, os.clock()
+\tlocal fpsConn = RunService.RenderStepped:Connect(function()
+\t\tframes = frames + 1
+\t\tlocal now = os.clock()
+\t\tif now - fpsClock >= 0.5 then
+\t\t\tvFps.Text = tostring(math.floor(frames / (now - fpsClock) + 0.5))
+\t\t\tframes, fpsClock = 0, now
+\t\tend
+\tend)
+
+\t-- CPU: best-effort, from Roblox's own performance stats where available
+\tlocal function readCpu()
+\t\tlocal ok, ms = pcall(function()
+\t\t\tlocal perf = Stats:FindFirstChild("PerformanceStats")
+\t\t\tlocal item = perf and perf:FindFirstChild("CPU (Main)")
+\t\t\treturn item and item:GetValue()
+\t\tend)
+\t\tif ok and ms then return string.format("%.0f%%", math.clamp(ms / 16.67 * 100, 0, 999)) end
+\t\treturn "N/A"
+\tend
+
+\t-- key time remaining, ticks once a second
+\tlocal function formatRemaining()
+\t\tif KEY_EXPIRES_AT <= 0 then return "No limit" end
+\t\tlocal left = math.max(0, math.floor(KEY_EXPIRES_AT - os.time()))
+\t\tif left <= 0 then return "Expired" end
+\t\tlocal h = math.floor(left / 3600)
+\t\tlocal m = math.floor((left % 3600) / 60)
+\t\tlocal sSec = left % 60
+\t\tif h > 0 then return string.format("%dh %02dm", h, m) end
+\t\treturn string.format("%dm %02ds", m, sSec)
+\tend
+
+\ttask.spawn(function()
+\t\twhile gui.Parent do
+\t\t\tvCpu.Text = readCpu()
+\t\t\tvTime.Text = formatRemaining()
+\t\t\ttask.wait(1)
+\t\tend
+\t\tpcall(function() fpsConn:Disconnect() end)
+\tend)
+
+end
+
 local function openMenu()
 	local alive = true
 	local conns = {}
@@ -1123,165 +1325,6 @@ local function openMenu()
 \tend)
 end
 
--- Info HUD, shown top-right once a valid key is active. Not draggable, on purpose.
-local function openHud()
-\tlocal RunService = game:GetService("RunService")
-\tlocal Stats      = game:GetService("Stats")
-\tlocal MarketplaceService = game:GetService("MarketplaceService")
-
-\tlocal gui = Instance.new("ScreenGui")
-\tgui.Name = "KeyGateHUD"
-\tgui.ResetOnSpawn = false
-\tgui.IgnoreGuiInset = true
-\tgui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-\tgui.DisplayOrder = 998
-\tlocal parent = guiParent()
-\tlocal old = parent:FindFirstChild("KeyGateHUD")
-\tif old then old:Destroy() end
-\tlocal okParent = pcall(function() gui.Parent = parent end)
-\tif not okParent then gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui") end
-
-\tlocal panel = Instance.new("Frame")
-\tpanel.Name = "Panel"
-\tpanel.AnchorPoint = Vector2.new(1, 0)
-\tpanel.Position = UDim2.new(1, -14, 0, 14)
-\tpanel.Size = UDim2.new(0, 222, 0, 178)
-\tpanel.BackgroundColor3 = COL.bg
-\tpanel.BorderSizePixel = 0
-\tpanel.Active = false                                      -- not a drag surface
-\tpanel.Parent = gui
-\tcorner(panel, 16)
-\tstroke(panel, COL.line, 1.5)
-
-\tlocal title = Instance.new("TextLabel")
-\ttitle.BackgroundTransparency = 1
-\ttitle.Position = UDim2.new(0, 14, 0, 10)
-\ttitle.Size = UDim2.new(1, -28, 0, 20)
-\ttitle.Font = Enum.Font.GothamBold
-\ttitle.TextSize = 13
-\ttitle.TextColor3 = COL.text
-\ttitle.TextXAlignment = Enum.TextXAlignment.Left
-\ttitle.Text = "KeyGate"
-\ttitle.Parent = panel
-
-\tlocal rows = Instance.new("Frame")
-\trows.BackgroundTransparency = 1
-\trows.Position = UDim2.new(0, 12, 0, 36)
-\trows.Size = UDim2.new(1, -24, 1, -46)
-\trows.Parent = panel
-\tlocal layout = Instance.new("UIListLayout")
-\tlayout.Padding = UDim.new(0, 6)
-\tlayout.SortOrder = Enum.SortOrder.LayoutOrder
-\tlayout.Parent = rows
-
-\tlocal valueLabels = {}
-\tlocal function addRow(order, label, accent)
-\t\tlocal row = Instance.new("Frame")
-\t\trow.Size = UDim2.new(1, 0, 0, 26)
-\t\trow.BackgroundColor3 = COL.field
-\t\trow.LayoutOrder = order
-\t\trow.Parent = rows
-\t\tcorner(row, 8)
-\t\tlocal dot = Instance.new("Frame")
-\t\tdot.AnchorPoint = Vector2.new(0, 0.5)
-\t\tdot.Position = UDim2.new(0, 8, 0.5, 0)
-\t\tdot.Size = UDim2.new(0, 6, 0, 6)
-\t\tdot.BackgroundColor3 = accent
-\t\tdot.BorderSizePixel = 0
-\t\tdot.Parent = row
-\t\tcorner(dot, 3)
-\t\tlocal lbl = Instance.new("TextLabel")
-\t\tlbl.BackgroundTransparency = 1
-\t\tlbl.Position = UDim2.new(0, 20, 0, 0)
-\t\tlbl.Size = UDim2.new(0.55, -20, 1, 0)
-\t\tlbl.Font = Enum.Font.Gotham
-\t\tlbl.TextSize = 12
-\t\tlbl.TextColor3 = COL.muted
-\t\tlbl.TextXAlignment = Enum.TextXAlignment.Left
-\t\tlbl.Text = label
-\t\tlbl.Parent = row
-\t\tlocal val = Instance.new("TextLabel")
-\t\tval.BackgroundTransparency = 1
-\t\tval.Position = UDim2.new(0.55, 0, 0, 0)
-\t\tval.Size = UDim2.new(0.45, -8, 1, 0)
-\t\tval.Font = Enum.Font.GothamBold
-\t\tval.TextSize = 12
-\t\tval.TextColor3 = accent
-\t\tval.TextXAlignment = Enum.TextXAlignment.Right
-\t\tval.TextTruncate = Enum.TextTruncate.AtEnd
-\t\tval.Text = "..."
-\t\tval.Parent = row
-\t\tvalueLabels[label] = val
-\t\treturn val
-\tend
-
-\tlocal vFps  = addRow(1, "FPS", COL.fps)
-\tlocal vCpu  = addRow(2, "CPU", COL.cpu)
-\tlocal vGame = addRow(3, "GAME", COL.gamestat)
-\tlocal vUser = addRow(4, "PLAYER", COL.userstat)
-\tlocal vTime = addRow(5, "KEY TIME", COL.timestat)
-
-\t-- player name
-\tvUser.Text = Players.LocalPlayer.Name
-
-\t-- game name: try the marketplace title first, fall back to game.Name / PlaceId
-\tvGame.Text = "..."
-\ttask.spawn(function()
-\t\tlocal ok, info = pcall(function() return MarketplaceService:GetProductInfo(game.PlaceId) end)
-\t\tif ok and info and info.Name then
-\t\t\tvGame.Text = info.Name
-\t\telseif game.Name ~= "" then
-\t\t\tvGame.Text = game.Name
-\t\telse
-\t\t\tvGame.Text = "Place " .. tostring(game.PlaceId)
-\t\tend
-\tend)
-
-\t-- FPS: smoothed frame counter
-\tlocal frames, fpsClock = 0, os.clock()
-\tlocal fpsConn = RunService.RenderStepped:Connect(function()
-\t\tframes = frames + 1
-\t\tlocal now = os.clock()
-\t\tif now - fpsClock >= 0.5 then
-\t\t\tvFps.Text = tostring(math.floor(frames / (now - fpsClock) + 0.5))
-\t\t\tframes, fpsClock = 0, now
-\t\tend
-\tend)
-
-\t-- CPU: best-effort, from Roblox's own performance stats where available
-\tlocal function readCpu()
-\t\tlocal ok, ms = pcall(function()
-\t\t\tlocal perf = Stats:FindFirstChild("PerformanceStats")
-\t\t\tlocal item = perf and perf:FindFirstChild("CPU (Main)")
-\t\t\treturn item and item:GetValue()
-\t\tend)
-\t\tif ok and ms then return string.format("%.0f%%", math.clamp(ms / 16.67 * 100, 0, 999)) end
-\t\treturn "N/A"
-\tend
-
-\t-- key time remaining, ticks once a second
-\tlocal function formatRemaining()
-\t\tif KEY_EXPIRES_AT <= 0 then return "No limit" end
-\t\tlocal left = math.max(0, math.floor(KEY_EXPIRES_AT - os.time()))
-\t\tif left <= 0 then return "Expired" end
-\t\tlocal h = math.floor(left / 3600)
-\t\tlocal m = math.floor((left % 3600) / 60)
-\t\tlocal sSec = left % 60
-\t\tif h > 0 then return string.format("%dh %02dm", h, m) end
-\t\treturn string.format("%dm %02ds", m, sSec)
-\tend
-
-\ttask.spawn(function()
-\t\twhile gui.Parent do
-\t\t\tvCpu.Text = readCpu()
-\t\t\tvTime.Text = formatRemaining()
-\t\t\ttask.wait(1)
-\t\tend
-\t\tpcall(function() fpsConn:Disconnect() end)
-\tend)
-
-end
-
 task.spawn(function()
 	local saved = readSaved()
 	if saved then
@@ -1300,6 +1343,7 @@ end)
 
   $("f").addEventListener("submit", ev => {
     ev.preventDefault(); showErr("");
+    if (!cleanScript($("myScript").value).trim()) return showErr("Add your Lua script first — it's required so the share link actually delivers something.");
     const style = gateStyle(document.querySelector('input[name="gstyle"]:checked').value);
     let quickDur = QUICK_DUR.def;
     if (style === "quick") {
@@ -1478,24 +1522,39 @@ function visitor() {
       $("captchaErr").textContent = "That code didn't match the new one shown above. Try again.";
     }
   }
+  const PANELS = ["gateAd", "gateTimed", "gateVideo", "gateProcess", "gateCaptcha"];
+  function hideAllPanels() { PANELS.forEach(id => $(id).hidden = true); }
+  const fmtTime = s => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+  const TERM_LINES = ["> Connecting to server...", "> Checking response...", "> Done."];
+
   function showMission() {
     const m = missions[missionIdx];
     $("gateStage").textContent = "Mission " + (missionIdx + 1) + " of " + missions.length;
     $("gateMsg").textContent = m.msg; $("gateMsg").classList.remove("is-ready");
     paintMissionDots();
+    hideAllPanels();
     if (m.type === "captcha") {
-      $("gateAd").hidden = true; $("gateTimed").hidden = true; $("gateCaptcha").hidden = false;
+      $("gateCaptcha").hidden = false;
       newCaptcha(); $("captchaErr").textContent = "";
-    } else {
-      $("gateAd").hidden = (m.type !== "ad" && m.type !== "video"); $("gateTimed").hidden = false; $("gateCaptcha").hidden = true;
+    } else if (m.type === "ad") {
+      $("gateAd").hidden = false; $("gateTimed").hidden = false;
       ringSetup(); runTimedMission(m);
+    } else if (m.type === "video") {
+      $("gateVideo").hidden = false;
+      $("gateVideoDur").textContent = fmtTime(m.seconds);
+      $("gateVideoNow").textContent = "0:00"; $("gateVideoBar").style.width = "0%";
+      runTimedMission(m);
+    } else {                                                             // "process": terminal-style log
+      $("gateProcess").hidden = false;
+      $("gateTerm").innerHTML = ""; $("gateProcessBar").style.width = "0%";
+      runTimedMission(m);
     }
   }
   function advanceMission() {
     missionIdx++;
     if (missionIdx < missions.length) { showMission(); return; }
     gateRunning = false; gateTimerDone = true;
-    $("gateAd").hidden = true; $("gateTimed").hidden = true; $("gateCaptcha").hidden = true;
+    hideAllPanels();
     paintMissionDots();
     if (!flow.math || !flow.wait) $("gateMsg").textContent = "Almost there, finish the steps above...";
     checkReady();
@@ -1503,14 +1562,29 @@ function visitor() {
   function runTimedMission(m) {
     if (gateRunning) return; gateRunning = true;
     const c = 2 * Math.PI * 38;
-    let ms = 0;
+    let ms = 0, shownLines = 0;
     const iv = setInterval(() => {
       const active = document.visibilityState === "visible" && document.hasFocus();
       if (!active) return;                                              // pauses exactly like the step-2 timer
       ms += 200;
       const pct = Math.min(100, ms / (m.seconds * 1000) * 100);
-      $("gateProg").style.strokeDashoffset = c - (c * pct / 100);
-      $("gatePct").textContent = Math.round(pct) + "%";
+      if (m.type === "ad") {
+        $("gateProg").style.strokeDashoffset = c - (c * pct / 100);
+        $("gatePct").textContent = Math.round(pct) + "%";
+      } else if (m.type === "video") {
+        $("gateVideoBar").style.width = pct + "%";
+        $("gateVideoNow").textContent = fmtTime(Math.min(m.seconds, ms / 1000));
+        $("gateVideoPlay").style.opacity = pct > 3 ? "0" : "1";
+      } else {
+        $("gateProcessBar").style.width = pct + "%";
+        const want = Math.min(TERM_LINES.length, Math.floor(pct / (100 / TERM_LINES.length)) + 1);
+        while (shownLines < want) {
+          const line = document.createElement("div");
+          if (shownLines > 0) $("gateTerm").children[shownLines - 1]?.classList.remove("cur");
+          line.textContent = TERM_LINES[shownLines]; line.className = "cur";
+          $("gateTerm").appendChild(line); shownLines++;
+        }
+      }
       if (ms >= m.seconds * 1000) { clearInterval(iv); gateRunning = false; advanceMission(); }
     }, 200);
   }
