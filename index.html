@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://718563047-atari-embeds.googleusercontent.com/embeds/0859b55943a2669bb80e1e1b89207842/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://2097204679-atari-embeds.googleusercontent.com/embeds/0859b55943a2669bb80e1e1b89207842/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
       <script>
         (function() {
           // Listen during capturing phase to intercept before <base target="_blank"> takes effect.
@@ -1021,10 +1021,11 @@ local function stroke(obj, color, thickness)
 	return s
 end
 
--- Info HUD, shown top-right once a valid key is active. Not draggable, on purpose.
+-- Info HUD, shown top-right once a valid key is active. Draggable by its title bar.
 local function openHud()
 \tlocal RunService = game:GetService("RunService")
 \tlocal Stats      = game:GetService("Stats")
+\tlocal UserInputService = game:GetService("UserInputService")
 \tlocal MarketplaceService = game:GetService("MarketplaceService")
 
 \tlocal gui = Instance.new("ScreenGui")
@@ -1043,13 +1044,18 @@ local function openHud()
 \tpanel.Name = "Panel"
 \tpanel.AnchorPoint = Vector2.new(1, 0)
 \tpanel.Position = UDim2.new(1, -14, 0, 14)
-\tpanel.Size = UDim2.new(0, 222, 0, 178)
+\tpanel.Size = UDim2.new(0, 244, 0, 234)
 \tpanel.BackgroundColor3 = COL.bg
 \tpanel.BorderSizePixel = 0
-\tpanel.Active = false                                      -- not a drag surface
 \tpanel.Parent = gui
 \tcorner(panel, 16)
 \tstroke(panel, COL.line, 1.5)
+
+\tlocal titleBar = Instance.new("Frame")                    -- drag handle
+\ttitleBar.BackgroundTransparency = 1
+\ttitleBar.Size = UDim2.new(1, 0, 0, 34)
+\ttitleBar.Active = true
+\ttitleBar.Parent = panel
 
 \tlocal title = Instance.new("TextLabel")
 \ttitle.BackgroundTransparency = 1
@@ -1060,7 +1066,28 @@ local function openHud()
 \ttitle.TextColor3 = COL.text
 \ttitle.TextXAlignment = Enum.TextXAlignment.Left
 \ttitle.Text = "KeyGate"
-\ttitle.Parent = panel
+\ttitle.Parent = titleBar
+
+\t-- draggable by the title bar only
+\tlocal dragging, dragStart, startPos = false, nil, nil
+\ttitleBar.InputBegan:Connect(function(input)
+\t\tif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+\t\t\tdragging = true
+\t\t\tdragStart = input.Position
+\t\t\tstartPos = panel.Position
+\t\tend
+\tend)
+\tUserInputService.InputChanged:Connect(function(input)
+\t\tif dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+\t\t\tlocal d = input.Position - dragStart
+\t\t\tpanel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
+\t\tend
+\tend)
+\tUserInputService.InputEnded:Connect(function(input)
+\t\tif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+\t\t\tdragging = false
+\t\tend
+\tend)
 
 \tlocal rows = Instance.new("Frame")
 \trows.BackgroundTransparency = 1
@@ -1072,17 +1099,16 @@ local function openHud()
 \tlayout.SortOrder = Enum.SortOrder.LayoutOrder
 \tlayout.Parent = rows
 
-\tlocal valueLabels = {}
-\tlocal function addRow(order, label, accent)
+\tlocal function addRow(order, label, accent, tall)
 \t\tlocal row = Instance.new("Frame")
-\t\trow.Size = UDim2.new(1, 0, 0, 26)
+\t\trow.Size = UDim2.new(1, 0, 0, tall and 40 or 26)
 \t\trow.BackgroundColor3 = COL.field
 \t\trow.LayoutOrder = order
 \t\trow.Parent = rows
 \t\tcorner(row, 8)
 \t\tlocal dot = Instance.new("Frame")
-\t\tdot.AnchorPoint = Vector2.new(0, 0.5)
-\t\tdot.Position = UDim2.new(0, 8, 0.5, 0)
+\t\tdot.AnchorPoint = Vector2.new(0, 0)
+\t\tdot.Position = UDim2.new(0, 8, 0, tall and 6 or 10)
 \t\tdot.Size = UDim2.new(0, 6, 0, 6)
 \t\tdot.BackgroundColor3 = accent
 \t\tdot.BorderSizePixel = 0
@@ -1091,25 +1117,30 @@ local function openHud()
 \t\tlocal lbl = Instance.new("TextLabel")
 \t\tlbl.BackgroundTransparency = 1
 \t\tlbl.Position = UDim2.new(0, 20, 0, 0)
-\t\tlbl.Size = UDim2.new(0.55, -20, 1, 0)
+\t\tlbl.Size = UDim2.new(1, -28, 0, tall and 16 or 26)
 \t\tlbl.Font = Enum.Font.Gotham
-\t\tlbl.TextSize = 12
+\t\tlbl.TextSize = 11
 \t\tlbl.TextColor3 = COL.muted
 \t\tlbl.TextXAlignment = Enum.TextXAlignment.Left
 \t\tlbl.Text = label
 \t\tlbl.Parent = row
 \t\tlocal val = Instance.new("TextLabel")
 \t\tval.BackgroundTransparency = 1
-\t\tval.Position = UDim2.new(0.55, 0, 0, 0)
-\t\tval.Size = UDim2.new(0.45, -8, 1, 0)
 \t\tval.Font = Enum.Font.GothamBold
-\t\tval.TextSize = 12
+\t\tval.TextSize = tall and 12 or 12
 \t\tval.TextColor3 = accent
-\t\tval.TextXAlignment = Enum.TextXAlignment.Right
 \t\tval.TextTruncate = Enum.TextTruncate.AtEnd
 \t\tval.Text = "..."
 \t\tval.Parent = row
-\t\tvalueLabels[label] = val
+\t\tif tall then
+\t\t\tval.Position = UDim2.new(0, 20, 0, 18)
+\t\t\tval.Size = UDim2.new(1, -28, 0, 16)
+\t\t\tval.TextXAlignment = Enum.TextXAlignment.Left
+\t\telse
+\t\t\tval.Position = UDim2.new(0.55, 0, 0, 0)
+\t\t\tval.Size = UDim2.new(0.45, -8, 1, 0)
+\t\t\tval.TextXAlignment = Enum.TextXAlignment.Right
+\t\tend
 \t\treturn val
 \tend
 
@@ -1118,6 +1149,7 @@ local function openHud()
 \tlocal vGame = addRow(3, "GAME", COL.gamestat)
 \tlocal vUser = addRow(4, "PLAYER", COL.userstat)
 \tlocal vTime = addRow(5, "KEY TIME", COL.timestat)
+\tlocal vPlay = addRow(6, "PLAY TIME", COL.accent, true)
 
 \t-- player name
 \tvUser.Text = Players.LocalPlayer.Name
@@ -1169,6 +1201,18 @@ local function openHud()
 \t\treturn string.format("%dm %02ds", m, sSec)
 \tend
 
+\t-- total play time since this HUD opened: days, hours, minutes, seconds, milliseconds, all shown
+\tlocal playStart = os.clock()
+\tlocal function formatPlayTime()
+\t\tlocal total = os.clock() - playStart
+\t\tlocal days = math.floor(total / 86400)
+\t\tlocal hours = math.floor((total % 86400) / 3600)
+\t\tlocal mins = math.floor((total % 3600) / 60)
+\t\tlocal secs = math.floor(total % 60)
+\t\tlocal ms = math.floor((total - math.floor(total)) * 1000)
+\t\treturn string.format("%dd %02dh %02dm %02ds %03dms", days, hours, mins, secs, ms)
+\tend
+
 \ttask.spawn(function()
 \t\twhile gui.Parent do
 \t\t\tvCpu.Text = readCpu()
@@ -1178,6 +1222,116 @@ local function openHud()
 \t\tpcall(function() fpsConn:Disconnect() end)
 \tend)
 
+\t-- play time updates fast enough that the milliseconds actually move
+\ttask.spawn(function()
+\t\twhile gui.Parent do
+\t\t\tvPlay.Text = formatPlayTime()
+\t\t\ttask.wait(0.03)
+\t\tend
+\tend)
+end
+
+-- Welcome splash: shown once, right after a key is accepted. "Welcome back" is used when
+-- the script started itself from an already-saved key, instead of a freshly typed one.
+local function openWelcome(returning)
+\tlocal TweenService = game:GetService("TweenService")
+
+\tlocal gui = Instance.new("ScreenGui")
+\tgui.Name = "KeyGateWelcome"
+\tgui.ResetOnSpawn = false
+\tgui.IgnoreGuiInset = true
+\tgui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+\tgui.DisplayOrder = 1000
+\tlocal parent = guiParent()
+\tlocal old = parent:FindFirstChild("KeyGateWelcome")
+\tif old then old:Destroy() end
+\tlocal okParent = pcall(function() gui.Parent = parent end)
+\tif not okParent then gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui") end
+
+\tlocal backdrop = Instance.new("Frame")
+\tbackdrop.Size = UDim2.new(1, 0, 1, 0)
+\tbackdrop.BackgroundColor3 = COL.bg
+\tbackdrop.BackgroundTransparency = 1
+\tbackdrop.BorderSizePixel = 0
+\tbackdrop.Parent = gui
+\tTweenService:Create(backdrop, TweenInfo.new(0.4), { BackgroundTransparency = 0.06 }):Play()
+
+\tlocal title = Instance.new("TextLabel")
+\ttitle.AnchorPoint = Vector2.new(0.5, 0.5)
+\ttitle.Position = UDim2.new(0.5, 0, 0.42, 0)
+\ttitle.Size = UDim2.new(0, 360, 0, 46)
+\ttitle.BackgroundTransparency = 1
+\ttitle.Font = Enum.Font.GothamBold
+\ttitle.TextSize = 32
+\ttitle.TextColor3 = COL.text
+\ttitle.Text = returning and "Welcome Back" or "Welcome"
+\ttitle.Parent = backdrop
+
+\tlocal sub = Instance.new("TextLabel")
+\tsub.AnchorPoint = Vector2.new(0.5, 0.5)
+\tsub.Position = UDim2.new(0.5, 0, 0.42 + 0.085, 0)
+\tsub.Size = UDim2.new(0, 360, 0, 24)
+\tsub.BackgroundTransparency = 1
+\tsub.Font = Enum.Font.Gotham
+\tsub.TextSize = 16
+\tsub.TextColor3 = COL.accent
+\tsub.Text = "To Aksara Lib"
+\tsub.Parent = backdrop
+
+\tlocal loadLbl = Instance.new("TextLabel")
+\tloadLbl.AnchorPoint = Vector2.new(0.5, 0.5)
+\tloadLbl.Position = UDim2.new(0.5, 0, 0.42 + 0.18, 0)
+\tloadLbl.Size = UDim2.new(0, 360, 0, 18)
+\tloadLbl.BackgroundTransparency = 1
+\tloadLbl.Font = Enum.Font.Gotham
+\tloadLbl.TextSize = 12
+\tloadLbl.TextColor3 = COL.muted
+\tloadLbl.Text = "Loading"
+\tloadLbl.Parent = backdrop
+
+\tlocal waveHolder = Instance.new("Frame")
+\twaveHolder.AnchorPoint = Vector2.new(0.5, 0.5)
+\twaveHolder.Position = UDim2.new(0.5, 0, 0.42 + 0.26, 0)
+\twaveHolder.Size = UDim2.new(0, 240, 0, 20)
+\twaveHolder.BackgroundTransparency = 1
+\twaveHolder.Parent = backdrop
+
+\tlocal total = 20
+\tlocal chars = {}
+\tfor i = 1, total do
+\t\tlocal ch = Instance.new("TextLabel")
+\t\tch.AnchorPoint = Vector2.new(0, 0.5)
+\t\tch.Position = UDim2.new((i - 1) / total, 0, 0.5, 0)
+\t\tch.Size = UDim2.new(1 / total, 0, 1, 0)
+\t\tch.BackgroundTransparency = 1
+\t\tch.Font = Enum.Font.Code
+\t\tch.TextSize = 18
+\t\tch.TextColor3 = COL.accent
+\t\tch.Text = (i % 2 == 1) and "-" or "_"
+\t\tch.Parent = waveHolder
+\t\tchars[i] = ch
+\tend
+
+\tlocal alive = true
+\ttask.spawn(function()
+\t\tlocal t0 = os.clock()
+\t\twhile alive do
+\t\t\tlocal t = os.clock() - t0
+\t\t\tfor i, ch in ipairs(chars) do
+\t\t\t\tlocal phase = t * 4 + i * 0.5                       -- staggered per character = ocean-wave motion
+\t\t\t\tch.Position = UDim2.new((i - 1) / total, 0, 0.5, math.sin(phase) * 6)
+\t\t\tend
+\t\t\ttask.wait()
+\t\tend
+\tend)
+
+\ttask.delay(2.2, function()
+\t\talive = false
+\t\tlocal tw = TweenService:Create(backdrop, TweenInfo.new(0.5), { BackgroundTransparency = 1 })
+\t\ttw:Play()
+\t\ttw.Completed:Wait()
+\t\tgui:Destroy()
+\tend)
 end
 
 local function openMenu()
@@ -1354,6 +1508,7 @@ local function openMenu()
 			pcall(function() c:Disconnect() end)
 		end
 		gui:Destroy()
+		openWelcome(false)
 		openHud()
 		runScript()
 	end
@@ -1417,6 +1572,7 @@ task.spawn(function()
 		local ok, _, expMin = verifyKey(saved)
 		if ok then
 			KEY_EXPIRES_AT = (expMin and expMin > 0) and (expMin * 60) or 0
+			openWelcome(true)
 			openHud()
 			runScript()
 			return
