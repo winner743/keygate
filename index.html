@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://26243015-atari-embeds.googleusercontent.com/embeds/0859b55943a2669bb80e1e1b89207842/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://718563047-atari-embeds.googleusercontent.com/embeds/0859b55943a2669bb80e1e1b89207842/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
       <script>
         (function() {
           // Listen during capturing phase to intercept before <base target="_blank"> takes effect.
@@ -186,17 +186,19 @@ details.guide[open] > summary::after{content:"\2212"}
 .gate-msg.is-ready{color:var(--ok); font-weight:600}
 
 /* Per-style themes: each gate gets its own look, not copied from any sponsor's branding */
-.gate[data-theme="blue-purple"]{background:linear-gradient(160deg, #241b4d, #150f30); border-color:#4c3fa8}
-.gate[data-theme="blue-purple"] .gate-msg{color:#cfc9ff}
-.gate[data-theme="yellow-white"]{background:linear-gradient(160deg, #fffdf3, #fff8dc); border:2px solid #f0c419}
-.gate[data-theme="yellow-white"] .gate-badge{color:#8a6d00}
-.gate[data-theme="yellow-white"] .gate-msg{color:#6b5900}
-.gate[data-theme="yellow-white"] .gate-stage{color:#8a7a2a}
-.gate[data-theme="yellow-white"] .gate-checks li{color:#8a7a2a}
-.gate[data-theme="yellow-white"] .gate-checks li.on{color:#4a3d00}
-.gate[data-theme="yellow-white"] .gate-ad{border-color:#e6c74a; background:rgba(240,196,25,.08); color:#8a6d00}
-.gate[data-theme="yellow-white"] .gate-ring .track{stroke:#f3e6b0}
-.gate[data-theme="dark"]{background:linear-gradient(160deg, #101014, #050506); border-color:#2a2a30}
+.gate[data-theme="blue-purple"]{background:linear-gradient(160deg, #3d2372, #24124a); border-color:#7c6cf0}
+.gate[data-theme="blue-purple"] .gate-msg{color:#e2d9ff}
+.gate[data-theme="yellow-white"]{background:linear-gradient(160deg, #f0c419, #d1a80a); border:2px solid #b8900a}
+.gate[data-theme="yellow-white"] .gate-badge{color:#3a2c00}
+.gate[data-theme="yellow-white"] .gate-msg{color:#3a2c00}
+.gate[data-theme="yellow-white"] .gate-stage{color:#5c4600}
+.gate[data-theme="yellow-white"] .gate-checks li{color:#5c4600}
+.gate[data-theme="yellow-white"] .gate-checks li.on{color:#2b2000}
+.gate[data-theme="yellow-white"] .gate-ad{border-color:#8a6d00; background:rgba(0,0,0,.08); color:#3a2c00}
+.gate[data-theme="yellow-white"] .gate-ring .track{stroke:rgba(0,0,0,.15)}
+.gate[data-theme="yellow-white"] .captcha-row input{background:#fffbea; color:#3a2c00; border-color:#8a6d00}
+.gate[data-theme="yellow-white"] .gate-term{border-color:#8a6d00}
+.gate[data-theme="dark"]{background:linear-gradient(160deg, #0a0a0d, #000000); border-color:#2a2a30}
 
 .mission-list{display:flex; gap:6px; justify-content:center; margin:0 0 14px}
 .mission-dot{width:8px; height:8px; border-radius:50%; background:var(--surface-2); border:1px solid var(--line); transition:background .2s, border-color .2s}
@@ -385,9 +387,29 @@ details.guide[open] > summary::after{content:"\2212"}
         <label for="myScript">Your Lua script <span style="color:var(--bad);font-weight:600">(required)</span></label>
         <textarea id="myScript" spellcheck="false" style="height:140px" placeholder="print(&quot;Hello from my script&quot;)" required=""></textarea>
         <p class="small" style="margin:8px 0 0">It runs right after a valid key.</p>
+        <label style="display:flex; align-items:center; gap:8px; margin-top:18px; cursor:pointer">
+          <input type="checkbox" id="useLoader" style="width:16px; height:16px; margin:0">
+          <span style="font-weight:600; font-size:14px">Host the script on GitHub as a loadstring loader</span>
+        </label>
+        <p class="small" style="margin:4px 0 0">Instead of pasting the full script, your executor loads it from GitHub each time. Edit the file on GitHub later and every player gets the update, no new link needed.</p>
+        <div id="loaderWrap" hidden="" style="margin-top:10px">
+          <label for="loaderToken" style="margin-top:0">GitHub token</label>
+          <input id="loaderToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_...">
+          <label for="loaderRepo">Repository name</label>
+          <input id="loaderRepo" type="text" autocomplete="off" spellcheck="false" placeholder="keygate">
+          <p class="small" style="margin:8px 0 0">Only used once, right now, to upload the file. Never saved.</p>
+        </div>
         <div class="msg bad" id="cErr" role="alert" hidden=""></div>
         <button class="btn" id="go" type="submit">Create share link</button>
       </form>
+    </section>
+
+    <section class="card" id="savedCard" hidden="">
+      <h1>Saved scripts</h1>
+      <p class="sub">Links you\'ve created in this browser. Not synced anywhere else.</p>
+      <div id="savedList"></div>
+      <div class="empty" id="savedEmpty" style="text-align:center; color:var(--muted); padding:10px 0">Nothing saved yet.</div>
+      <button class="linkbtn" id="savedBack" type="button" style="margin-top:12px">Back</button>
     </section>
 
     <section class="card" id="resCard" hidden="">
@@ -402,9 +424,11 @@ details.guide[open] > summary::after{content:"\2212"}
       </div>
       <label style="margin-top:26px">API key</label>
       <div class="linkrow"><input id="apiKey" readonly=""><button id="copyApi" type="button">Copy</button></div>
-      <label style="margin-top:22px">Ready-to-use Lua script (key menu + your script)</label>
+      <label style="margin-top:22px" id="luaLabel">Ready-to-use Lua script (key menu + your script)</label>
+      <div class="note" id="loaderNote" hidden="" style="margin-bottom:10px">This is a small loader. The full script is hosted on GitHub and fetched each time it runs.</div>
       <textarea id="lua" readonly="" spellcheck="false"></textarea>
       <button class="btn ghost" id="copyLua" type="button" style="margin-top:8px">Copy script</button>
+      <button class="linkbtn" id="showFull" type="button" hidden="" style="margin-top:6px">Show the full script instead</button>
       <label style="margin-top:26px">Test your key system</label>
       <p class="small" style="margin:0 0 8px">Make a test key (valid for 1 hour), paste it into the key menu and check that your script runs.</p>
       <div class="linkrow"><input id="testKey" readonly="" placeholder="Press the button below"><button id="copyTest" type="button">Copy</button></div>
@@ -412,7 +436,10 @@ details.guide[open] > summary::after{content:"\2212"}
       <button class="btn ghost" id="again" type="button" style="margin-top:22px">Create another</button>
     </section>
 
-    <p class="foot" id="siteFoot" hidden="">Website: <span id="siteName"></span> <button class="linkbtn" id="siteUpdate" type="button">Update</button></p>
+    <p class="foot" id="siteFoot">
+      <span id="siteInfo" hidden="">Website: <span id="siteName"></span> <button class="linkbtn" id="siteUpdate" type="button">Update</button> · </span>
+      <button class="linkbtn" id="openSaved" type="button">Saved scripts (<span id="savedCount">0</span>)</button>
+    </p>
   </div>
 
   <!-- ============ VISITOR ============ -->
@@ -664,6 +691,64 @@ function creator() {
   }
   paintStyles();
 
+  /* ---- Saved scripts: kept in this browser only, so a creator can come back and re-copy later ---- */
+  const SAVED_KEY = "keygate:saved", SAVED_MAX = 30;
+  function loadSaved() { try { const v = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(v) ? v : []; } catch { return []; } }
+  function saveSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list.slice(0, SAVED_MAX))); } catch {} }
+  function rememberCreation(entry) { const list = loadSaved(); list.unshift(entry); saveSaved(list); refreshSavedCount(); }
+  function refreshSavedCount() { $("savedCount").textContent = loadSaved().length; }
+  function renderSaved() {
+    const list = loadSaved();
+    $("savedEmpty").hidden = list.length > 0;
+    const wrap = $("savedList"); wrap.innerHTML = "";
+    list.forEach((item, i) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.cssText = "padding:16px; margin-bottom:12px; background:var(--bg)";
+      const when = new Date(item.t).toLocaleString();
+      card.innerHTML = `<p style="margin:0 0 4px;font:600 15px 'Sora',sans-serif">${escapeHtml(item.title || "Untitled")}</p>
+        <p class="small" style="margin:0 0 10px">${when} &middot; ${item.loader ? "GitHub loader" : "Inline script"}</p>`;
+      const shareRow = document.createElement("div"); shareRow.className = "linkrow";
+      const shareIn = document.createElement("input"); shareIn.readOnly = true; shareIn.value = item.share;
+      const shareBtn = document.createElement("button"); shareBtn.type = "button"; shareBtn.textContent = "Copy link";
+      shareBtn.onclick = e => copy(item.share, e.currentTarget);
+      shareRow.append(shareIn, shareBtn); card.appendChild(shareRow);
+      const btnRow = document.createElement("div"); btnRow.style.cssText = "display:flex;gap:8px;margin-top:10px;flex-wrap:wrap";
+      const copyScriptBtn = document.createElement("button"); copyScriptBtn.type = "button"; copyScriptBtn.className = "btn ghost"; copyScriptBtn.style.cssText = "margin:0;width:auto;padding:0 16px;height:38px";
+      copyScriptBtn.textContent = "Copy script"; copyScriptBtn.onclick = e => copy(item.lua, e.currentTarget);
+      const removeBtn = document.createElement("button"); removeBtn.type = "button"; removeBtn.className = "btn ghost"; removeBtn.style.cssText = "margin:0;width:auto;padding:0 16px;height:38px";
+      removeBtn.textContent = "Remove"; removeBtn.onclick = () => { const l = loadSaved(); l.splice(i, 1); saveSaved(l); renderSaved(); refreshSavedCount(); };
+      btnRow.append(copyScriptBtn, removeBtn); card.appendChild(btnRow);
+      wrap.appendChild(card);
+    });
+  }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+  $("openSaved").onclick = () => { renderSaved(); $("formCard").hidden = true; $("resCard").hidden = true; $("savedCard").hidden = false; };
+  $("savedBack").onclick = showForm;
+
+  /* ---- Optional: host the script on GitHub and hand out a one-line loadstring loader ---- */
+  $("useLoader").addEventListener("change", () => { $("loaderWrap").hidden = !$("useLoader").checked; });
+  async function uploadLoaderScript(token, repoName, id, fullLua) {
+    if (!/^[A-Za-z0-9._-]{1,100}$/.test(repoName)) throw problem("Repository names can only use letters, numbers, dots, dashes and underscores.");
+    const me = await gh(token, "GET", "/user");
+    if (me.status === 401) throw problem("GitHub rejected that token. Make sure you copied all of it.");
+    if (!me.ok || !me.data || !me.data.login) throw problem("Could not talk to GitHub (" + me.status + ").");
+    const owner = me.data.login;
+    const repo = await gh(token, "GET", `/repos/${owner}/${repoName}`);
+    if (!repo.ok) throw problem("Could not find the '" + repoName + "' repository under your account. Publish your website there first, or check the name.");
+    const branch = (repo.data && repo.data.default_branch) || "main";
+    const path = `scripts/${id}.lua`;
+    const content = btoa(unescape(encodeURIComponent(fullLua)));
+    const cur = await gh(token, "GET", `/repos/${owner}/${repoName}/contents/${path}?ref=${encodeURIComponent(branch)}`);
+    const put = await gh(token, "PUT", `/repos/${owner}/${repoName}/contents/${path}`, Object.assign({ message: "Add KeyGate script " + id, content, branch }, cur.ok && cur.data && cur.data.sha ? { sha: cur.data.sha } : {}));
+    if (put.status === 401 || put.status === 403) throw problem("This token isn't allowed to write to that repository.");
+    if (!(put.status === 200 || put.status === 201)) throw problem("Could not upload the script (" + put.status + ").");
+    return `https://raw.githubusercontent.com/${owner}/${repoName}/${branch}/${path}`;
+  }
+  function loaderLua(rawUrl) {
+    return `-- KeyGate loadstring loader\n-- Fetches and runs the full script (key menu included) fresh from GitHub each time.\nloadstring(game:HttpGet(${JSON.stringify(rawUrl)}))()\n`;
+  }
+
   const PREVIEW = /googleusercontent|claude\.ai|localhost|127\.0\.0\.1/;
   const previewHost = () => { try { return PREVIEW.test(location.hostname) || !/^https?:$/.test(location.protocol); } catch { return true; } };
   const savedSite = () => { try { const v = localStorage.getItem("keygate:site"); return v && /^https:\/\//.test(v) ? v : ""; } catch { return ""; } };
@@ -676,11 +761,12 @@ function creator() {
   const siteKnown = () => !!(CONFIG.SITE_URL.trim() || savedSite() || !previewHost());
 
   function showForm() {
-    $("pubCard").hidden = true; $("pubDone").hidden = true; $("resCard").hidden = true; $("formCard").hidden = false;
-    const s = savedSite(); $("siteFoot").hidden = !(s && previewHost() && !CONFIG.SITE_URL.trim());
+    $("pubCard").hidden = true; $("pubDone").hidden = true; $("resCard").hidden = true; $("savedCard").hidden = true; $("formCard").hidden = false;
+    const s = savedSite(); $("siteInfo").hidden = !(s && previewHost() && !CONFIG.SITE_URL.trim());
     $("siteName").textContent = s.replace(/^https:\/\//, "").replace(/\/$/, "");
+    refreshSavedCount();
   }
-  function showPublish() { $("formCard").hidden = true; $("resCard").hidden = true; $("pubDone").hidden = true; $("siteFoot").hidden = true; $("pubCard").hidden = false; }
+  function showPublish() { $("formCard").hidden = true; $("resCard").hidden = true; $("pubDone").hidden = true; $("savedCard").hidden = true; $("pubCard").hidden = false; }
   const mark = (id, on) => $(id).classList.toggle("done", !!on);
   const refreshGuide = () => { mark("gs1", siteKnown()); };
   $("guide").open = !siteKnown();
@@ -1341,22 +1427,46 @@ end)
 `;
   }
 
-  $("f").addEventListener("submit", ev => {
+  $("f").addEventListener("submit", async ev => {
     ev.preventDefault(); showErr("");
-    if (!cleanScript($("myScript").value).trim()) return showErr("Add your Lua script first — it's required so the share link actually delivers something.");
+    const rawScript = cleanScript($("myScript").value);
+    if (!rawScript.trim()) return showErr("Add your Lua script first — it's required so the share link actually delivers something.");
     const style = gateStyle(document.querySelector('input[name="gstyle"]:checked').value);
     let quickDur = QUICK_DUR.def;
     if (style === "quick") {
       quickDur = Math.round(Number($("quickDur").value));
       if (!Number.isFinite(quickDur) || quickDur < QUICK_DUR.min || quickDur > QUICK_DUR.max) return showErr(`Verification time must be between ${QUICK_DUR.min} and ${QUICK_DUR.max} seconds.`);
     }
-    const btn = $("go"); btn.disabled = true;
+    const useLoader = $("useLoader").checked;
+    const loaderToken = extractToken($("loaderToken").value), loaderRepo = cleanText($("loaderRepo").value);
+    if (useLoader) {
+      if (!loaderToken) return showErr("Paste your GitHub token, or turn off the loadstring option.");
+      if (!loaderRepo) return showErr("Enter the repository name, or turn off the loadstring option.");
+    }
+    const btn = $("go"); btn.disabled = true; btn.textContent = useLoader ? "Uploading to GitHub..." : "Creating...";
     try {
       const secret = "KGAPI-" + makeToken(24);
       const title = cleanText($("title").value).slice(0, 60);
       const payload = b64u(JSON.stringify({ t: title, k: secret, y: style, s: style === "quick" ? quickDur : undefined }));
       const share = baseUrl() + "#g=" + payload;
-      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = buildLua(secret, share, cleanScript($("myScript").value));
+      let fullLua = buildLua(secret, share, rawScript);
+      let deliverLua = fullLua, rawUrl = "";
+      if (useLoader) {
+        rawUrl = await uploadLoaderScript(loaderToken, loaderRepo, makeToken(12).toLowerCase(), fullLua);
+        deliverLua = loaderLua(rawUrl);
+        $("loaderToken").value = "";                                    // never kept, exactly like the publish token
+      }
+      $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = deliverLua;
+      $("loaderNote").hidden = !useLoader; $("showFull").hidden = !useLoader;
+      $("showFull").textContent = "Show the full script instead";
+      $("luaLabel").textContent = useLoader ? "Ready-to-use Lua script (loader)" : "Ready-to-use Lua script (key menu + your script)";
+      let showingLoader = useLoader;
+      $("showFull").onclick = () => {
+        showingLoader = !showingLoader;
+        $("lua").value = showingLoader ? deliverLua : fullLua;
+        $("loaderNote").hidden = !showingLoader;
+        $("showFull").textContent = showingLoader ? "Show the full script instead" : "Show the loader instead";
+      };
       let shareHost = ""; try { shareHost = new URL(share).hostname; } catch {}
       let note = "";
       if (!/^https?:\/\//.test(share)) note = "This link isn't a full web address yet. Publish your website first (Update below) or fill in SITE_URL in the settings.";
@@ -1373,10 +1483,12 @@ end)
       $("copyShare").onclick = e => copy(share, e.currentTarget);
       $("copyApi").onclick = e => copy(secret, e.currentTarget);
       $("copyLua").onclick = e => copy($("lua").value, e.currentTarget);
-    } catch { showErr("Could not create the link. Please try again."); }
-    finally { btn.disabled = false; }
+      rememberCreation({ title, share, lua: fullLua, loader: useLoader, rawUrl, t: Date.now() });
+    } catch (e) {
+      showErr(e && e.friendly ? e.message : "Could not create the link. Please try again.");
+    } finally { btn.disabled = false; btn.textContent = "Create share link"; }
   });
-  $("again").onclick = () => { $("f").reset(); paintStyles(); showErr(""); showForm(); };
+  $("again").onclick = () => { $("f").reset(); paintStyles(); $("loaderWrap").hidden = true; showErr(""); showForm(); };
 }
 
 /* =====================================================================
