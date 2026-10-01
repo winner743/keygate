@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><base href="https://2097204679-atari-embeds.googleusercontent.com/embeds/0859b55943a2669bb80e1e1b89207842/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.7RMuFFQRkIM.O%2Fd%3D1%2Frs%3DAHpOoo96vPTUmorjAxUToerDK1wIZ_D9cg%2Fm%3D__features__" target="_blank">
+<html lang="en"><head><base href="https://1176982647-atari-embeds.googleusercontent.com/embeds/0859b55943a2669bb80e1e1b89207842/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.id.rSbJYhBfuqI.O%2Fd%3D1%2Frs%3DAHpOoo-jVekxMAQXeq7xqpwfVZ239erXog%2Fm%3D__features__" target="_blank">
       <script>
         (function() {
           // Listen during capturing phase to intercept before <base target="_blank"> takes effect.
@@ -343,7 +343,7 @@ details.guide[open] > summary::after{content:"\2212"}
         <div class="small" id="pubStatus" hidden="" style="margin-top:14px"></div>
         <button class="btn" id="pubGo" type="submit">Publish website</button>
       </form>
-      <p class="small" style="margin:14px 0 0">The token is only used in this browser to publish. It is never saved and never put in your links. You can delete it on GitHub afterwards.</p>
+      <p class="small" style="margin:14px 0 0">The token is never put in your links or in any file KeyGate uploads. After it works, it's kept in this browser only, so you don't have to paste it again for publishing or for the loadstring loader. <button class="linkbtn" id="forgetToken1" type="button" style="padding:0">Forget it</button></p>
       <button class="linkbtn" id="pubSkip" type="button" style="margin-top:8px">Skip, I host the file myself</button>
     </section>
 
@@ -397,7 +397,7 @@ details.guide[open] > summary::after{content:"\2212"}
           <input id="loaderToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_...">
           <label for="loaderRepo">Repository name</label>
           <input id="loaderRepo" type="text" autocomplete="off" spellcheck="false" placeholder="keygate">
-          <p class="small" style="margin:8px 0 0">Only used once, right now, to upload the file. Never saved.</p>
+          <p class="small" style="margin:8px 0 0">The token isn't put in the script or the share link. After it works, it's kept in this browser only. <button class="linkbtn" id="forgetToken2" type="button" style="padding:0">Forget it</button></p>
         </div>
         <div class="msg bad" id="cErr" role="alert" hidden=""></div>
         <button class="btn" id="go" type="submit">Create share link</button>
@@ -407,6 +407,7 @@ details.guide[open] > summary::after{content:"\2212"}
     <section class="card" id="savedCard" hidden="">
       <h1>Saved scripts</h1>
       <p class="sub">Links you\'ve created in this browser. Not synced anywhere else.</p>
+      <div class="note" id="storageWarn" hidden="" style="margin-bottom:14px">This browser isn\'t keeping data between visits (common in in-app or private browsing), so nothing here will still be here next time. Open this page in your normal browser app instead.</div>
       <div id="savedList"></div>
       <div class="empty" id="savedEmpty" style="text-align:center; color:var(--muted); padding:10px 0">Nothing saved yet.</div>
       <button class="linkbtn" id="savedBack" type="button" style="margin-top:12px">Back</button>
@@ -714,17 +715,43 @@ function creator() {
       shareBtn.onclick = e => copy(item.share, e.currentTarget);
       shareRow.append(shareIn, shareBtn); card.appendChild(shareRow);
       const btnRow = document.createElement("div"); btnRow.style.cssText = "display:flex;gap:8px;margin-top:10px;flex-wrap:wrap";
-      const copyScriptBtn = document.createElement("button"); copyScriptBtn.type = "button"; copyScriptBtn.className = "btn ghost"; copyScriptBtn.style.cssText = "margin:0;width:auto;padding:0 16px;height:38px";
-      copyScriptBtn.textContent = "Copy script"; copyScriptBtn.onclick = e => copy(item.lua, e.currentTarget);
-      const removeBtn = document.createElement("button"); removeBtn.type = "button"; removeBtn.className = "btn ghost"; removeBtn.style.cssText = "margin:0;width:auto;padding:0 16px;height:38px";
-      removeBtn.textContent = "Remove"; removeBtn.onclick = () => { const l = loadSaved(); l.splice(i, 1); saveSaved(l); renderSaved(); refreshSavedCount(); };
-      btnRow.append(copyScriptBtn, removeBtn); card.appendChild(btnRow);
+      const mkBtn = txt => { const b = document.createElement("button"); b.type = "button"; b.className = "btn ghost"; b.style.cssText = "margin:0;width:auto;padding:0 16px;height:38px"; b.textContent = txt; return b; };
+      if (item.loader && item.rawUrl) {
+        const copyLoaderBtn = mkBtn("Copy loader"); copyLoaderBtn.onclick = e => copy(loaderLua(item.rawUrl), e.currentTarget);
+        const copyFullBtn = mkBtn("Copy full script"); copyFullBtn.onclick = e => copy(item.lua, e.currentTarget);
+        btnRow.append(copyLoaderBtn, copyFullBtn);
+      } else {
+        const copyScriptBtn = mkBtn("Copy script"); copyScriptBtn.onclick = e => copy(item.lua, e.currentTarget);
+        btnRow.append(copyScriptBtn);
+      }
+      const removeBtn = mkBtn("Remove");
+      removeBtn.onclick = () => { const l = loadSaved(); l.splice(i, 1); saveSaved(l); renderSaved(); refreshSavedCount(); };
+      btnRow.append(removeBtn); card.appendChild(btnRow);
       wrap.appendChild(card);
     });
   }
   function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+  function storageOk() {
+    try { const k = "keygate:t"; localStorage.setItem(k, "1"); const ok = localStorage.getItem(k) === "1"; localStorage.removeItem(k); return ok; }
+    catch { return false; }
+  }
+  $("storageWarn").hidden = storageOk();
   $("openSaved").onclick = () => { renderSaved(); $("formCard").hidden = true; $("resCard").hidden = true; $("savedCard").hidden = false; };
   $("savedBack").onclick = showForm;
+
+  /* ---- GitHub token: entered once, reused for both publishing and the loadstring loader ---- */
+  const GH_TOKEN_KEY = "keygate:ghtoken";
+  const savedToken = () => { try { return localStorage.getItem(GH_TOKEN_KEY) || ""; } catch { return ""; } };
+  function rememberToken(tok) { try { localStorage.setItem(GH_TOKEN_KEY, tok); } catch {} fillTokenFields(); }
+  function forgetToken() { try { localStorage.removeItem(GH_TOKEN_KEY); } catch {} fillTokenFields(); }
+  function fillTokenFields() {
+    const t = savedToken();
+    $("ghToken").value = t; $("loaderToken").value = t;
+    const has = !!t;
+    $("forgetToken1").hidden = !has; $("forgetToken2").hidden = !has;
+  }
+  fillTokenFields();
+  $("forgetToken1").onclick = forgetToken; $("forgetToken2").onclick = forgetToken;
 
   /* ---- Optional: host the script on GitHub and hand out a one-line loadstring loader ---- */
   $("useLoader").addEventListener("change", () => { $("loaderWrap").hidden = !$("useLoader").checked; });
@@ -842,7 +869,7 @@ function creator() {
     const btn = $("pubGo"); btn.disabled = true; btn.textContent = "Publishing...";
     try {
       const url = await publish(token, name);
-      $("ghToken").value = "";                                         // the token is never kept
+      rememberToken(token);
       try { localStorage.setItem("keygate:site", url); } catch {}
       say("");
       $("siteUrl").value = url;
@@ -1610,7 +1637,7 @@ end)
       if (useLoader) {
         rawUrl = await uploadLoaderScript(loaderToken, loaderRepo, makeToken(12).toLowerCase(), fullLua);
         deliverLua = loaderLua(rawUrl);
-        $("loaderToken").value = "";                                    // never kept, exactly like the publish token
+        rememberToken(loaderToken);
       }
       $("shareUrl").value = share; $("apiKey").value = secret; $("lua").value = deliverLua;
       $("loaderNote").hidden = !useLoader; $("showFull").hidden = !useLoader;
